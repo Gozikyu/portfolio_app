@@ -5,11 +5,16 @@ services:
     image: mysql:8.0
     volumes:
       - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+    command: --default-authentication-plugin=mysql_native_password
+
   api:
     build: 
       context: ./api/
       dockerfile: Dockerfile
-    command: /bin/sh -c "rm -f /myapp/tmp/pids/server.pid && bundle exec rails s -p 30001-b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
     image: rails:dev
     volumes:
       - ./api:/myapp
@@ -17,6 +22,10 @@ services:
     environment:
       TZ: Asia/Tokyo
       RAILS_ENV: development
+      # MYSQL_USER: root
+      # MYSQL_ROOT_PASSWORD: password
+      # MYSQL_ALLOW_EMPTY_PASSWORD: password
+      # MYSQL_RANDOM_ROOT_PASSWORD: password
     ports:
       - 3001:3001
     depends_on:
@@ -27,7 +36,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./front:/usr/src/app
-    command: sh -c "cd react-sample && yarn start"
+    command: sh -c "cd react_front && yarn start"
     ports:
       - "3000:3000"
 volumes:
