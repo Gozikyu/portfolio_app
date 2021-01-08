@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   factory :namelessUser , class: User do
-    # name {  }
+    name {  }
     email { "hoge@gmail.com" }
     password {'password'}
     password_confirmation {'password'}
