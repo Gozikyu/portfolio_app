@@ -14,7 +14,7 @@ const UserList = () => {
       .catch((data) =>{
         console.log(data)
       })
-    }
+    },[]
   )
 
   return(
