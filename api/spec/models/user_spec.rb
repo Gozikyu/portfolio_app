@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   user = FactoryBot.build(:user)
 
   it 'should be vaild' do
@@ -24,7 +25,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'email should be not be too long' do
-    user = FactoryBot.build(:user, email: 'a' * 244 + '@example.com')
+    user = FactoryBot.build(:user, email: "#{'a' * 244}@example.com")
     expect(user).not_to be_valid
   end
 
@@ -65,5 +66,4 @@ RSpec.describe User, type: :model do
     user.save
     expect(user.reload.email).to eq mixed_case_email.downcase
   end
-
 end

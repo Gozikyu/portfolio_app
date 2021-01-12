@@ -1,0 +1,17 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.6.6
+  TargetRailsVersion: 6.1.0
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+    - 'lib/tasks/auto_annotate_models.rake'

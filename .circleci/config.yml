@@ -1,0 +1,60 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  rubocop:
+    docker:
+      - image: circleci/ruby:2.6.6-node-browsers-legacy
+        environment:
+          RAILS_ENV: test
+          MYSQL_HOST: 127.0.0.1
+      - image: circleci/mysql:8.0
+        command: [--default-authentication-plugin=mysql_native_password]
+        environment:
+          MYSQL_USER: root
+          MYSQL_DB: myapp_test
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: cd api && bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - run: yarn install
+      # Rubocop
+      - run:
+          name: Rubocop
+          command: cd api && bundle exec rubocop
+
+  rspec:
+    docker:
+      - image: circleci/ruby:2.6.6-node-browsers-legacy
+        environment:
+          RAILS_ENV: test
+          MYSQL_HOST: 127.0.0.1 
+      - image: circleci/mysql:8.0
+        command: [--default-authentication-plugin=mysql_native_password]
+        environment:
+          MYSQL_USER: root
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DB: myapp_test
+          MYSQL_ROOT_HOST: '%'
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: cd api && bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - run: yarn install
+      - run: cd api && bundle exec rake db:create
+      - run: cd api && bundle exec rake db:schema:load
+      # Rspec
+      - run:
+          name: Rspec
+          command: cd api && bundle exec rspec
+
+workflows:
+  version: 2
+  rubocop_rspec:
+    jobs:
+      - rubocop
+      - rspec:
+          requires:
+            - rubocop
