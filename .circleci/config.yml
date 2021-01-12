@@ -7,6 +7,7 @@ jobs:
   rubocop:
     docker:
       - image: circleci/ruby:2.6.6-node-browsers-legacy
+        command: mysqld --default-authentication-plugin=mysql_native_password
         environment:
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
@@ -41,6 +42,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
       - image: circleci/mysql:8.0
+        command: mysqld --default-authentication-plugin=mysql_native_password
         environment:
           MYSQL_USER: root
           MYSQL_DB: myapp_test
