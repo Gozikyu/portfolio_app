@@ -32,7 +32,7 @@ jobs:
       # Rubocop
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: cd api && bundle exec rubocop
 
   rspec:
     docker:
@@ -58,12 +58,12 @@ jobs:
       #     paths:
       #       - ./vendor/bundle
       #     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run: cd api && bundle exec rake db:create
+      - run: cd api && bundle exec rake db:schema:load
       # Rspec
       - run:
           name: Rspec
-          command: bundle exec rspec
+          command: cd api && bundle exec rspec
 
 workflows:
   version: 2
