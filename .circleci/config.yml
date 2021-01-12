@@ -44,6 +44,7 @@ jobs:
         environment:
           MYSQL_USER: root
           MYSQL_DB: myapp_test
+          MYSQL_ROOT_HOST: '%'
     working_directory: ~/repo
     steps:
       - checkout
