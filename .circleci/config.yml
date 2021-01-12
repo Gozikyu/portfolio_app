@@ -18,18 +18,17 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      # - restore_cache:
-      #     keys:
-      #       - v1-dependencies-{{ checksum "Gemfile.lock" }}
-      #       # fallback to using the latest cache if no exact match is found
-      #       - v1-dependencies-
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run: cd api && bundle install --jobs=4 --retry=3 --path vendor/bundle
-      # - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
       - run: yarn install
-      # - save_cache:
-      #     paths:
-      #       - ./vendor/bundle
-      #     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       # Rubocop
       - run:
           name: Rubocop
@@ -77,12 +76,3 @@ workflows:
       - rspec:
           requires:
             - rubocop
-
-# version: 2.1
-# jobs:
-#   build:
-#     docker:
-#       - image: circleci/node:4.8.2
-#     steps:
-#       - checkout
-#       - run: echo "hello world"
