@@ -40,7 +40,7 @@ jobs:
         environment:
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
-      - image: circleci/mysql8.0
+      - image: circleci/mysql:8.0
         environment:
           MYSQL_USER: root
           MYSQL_DB: myapp_test
@@ -65,22 +65,14 @@ jobs:
           name: Rspec
           command: cd api && bundle exec rspec
 
-# workflows:
-#   version: 2
-#   rubocop_rspec:
-#     jobs:
-#       - rubocop
-#       - rspec:
-#           requires:
-#             - rubocop
-
 workflows:
   version: 2
   rubocop_rspec:
     jobs:
-      - rspec
       - rubocop
-
+      - rspec:
+          requires:
+            - rubocop
 
 # version: 2.1
 # jobs:
