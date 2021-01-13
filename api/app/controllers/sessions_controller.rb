@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: signin_params[:email])
     if @user && @user.authenticate(signin_params[:password])
       render json: @user
+    else
+      render status:404
     end
   end
 end

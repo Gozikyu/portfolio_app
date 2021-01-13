@@ -19,7 +19,7 @@ RSpec.describe "Sessions", type: :request do
     it 'login with invalid information' do
       FactoryBot.create(:user)
       post '/login', params: { user: {email: '', password: ''} } 
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(404)
     end
   end
 

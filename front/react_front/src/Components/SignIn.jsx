@@ -85,6 +85,7 @@ const SignIn = () => {
               history.push({pathname: '/users/'+createdId})
           }).catch(error => {
               console.log("registration error", error)
+              alert('メールアドレスとパスワードの組み合わせが正しくありません。')
           }
           )
         // event.preventDefault()
