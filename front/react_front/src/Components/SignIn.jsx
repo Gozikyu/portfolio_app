@@ -68,7 +68,7 @@ const SignIn = () => {
         />
  */}
 <PrimaryButton
-          label={"アカウントを登録する"}
+          label={"ログインする"}
         onClick={() =>
           axios.post("http://localhost:3001/login",
               {
