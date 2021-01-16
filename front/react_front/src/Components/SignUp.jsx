@@ -123,7 +123,7 @@ import { useHistory } from 'react-router-dom';
                       password_confirmation: confirmPassword
                   }
               },
-              // { withCredentials: true }
+              { withCredentials: true }
           ).then(response => {
               console.log("registration res", response)
               const createdId = response.data.id

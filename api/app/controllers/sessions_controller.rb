@@ -1,14 +1,34 @@
 class SessionsController < ApplicationController
-  def new
-    @user = User.all
-    render json: @user
-  end
+
+# def login
+#   @user = User.find_by(email: session_params[:email])
+
+#   if @user && @user.authenticate(session_params[:password])
+#       login!
+#       render json: { logged_in: true, user: @user }
+#   else
+#       render json: { status: 401, errors: ['認証に失敗しました。', '正しいメールアドレス・パスワードを入力し直すか、新規登録を行ってください。'] }
+#   end
+# end
+
+# def logout
+#     reset_session
+#     render json: { status: 200, logged_out: true }
+# end
+
+def logged_in?
+    if current_user
+        render json: { logged_in: true, user: current_user }
+    else
+        render json: { logged_in: false, message: 'ユーザーが存在しません' }
+    end
+end
 
   def create
     @user = User.find_by(email: signin_params[:email])
     if @user && @user.authenticate(signin_params[:password])
       session[:user_id] = @user.id
-      render json: User.find(session[:user_id])
+      render json: current_user
     else
       render status:404
     end
@@ -19,18 +39,4 @@ private
 
 def signin_params
   params.require(:user).permit(:email, :password)
-end
-
-def log_in(user)
-  session[:user_id] = user.id
-end
-
-def current_user
-  if session[:user_id]
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-end
-
-def logged_in?
-  !current_user.nil?
 end

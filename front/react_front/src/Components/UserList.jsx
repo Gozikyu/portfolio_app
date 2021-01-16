@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import User from './User'
 import axios from 'axios'
-const UserList = () => {
+
+const UserList = (props) => {
 
   const [users, setUsers] = useState([])
 
@@ -21,7 +22,7 @@ const UserList = () => {
     <div className='userList'>
         {users.map((data) => {
           return(
-              <User data={ data } key={ data.id } />
+              <User data={ data } key={ data.id } loggedInStatus={props.loggedInStatus} />
           )
         })}
     </div>

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 // import { signIn } from "../reducks/users/operations";
 // import { push } from "connected-react-router";
 
-const SignIn = () => {
+const SignIn = (props) => {
 //   const dispatch = useDispatch();
 //   const selector = useSelector((state) => state);
 
@@ -77,11 +77,12 @@ const SignIn = () => {
                       password: password,
                   }
               },
-              // { withCredentials: true }
+              { withCredentials: true }
           ).then(response => {
               console.log("registration res", response)
               const createdId = response.data.id
               console.log(createdId)
+              props.handleSuccessfulAuthentication(response.data)
               history.push({pathname: '/users/'+createdId})
           }).catch(error => {
               console.log("registration error", error)
