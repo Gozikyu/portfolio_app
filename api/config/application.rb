@@ -43,10 +43,19 @@ module Myapp
         origins 'http://localhost:3000'
         resource '*',
                  headers: :any,
-                 methods: %i[get post patch delete options]
+                 methods: %i[get post patch delete options],
+                 credentials: true
       end
     end
 
     config.hosts << '.example.com'
+
+    # セッションメソッドを有効にする
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
+    # ログイン状態を保持する為に署名つきCookieへの保存を有効にする
+    # cookies.permanent.signed[:user_id] = user.id
+    # cookies.permanent[:remember_token] = user.remember_token
   end
 end

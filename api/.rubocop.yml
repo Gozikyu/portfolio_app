@@ -4,6 +4,10 @@ Documentation:
   Enabled: false
 Metrics/BlockLength:
   Enabled: false
+AsciiComments:
+  Enabled: false
+Style/SafeNavigation:
+  Enabled: false
 
 AllCops:
   TargetRubyVersion: 2.6.6

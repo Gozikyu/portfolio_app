@@ -91,7 +91,29 @@ import { useHistory } from 'react-router-dom';
       <div className="center">
         <PrimaryButton
           label={"アカウントを登録する"}
-        onClick={() =>
+        onClick={() => {
+          if (
+            username === "" ||
+            email === "" ||
+            password === "" ||
+            confirmPassword === ""
+          ) {
+            alert("必須項目が入力されていません。");
+            return false;
+          }
+          if (!(email.match(/@/))) {
+            alert("正しいメールアドレスを入力してください。");
+            return false;
+          }
+          if (password.length < 6) {
+            alert("パスワードは６文字以上である必要があります。");
+            return false;
+          }
+          if (password !== confirmPassword) {
+            alert("パスワードと確認用パスワードが一致しません");
+            return false;
+          }
+      
           axios.post("http://localhost:3001/users",
               {
                   user: {
@@ -101,7 +123,7 @@ import { useHistory } from 'react-router-dom';
                       password_confirmation: confirmPassword
                   }
               },
-              // { withCredentials: true }
+              { withCredentials: true }
           ).then(response => {
               console.log("registration res", response)
               const createdId = response.data.id
@@ -112,7 +134,7 @@ import { useHistory } from 'react-router-dom';
           }
           )
         // event.preventDefault()
-
+        }
     }
         />
         <div className="help">
