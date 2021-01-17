@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
@@ -12,7 +11,7 @@ RSpec.describe 'Users', type: :request do
 
   describe 'POST /create' do
     it 'valid user should signup' do
-      post '/users', params: { user: { email: "", password: "" } } 
+      post '/users', params: { user: { email: '', password: '' } }
       expect(response).to have_http_status(200)
     end
 

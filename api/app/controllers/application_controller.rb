@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-    include ActionController::Cookies
+  include ActionController::Cookies
 
-    def login!
-        session[:user_id] = @user.id
-    end
+  def login!
+    session[:user_id] = @user.id
+  end
 
-    def current_user
-        if session[:user_id]
-            @current_user ||= User.find_by(id: session[:user_id])
-        end
-    end
-
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
 end
