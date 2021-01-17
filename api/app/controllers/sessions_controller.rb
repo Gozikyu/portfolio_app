@@ -11,10 +11,10 @@ class SessionsController < ApplicationController
 #   end
 # end
 
-# def logout
-#     reset_session
-#     render json: { status: 200, logged_out: true }
-# end
+def log_out
+  session.delete(:user_id)
+  @current_user = nil
+end
 
 def logged_in?
     if current_user
@@ -33,7 +33,13 @@ end
       render status:404
     end
   end
+
+  def destroy
+    log_out
+  end
+  
 end
+
 
 private
 

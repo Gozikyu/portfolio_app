@@ -82,7 +82,7 @@ const SignIn = (props) => {
               console.log("registration res", response)
               const createdId = response.data.id
               console.log(createdId)
-              props.handleSuccessfulAuthentication(response.data)
+              props.login()
               history.push({pathname: '/users/'+createdId})
           }).catch(error => {
               console.log("registration error", error)
