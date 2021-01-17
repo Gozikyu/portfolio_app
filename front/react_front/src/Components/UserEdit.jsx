@@ -1,16 +1,22 @@
 import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
 import axios from 'axios'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import User from "./User";
 
-　const SignUp = () => {
+　const UserEdit = () => {
 
   const history = useHistory()
+  const location = useLocation()
 
   const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [confirmPassword, setConfirmPassword] = useState("");
+    [confirmPassword, setConfirmPassword] = useState("")
+
+  const id = location.pathname.split('/')[2]
+  console.log(id)
+
 
   const inputUsername = useCallback(
     (event) => {
@@ -90,7 +96,7 @@ import { useHistory } from 'react-router-dom';
 
       <div className="center">
         <PrimaryButton
-          label={"アカウントを登録する"}
+          label={"アカウント情報を変更する"}
         onClick={() => {
           if (
             username === "" ||
@@ -114,7 +120,7 @@ import { useHistory } from 'react-router-dom';
             return false;
           }
       
-          axios.post("http://localhost:3001/users",
+          axios.patch("http://localhost:3001/users/"+id,
               {
                   user: {
                       name: username,
@@ -148,4 +154,4 @@ import { useHistory } from 'react-router-dom';
 );
 }
 
-export default SignUp;
+export default UserEdit;

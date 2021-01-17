@@ -16,11 +16,11 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # def update
-  #   @user = User.find(params[:id])
-  #   @user.update_attributes(user: params[:user])
-  #   render json: @user
-  # end
+  def update
+    @user = User.find(params[:id])
+    @user.update(registrations_params)
+    render json: @user
+  end
 
   # def destroy
   #   @user = User.find(params[:id])

@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import UserList from './UserList';
 import UserProfile from './UserProfile';
+import UserEdit from "./UserEdit"
 import SignUp from './SignUp';
 import SignIn from "./SignIn";
-
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState("not login")
@@ -71,6 +71,7 @@ const Routing = () => {
             )}
           />
           <Route exact path='/users/:id' component={UserProfile}/>
+          <Route exact path='/users/:id/edit' component={UserEdit}/>
           <Route exact path='/signup' component={SignUp}/>
           {/* <Route exact path='/signin' component={SignIn}/> */}
           <Route
