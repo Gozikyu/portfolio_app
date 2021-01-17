@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
 
-  describe "GET /new" do
+  describe "GET /logged_in?" do
     it "returns http success" do
       get "/login"
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -21,6 +21,11 @@ RSpec.describe "Sessions", type: :request do
       post '/login', params: { user: {email: '', password: ''} } 
       expect(response).to have_http_status(404)
     end
-  end
 
+    it 'remember user by session' do
+      FactoryBot.create(:user)
+      post '/login', params: { user: {email: 'hoge@gmail.com', password: 'password'} } 
+      expect(session[:user_id].nil?).to be false
+    end 
+  end
 end
