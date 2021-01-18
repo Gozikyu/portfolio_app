@@ -22,6 +22,30 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
+  describe 'PATCH /update' do
+  # context 'with valid parameters' do
+  #   let(:new_attributes) do
+  #   { email: 'new_test@mail.com' }
+  #   end
+
+    it 'updates the requested user' do
+      user = FactoryBot.create(:user)
+      user.email = 'new@gmail.com'
+      patch user_url(user), params: { user: FactoryBot.attributes_for(:UpdatedUser)  }
+      user.reload
+      expect(user.email).to eq 'update@gmail.com'
+    end
+
+    # it 'redirects to the user' do
+    # user = User.create! valid_attributes
+    # patch user_url(user), params: { user: new_attributes }
+    # user.reload
+    # expect(response).to redirect_to(user_url(user))
+    # end
+  end
+
+  
+
   # let(:valid_attributes) do
   #     { name: 'test', email: 'test@mail.com' }
   #   end
@@ -45,13 +69,6 @@ RSpec.describe 'Users', type: :request do
   # end
   # end
 
-  # describe 'GET /edit' do
-  # it 'render a successful response' do
-  #     user = User.create! valid_attributes
-  #     get edit_user_url(user)
-  #     expect(response).to be_successful
-  # end
-  # end
 
   # describe 'POST /create' do
   # context 'with valid parameters' do
@@ -81,27 +98,6 @@ RSpec.describe 'Users', type: :request do
   # end
   # end
 
-  # describe 'PATCH /update' do
-  # context 'with valid parameters' do
-  #     let(:new_attributes) do
-  #     { email: 'new_test@mail.com' }
-  #     end
-
-  #     it 'updates the requested user' do
-  #     expect do
-  #         user = User.create! valid_attributes
-  #         patch user_url(user), params: { user: new_attributes }
-  #         user.reload
-  #     end.to change(User, :count).by(1)
-  #     end
-
-  #     it 'redirects to the user' do
-  #     user = User.create! valid_attributes
-  #     patch user_url(user), params: { user: new_attributes }
-  #     user.reload
-  #     expect(response).to redirect_to(user_url(user))
-  #     end
-  # end
 
   # context 'with invalid parameters' do
   #     it "renders a successful response (i.e. to display the 'edit' template)" do

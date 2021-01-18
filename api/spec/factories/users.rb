@@ -8,6 +8,14 @@ FactoryBot.define do
     password_confirmation { 'password' }
   end
 
+  factory :UpdatedUser, class: User do
+    name {'Hoge'}
+    email { 'update@gmail.com' }
+    password { 'password' }
+    password_confirmation { 'password' }
+  end
+
+
   factory :namelessUser, class: User do
     name {}
     email { 'hoge@gmail.com' }
