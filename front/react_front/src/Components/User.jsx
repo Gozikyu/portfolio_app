@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const User = (props) => {
+  console.log(props.data);
 
-  console.log(props.data)
-
-  return(
+  return (
     <div>
-      <span>{ props.data.name } {props.loggedInStatus}</span>
+      <span>
+        {props.data.name} {props.loggedInStatus}
+      </span>
     </div>
-  )
-  
-}
-export default User
+  );
+};
+export default User;

@@ -1,17 +1,16 @@
 import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
-import axios from 'axios'
-import { useHistory } from 'react-router-dom';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { signIn } from "../reducks/users/operations";
 // import { push } from "connected-react-router";
 
 const SignIn = (props) => {
-//   const dispatch = useDispatch();
-//   const selector = useSelector((state) => state);
+  //   const dispatch = useDispatch();
+  //   const selector = useSelector((state) => state);
 
-    const history = useHistory()
-
+  const history = useHistory();
 
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState("");
@@ -67,31 +66,36 @@ const SignIn = (props) => {
           onClick={() => dispatch(signIn(email, password))}
         />
  */}
-<PrimaryButton
+        <PrimaryButton
           label={"ログインする"}
-        onClick={() =>
-          axios.post("http://localhost:3001/login",
-              {
-                  user: {
+          onClick={
+            () =>
+              axios
+                .post(
+                  "http://localhost:3001/login",
+                  {
+                    user: {
                       email: email,
                       password: password,
-                  }
-              },
-              { withCredentials: true }
-          ).then(response => {
-              console.log("registration res", response)
-              const createdId = response.data.id
-              console.log(createdId)
-              props.login()
-              history.push({pathname: '/users/'+createdId})
-          }).catch(error => {
-              console.log("registration error", error)
-              alert('メールアドレスとパスワードの組み合わせが正しくありません。')
+                    },
+                  },
+                  { withCredentials: true }
+                )
+                .then((response) => {
+                  console.log("registration res", response);
+                  const createdId = response.data.id;
+                  console.log(createdId);
+                  props.login();
+                  history.push({ pathname: "/users/" + createdId });
+                })
+                .catch((error) => {
+                  console.log("registration error", error);
+                  alert(
+                    "メールアドレスとパスワードの組み合わせが正しくありません。"
+                  );
+                })
+            // event.preventDefault()
           }
-          )
-        // event.preventDefault()
-
-    }
         />
 
         <div className="module-spacer--medium" />

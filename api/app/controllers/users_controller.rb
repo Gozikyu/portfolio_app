@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  # before_action :logged_in_user, only: [:update]
+  before_action :logged_in_user, only: [:update]
+  
   def index
     @user = User.all
     render json: @user
