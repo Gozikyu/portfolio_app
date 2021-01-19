@@ -1,6 +1,5 @@
-# frozen_string_literal: true
-
 class UsersController < ApplicationController
+  # before_action :logged_in_user, only: [:update]
   def index
     @user = User.all
     render json: @user
@@ -36,4 +35,12 @@ class UsersController < ApplicationController
   def registrations_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+
+  # ログイン済みユーザーかどうか確認
+  def logged_in_user
+    unless logged_in?
+      ender json: { logged_in: false, message: 'ログインして下さい。' }
+    end
+  end
+
 end

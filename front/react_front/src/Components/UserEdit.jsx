@@ -2,9 +2,8 @@ import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
 import axios from 'axios'
 import { useHistory, useLocation } from 'react-router-dom';
-import User from "./User";
 
-　const UserEdit = () => {
+　const UserEdit = (props) => {
 
   const history = useHistory()
   const location = useLocation()
@@ -15,8 +14,6 @@ import User from "./User";
     [confirmPassword, setConfirmPassword] = useState("")
 
   const id = location.pathname.split('/')[2]
-  console.log(id)
-
 
   const inputUsername = useCallback(
     (event) => {
@@ -153,5 +150,6 @@ import User from "./User";
     </div>
 );
 }
+
 
 export default UserEdit;
