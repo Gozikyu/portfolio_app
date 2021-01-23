@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
+
+  # # テストユーザーとしてログインする
+  # def log_in_as(user)
+  #   session[:user_id] = user.id
+  # end
+
   describe 'GET /show' do
     it 'renders a successful response' do
       FactoryBot.create(:user)
@@ -30,7 +36,7 @@ RSpec.describe 'Users', type: :request do
 
     it 'updates the requested user' do
       user = FactoryBot.create(:user)
-      user.email = 'new@gmail.com'
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       patch user_url(user), params: { user: FactoryBot.attributes_for(:UpdatedUser)  }
       user.reload
       expect(user.email).to eq 'update@gmail.com'

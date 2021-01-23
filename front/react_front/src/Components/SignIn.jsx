@@ -28,7 +28,7 @@ const SignIn = (props) => {
     },
     [setPassword]
   );
-
+  console.log("signin");
   return (
     <div className="c-section-container">
       <h2 className="u-text__headline u-text-center">SIGN IN</h2>

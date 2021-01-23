@@ -11,7 +11,8 @@ import Auth from "./Auth";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState();
+  const [currentUserId, setCurrentUserId] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const login = () => {
     setLoggedInStatus(true);
@@ -36,6 +37,7 @@ const Routing = () => {
       .catch((error) => {
         console.log("ログインステータスエラー", error);
       });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -70,13 +72,6 @@ const Routing = () => {
       )}
       <Router>
         <Switch>
-          <Route
-            exact
-            path={"/users"}
-            render={(props) => (
-              <UserList {...props} loggedInStatus={loggedInStatus} />
-            )}
-          />
           <Route exact path="/users/:id" component={UserProfile} />
           <Route exact path="/signup" component={SignUp} />
 
@@ -87,20 +82,32 @@ const Routing = () => {
               <UserEdit {...props} currentUserId={currentUserId} />
             )}
           />
+          <Route
+            exact
+            path={"/signin"}
+            render={(props) => (
+              <SignIn
+                {...props}
+                loggedInStatus={loggedInStatus}
+                login={login}
+              />
+            )}
+          />
 
-          <Auth loggedInStatus={loggedInStatus}>
-            <Route
-              exact
-              path={"/signin"}
-              render={(props) => (
-                <SignIn
-                  {...props}
-                  loggedInStatus={loggedInStatus}
-                  login={login}
-                />
-              )}
-            />
-          </Auth>
+          {/* <Auth
+            exact
+            path={"/users"}
+            loggedInStatus={loggedInStatus}
+            loading={loading}
+          > */}
+          <Route
+            exact
+            path={"/users"}
+            render={(props) => (
+              <UserList {...props} loggedInStatus={loggedInStatus} />
+            )}
+          />
+          {/* </Auth> */}
         </Switch>
       </Router>
     </div>

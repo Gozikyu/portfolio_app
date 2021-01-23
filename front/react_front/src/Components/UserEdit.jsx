@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
 import axios from "axios";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
@@ -42,7 +42,9 @@ const UserEdit = (props) => {
     [setConfirmPassword]
   );
 
-  if (id == props.currentUserId) {
+  if (props.currentUserId == "") {
+    return <p>読み込み中です</p>;
+  } else if (props.currentUserId == id) {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">アカウント登録</h2>
@@ -57,9 +59,7 @@ const UserEdit = (props) => {
           type={"text"}
           onChange={inputUsername}
         />
-        {console.log(id)}
-        {console.log(props.currentUserId)}
-        {console.log(id == 2)}
+        {console.log("render")}
 
         <TextInput
           fullWidth={true}
