@@ -29,4 +29,5 @@ RSpec.describe 'Sessions', type: :request do
       expect(session[:user_id].nil?).to be true
     end
   end
+  
 end

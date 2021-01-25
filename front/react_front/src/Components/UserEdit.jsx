@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
 import axios from "axios";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const UserEdit = (props) => {
   const history = useHistory();
@@ -10,9 +10,42 @@ const UserEdit = (props) => {
   const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [confirmPassword, setConfirmPassword] = useState("");
+    [confirmPassword, setConfirmPassword] = useState(""),
+    [currentUser, setCurrentUser] = useState(false);
 
-  const id = location.pathname.split("/")[2];
+  const urlId = location.pathname.split("/")[2];
+
+  const checkCorrectUser = () => {
+    axios
+      .get("http://localhost:3001/login", { withCredentials: true })
+      .then((response) => {
+        if (response.data.logged_in) {
+          const currentUserId = response.data.user.id;
+          console.log(urlId);
+          console.log(currentUserId);
+          if (urlId == currentUserId) {
+            setCurrentUser(true);
+            return;
+          } else {
+            alert("ログイン中のユーザー情報以外は編集できません");
+            history.push("/");
+          }
+        } else {
+          alert("ログインしてください");
+          history.push("/signin");
+        }
+      })
+      .catch((error) => {
+        alert(
+          "ログインステータスエラーが起きました。通信環境をお確かめください。"
+        );
+        console.log("ログインステータスエラー", error);
+      });
+  };
+
+  useEffect(() => {
+    checkCorrectUser();
+  }, []);
 
   const inputUsername = useCallback(
     (event) => {
@@ -42,9 +75,10 @@ const UserEdit = (props) => {
     [setConfirmPassword]
   );
 
-  if (props.currentUserId == "") {
+  if (!currentUser) {
+    console.log("render");
     return <p>読み込み中です</p>;
-  } else if (props.currentUserId == id) {
+  } else {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">アカウント登録</h2>
@@ -122,7 +156,7 @@ const UserEdit = (props) => {
 
               axios
                 .patch(
-                  "http://localhost:3001/users/" + id,
+                  "http://localhost:3001/users/" + urlId,
                   {
                     user: {
                       name: username,
@@ -148,8 +182,6 @@ const UserEdit = (props) => {
         </div>
       </div>
     );
-  } else {
-    return <Redirect to={"/"} />;
   }
 };
 export default UserEdit;

@@ -42,6 +42,19 @@ RSpec.describe 'Users', type: :request do
       expect(user.email).to eq 'update@gmail.com'
     end
 
+    it 'should be rejected when edit as wrong user' do
+      user=FactoryBot.create(:user)
+      Another=FactoryBot.create(:Another)
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      patch user_path(Another), params:{user: {name:'update'}}
+      expect(response).to have_http_status(404)
+      patch user_path(user), params:{user: {name:'update'}}
+      user.reload
+      expect(response).to have_http_status(200)
+      expect(user.name).to eq 'update'
+    end
+  
+
     # it 'redirects to the user' do
     # user = User.create! valid_attributes
     # patch user_url(user), params: { user: new_attributes }

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -66,4 +64,6 @@ RSpec.describe User, type: :model do
     user.save
     expect(user.reload.email).to eq mixed_case_email.downcase
   end
+
+
 end
