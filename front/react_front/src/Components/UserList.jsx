@@ -5,7 +5,9 @@ import axios from "axios";
 import Pagination from "material-ui-flat-pagination";
 
 const UserList = (props) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]),
+    [currentUser, setCurrentUser] = useState("");
+
   const history = useHistory();
 
   const getUsers = () => {
@@ -27,10 +29,11 @@ const UserList = (props) => {
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         console.log("registration res", response.data);
+        setCurrentUser(response.data.user);
         if (response.data.logged_in) {
           return;
         } else {
-          alert("please login");
+          alert("ログインしてください");
           history.push("/signin");
         }
       });
@@ -42,20 +45,20 @@ const UserList = (props) => {
   }, []);
 
   if (users == [] || users.logged_in == false) {
-    console.log("render");
-    console.log(users);
-    console.log(users);
     return <p>読み込み中です</p>;
   } else {
+    console.log(currentUser);
+
     return (
       <>
         <div className="userList">
-          {users.map((data) => {
+          {users.map((user) => {
             return (
               <User
-                data={data}
-                key={data.id}
+                user={user}
+                key={user.id}
                 loggedInStatus={props.loggedInStatus}
+                currentUser={currentUser}
               />
             );
           })}
