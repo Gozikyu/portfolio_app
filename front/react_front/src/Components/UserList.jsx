@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 import User from "./User";
 import axios from "axios";
+import Pagination from "material-ui-flat-pagination";
 
 const UserList = (props) => {
   const [users, setUsers] = useState([]);
@@ -47,17 +48,19 @@ const UserList = (props) => {
     return <p>読み込み中です</p>;
   } else {
     return (
-      <div className="userList">
-        {users.map((data) => {
-          return (
-            <User
-              data={data}
-              key={data.id}
-              loggedInStatus={props.loggedInStatus}
-            />
-          );
-        })}
-      </div>
+      <>
+        <div className="userList">
+          {users.map((data) => {
+            return (
+              <User
+                data={data}
+                key={data.id}
+                loggedInStatus={props.loggedInStatus}
+              />
+            );
+          })}
+        </div>
+      </>
     );
   }
 };

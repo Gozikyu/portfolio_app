@@ -1,13 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const User = (props) => {
   console.log(props.data);
+  const userProfilepage = "users/" + props.data.id;
 
   return (
     <div>
-      <span>
-        {props.data.name} {props.loggedInStatus}
-      </span>
+      <Link to={userProfilepage}>{props.data.name}</Link>
     </div>
   );
 };

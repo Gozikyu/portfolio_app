@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import User from "./User";
 import { useLocation } from "react-router-dom";
 
 const UserProfile = () => {
@@ -23,7 +22,8 @@ const UserProfile = () => {
 
   return (
     <div className="UserProfile">
-      <User data={user} key={user.id} />
+      <p> id:{user.id}</p>
+      {user.name}
     </div>
   );
 };

@@ -17,8 +17,9 @@ RSpec.describe 'Users', type: :request do
 
   describe 'POST /create' do
     it 'valid user should signup' do
-      post '/users', params: { user: { email: '', password: '' } }
-      expect(response).to have_http_status(200)
+      expect do
+        post '/users', params: { user: FactoryBot.attributes_for(:user) }
+      end.to change(User, :count).by(1)
     end
 
     it 'invalid user should not signup' do
@@ -54,6 +55,14 @@ RSpec.describe 'Users', type: :request do
       expect(user.name).to eq 'update'
     end
   
+    it 'should not allow the admin attribute to be edited via the web' do
+      Another=FactoryBot.create(:Another)
+      expect(Another.admin).to eq false
+      post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
+      patch user_path(Another), params:{user: {admine:true}}
+      expect(Another.admin).to eq false
+    end
+
 
     # it 'redirects to the user' do
     # user = User.create! valid_attributes
