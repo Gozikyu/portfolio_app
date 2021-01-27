@@ -72,6 +72,28 @@ RSpec.describe 'Users', type: :request do
     # end
   end
 
+  describe 'DELETE /destroy' do
+    it 'admin user should destory users' do
+      user=FactoryBot.create(:user)
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      Another=FactoryBot.create(:Another)
+        expect do
+        delete user_url(Another)
+        end.to change(User, :count).by(-1)
+    end
+
+    it 'non_admin user should not destroys users' do
+      user=FactoryBot.create(:user)
+      Another=FactoryBot.create(:Another)
+      post '/login', params: { user: { email: 'another.com', password: 'password' } }
+        expect do
+        delete user_url(Another)
+        end.to change(User, :count).by(0)
+    end
+
+  end
+  
+
   
 
   # let(:valid_attributes) do
@@ -136,13 +158,6 @@ RSpec.describe 'Users', type: :request do
   # end
   # end
 
-  # describe 'DELETE /destroy' do
-  # it 'destroys the requested user' do
-  #     user = User.create! valid_attributes
-  #     expect do
-  #     delete user_url(user)
-  #     end.to change(User, :count).by(-1)
-  # end
 
   # it 'redirects to the users list' do
   #     user = User.create! valid_attributes

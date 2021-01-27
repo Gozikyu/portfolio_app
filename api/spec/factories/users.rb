@@ -6,6 +6,7 @@ FactoryBot.define do
     email { 'hoge@gmail.com' }
     password { 'password' }
     password_confirmation { 'password' }
+    admin {true}
   end
 
   factory :Another, class: User do
@@ -13,6 +14,7 @@ FactoryBot.define do
     email { 'another@gmail.com' }
     password { 'password' }
     password_confirmation { 'password' }
+    admin {false}
   end
 
   factory :UpdatedUser, class: User do
@@ -20,6 +22,7 @@ FactoryBot.define do
     email { 'update@gmail.com' }
     password { 'password' }
     password_confirmation { 'password' }
+    admin {false}
   end
 
 
@@ -28,5 +31,6 @@ FactoryBot.define do
     email { 'hoge@gmail.com' }
     password { 'password' }
     password_confirmation { 'password' }
+    admin {false}
   end
 end
