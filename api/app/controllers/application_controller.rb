@@ -9,28 +9,20 @@ class ApplicationController < ActionController::API
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
-
   def logged_in?
     !current_user.nil?
   end
 
   def logged_in_user
-    unless logged_in?
-      render json: { logged_in: false, message: current_user }
-    end
+    render json: { logged_in: false, message: current_user } unless logged_in?
   end
 
   def correct_user
-    @user = User.find_by(id:params[:id])
-    unless User.find_by(id:session[:user_id]) == @user
-      render status: 404 
-    end
+    @user = User.find_by(id: params[:id])
+    render status: 404 unless User.find_by(id: session[:user_id]) == @user
   end
 
   def admin_user
-    unless current_user.admin
-      render json: { status: 500, message: "現在のユーザーはadminユーザーではありません。"}
-    end
+    render json: { status: 500, message: '現在のユーザーはadminユーザーではありません。' } unless current_user.admin
   end
-  
 end

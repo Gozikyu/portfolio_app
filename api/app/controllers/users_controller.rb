@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :update]
+  before_action :logged_in_user, only: %i[index update]
   before_action :correct_user, only: [:update]
   before_action :admin_user, only: [:destroy]
-  
+
   def index
     @user = User.all
     render json: @user
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     if @user.destroy
       render json: { status: 200, message: 'ユーザー削除成功' }
     else
-      render json:{ status: 404, message: 'ユーザー削除失敗' }
+      render json: { status: 404, message: 'ユーザー削除失敗' }
     end
   end
 
@@ -38,6 +38,4 @@ class UsersController < ApplicationController
   def registrations_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
-
-
 end
