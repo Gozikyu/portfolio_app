@@ -69,7 +69,7 @@ RSpec.describe 'Users', type: :request do
     end
 
     it 'non_admin user should not destroys users' do
-      post '/login', params: { user: { email: 'another.com', password: 'password' } }
+      post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
         delete user_url(@another)
       end.to change(User, :count).by(0)
