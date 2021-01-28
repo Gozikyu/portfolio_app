@@ -25,6 +25,14 @@ RSpec.describe 'Users', type: :request do
         post '/users', params: { user: FactoryBot.attributes_for(:NamelessUser) }
       end.to change(User, :count).by(0)
     end
+
+    it 'signup user should not be admin user' do
+      post '/users', params: { user: FactoryBot.attributes_for(:SignupUser) }
+      @signupedUser = User.last
+      expect(@signupedUser.name).to eq 'Signup'
+      expect(@signupedUser.admin).to eq false
+    end
+
   end
 
   describe 'PATCH /update' do

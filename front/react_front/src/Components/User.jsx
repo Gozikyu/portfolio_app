@@ -9,6 +9,7 @@ const User = (props) => {
   return (
     <div>
       <Link to={userProfileurl}>{props.user.name}</Link>
+      {props.user.id}
       {props.currentUser.admin && (
         <PrimaryButton
           label={"ユーザーを削除する"}
@@ -17,11 +18,12 @@ const User = (props) => {
               .delete(userProfileurl, { withCredentials: true })
               .then((response) => {
                 console.log("registration res", response);
+                alert("指定したユーザーを削除しました");
               })
               .catch((error) => {
                 console.log("registration error", error);
                 alert(
-                  "ユーザーを削除できませんでした。通信環境をご確認ください。"
+                  "ユーザーを削除できませんでした。通信環境をご確認ください"
                 );
               })
           }

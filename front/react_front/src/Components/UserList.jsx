@@ -48,6 +48,7 @@ const UserList = (props) => {
     return <p>読み込み中です</p>;
   } else {
     console.log(currentUser);
+    console.log(users);
 
     return (
       <>
