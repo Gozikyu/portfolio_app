@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 # メインのサンプルユーザーを1人作成する
-User.create!(name: 'Example User',
-             email: 'example@railstutorial.org',
+User.create!(name: 'admin',
+             email: 'admin@gmail.com',
              password: 'password',
-             password_confirmation: 'password')
+             password_confirmation: 'password',
+             admin: true)
 
 # 追加のユーザーをまとめて生成する
 99.times do |n|
@@ -14,5 +15,6 @@ User.create!(name: 'Example User',
   User.create!(name: name,
                email: email,
                password: password,
-               password_confirmation: password)
+               password_confirmation: password,
+               admin: false)
 end

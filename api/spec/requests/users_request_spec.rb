@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
+  before do
+    @user = FactoryBot.create(:user)
+    @another = FactoryBot.create(:Another)
+  end
+
   describe 'GET /show' do
     it 'renders a successful response' do
-      FactoryBot.create(:user)
       get users_url
       expect(response).to be_successful
     end
@@ -11,13 +15,63 @@ RSpec.describe 'Users', type: :request do
 
   describe 'POST /create' do
     it 'valid user should signup' do
-      post '/users', params: { user: { email: '', password: '' } }
-      expect(response).to have_http_status(200)
+      expect do
+        post '/users', params: { user: FactoryBot.attributes_for(:SignupUser) }
+      end.to change(User, :count).by(1)
     end
 
     it 'invalid user should not signup' do
       expect do
-        post '/users', params: { user: FactoryBot.attributes_for(:namelessUser) }
+        post '/users', params: { user: FactoryBot.attributes_for(:NamelessUser) }
+      end.to change(User, :count).by(0)
+    end
+  end
+
+  describe 'PATCH /update' do
+    it 'updates the requested user' do
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      patch user_url(@user), params: { user: FactoryBot.attributes_for(:UpdatedUser) }
+      @user.reload
+      expect(@user.email).to eq 'update@gmail.com'
+    end
+
+    it 'should be rejected when edit as wrong user' do
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      patch user_path(@another), params: { user: { name: 'update' } }
+      expect(response).to have_http_status(404)
+      patch user_path(@user), params: { user: { name: 'update' } }
+      @user.reload
+      expect(response).to have_http_status(200)
+      expect(@user.name).to eq 'update'
+    end
+
+    it 'should not allow the admin attribute to be edited via the web' do
+      expect(@another.admin).to eq false
+      post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
+      patch user_path(@another), params: { user: { admine: true } }
+      expect(@another.admin).to eq false
+    end
+
+    # it 'redirects to the user' do
+    # user = User.create! valid_attributes
+    # patch user_url(user), params: { user: new_attributes }
+    # user.reload
+    # expect(response).to redirect_to(user_url(user))
+    # end
+  end
+
+  describe 'DELETE /destroy' do
+    it 'admin user should destory users' do
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      expect do
+        delete user_url(@another)
+      end.to change(User, :count).by(-1)
+    end
+
+    it 'non_admin user should not destroys users' do
+      post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
+      expect do
+        delete user_url(@another)
       end.to change(User, :count).by(0)
     end
   end
@@ -41,14 +95,6 @@ RSpec.describe 'Users', type: :request do
   # describe 'GET /new' do
   # it 'renders a successful response' do
   #     get new_user_url
-  #     expect(response).to be_successful
-  # end
-  # end
-
-  # describe 'GET /edit' do
-  # it 'render a successful response' do
-  #     user = User.create! valid_attributes
-  #     get edit_user_url(user)
   #     expect(response).to be_successful
   # end
   # end
@@ -81,28 +127,6 @@ RSpec.describe 'Users', type: :request do
   # end
   # end
 
-  # describe 'PATCH /update' do
-  # context 'with valid parameters' do
-  #     let(:new_attributes) do
-  #     { email: 'new_test@mail.com' }
-  #     end
-
-  #     it 'updates the requested user' do
-  #     expect do
-  #         user = User.create! valid_attributes
-  #         patch user_url(user), params: { user: new_attributes }
-  #         user.reload
-  #     end.to change(User, :count).by(1)
-  #     end
-
-  #     it 'redirects to the user' do
-  #     user = User.create! valid_attributes
-  #     patch user_url(user), params: { user: new_attributes }
-  #     user.reload
-  #     expect(response).to redirect_to(user_url(user))
-  #     end
-  # end
-
   # context 'with invalid parameters' do
   #     it "renders a successful response (i.e. to display the 'edit' template)" do
   #     user = User.create! valid_attributes
@@ -110,14 +134,6 @@ RSpec.describe 'Users', type: :request do
   #     expect(response).to be_successful
   #     end
   # end
-  # end
-
-  # describe 'DELETE /destroy' do
-  # it 'destroys the requested user' do
-  #     user = User.create! valid_attributes
-  #     expect do
-  #     delete user_url(user)
-  #     end.to change(User, :count).by(-1)
   # end
 
   # it 'redirects to the users list' do

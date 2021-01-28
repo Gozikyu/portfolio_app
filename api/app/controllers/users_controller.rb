@@ -1,6 +1,8 @@
-# frozen_string_literal: true
-
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: %i[index update]
+  before_action :correct_user, only: [:update]
+  before_action :admin_user, only: [:destroy]
+
   def index
     @user = User.all
     render json: @user
@@ -16,20 +18,20 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # def update
-  #   @user = User.find(params[:id])
-  #   @user.update_attributes(user: params[:user])
-  #   render json: @user
-  # end
+  def update
+    @user = User.find(params[:id])
+    @user.update(registrations_params)
+    render json: @user
+  end
 
-  # def destroy
-  #   @user = User.find(params[:id])
-  #   if @user.destroy
-  #     head :no_content, status: :ok
-  #   else
-  #     render json: @user.errors, status: :unprocessable_entity
-  #   end
-  # end
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy
+      render json: { status: 200, message: 'ユーザー削除成功' }
+    else
+      render json: { status: 404, message: 'ユーザー削除失敗' }
+    end
+  end
 
   private
 

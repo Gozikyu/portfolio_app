@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :logged_in_user, only: [:new]
   # def login
   #   @user = User.find_by(email: session_params[:email])
 
@@ -15,7 +16,7 @@ class SessionsController < ApplicationController
     @current_user = nil
   end
 
-  def logged_in?
+  def new
     if current_user
       render json: { logged_in: true, user: current_user }
     else

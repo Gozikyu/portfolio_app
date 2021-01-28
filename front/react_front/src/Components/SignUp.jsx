@@ -1,11 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "./UIkit/index";
-import axios from 'axios'
-import { useHistory } from 'react-router-dom';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-　const SignUp = () => {
-
-  const history = useHistory()
+const SignUp = () => {
+  const history = useHistory();
 
   const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
@@ -39,7 +38,6 @@ import { useHistory } from 'react-router-dom';
     },
     [setConfirmPassword]
   );
-
 
   return (
     <div className="c-section-container">
@@ -91,51 +89,53 @@ import { useHistory } from 'react-router-dom';
       <div className="center">
         <PrimaryButton
           label={"アカウントを登録する"}
-        onClick={() => {
-          if (
-            username === "" ||
-            email === "" ||
-            password === "" ||
-            confirmPassword === ""
-          ) {
-            alert("必須項目が入力されていません。");
-            return false;
-          }
-          if (!(email.match(/@/))) {
-            alert("正しいメールアドレスを入力してください。");
-            return false;
-          }
-          if (password.length < 6) {
-            alert("パスワードは６文字以上である必要があります。");
-            return false;
-          }
-          if (password !== confirmPassword) {
-            alert("パスワードと確認用パスワードが一致しません");
-            return false;
-          }
-      
-          axios.post("http://localhost:3001/users",
-              {
+          onClick={() => {
+            if (
+              username === "" ||
+              email === "" ||
+              password === "" ||
+              confirmPassword === ""
+            ) {
+              alert("必須項目が入力されていません。");
+              return false;
+            }
+            if (!email.match(/@/)) {
+              alert("正しいメールアドレスを入力してください。");
+              return false;
+            }
+            if (password.length < 6) {
+              alert("パスワードは６文字以上である必要があります。");
+              return false;
+            }
+            if (password !== confirmPassword) {
+              alert("パスワードと確認用パスワードが一致しません。");
+              return false;
+            }
+
+            axios
+              .post(
+                "http://localhost:3001/users",
+                {
                   user: {
-                      name: username,
-                      email: email,
-                      password: password,
-                      password_confirmation: confirmPassword
-                  }
-              },
-              { withCredentials: true }
-          ).then(response => {
-              console.log("registration res", response)
-              const createdId = response.data.id
-              console.log(createdId)
-              history.push({pathname: '/users/'+createdId})
-          }).catch(error => {
-              console.log("registration error", error)
-          }
-          )
-        // event.preventDefault()
-        }
-    }
+                    name: username,
+                    email: email,
+                    password: password,
+                    password_confirmation: confirmPassword,
+                  },
+                },
+                { withCredentials: true }
+              )
+              .then((response) => {
+                console.log("registration res", response);
+                const createdId = response.data.id;
+                console.log(createdId);
+                history.push({ pathname: "/users/" + createdId });
+              })
+              .catch((error) => {
+                console.log("registration error", error);
+              });
+            // event.preventDefault()
+          }}
         />
         <div className="help">
           {" "}
@@ -145,7 +145,7 @@ import { useHistory } from 'react-router-dom';
         </div>
       </div>
     </div>
-);
-}
+  );
+};
 
 export default SignUp;
