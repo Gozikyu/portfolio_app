@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 import User from "./User";
 import axios from "axios";
-import Pagination from "material-ui-flat-pagination";
+import Pagination from "@material-ui/lab/Pagination";
+// import Pagination from "material-ui-flat-pagination";
 
 const UserList = (props) => {
   const [users, setUsers] = useState([]),
-    [currentUser, setCurrentUser] = useState("");
+    [currentUser, setCurrentUser] = useState(""),
+    [page, setPage] = useState(1);
 
   const history = useHistory();
+
+  const perpage = 10;
+  const firstNumber = 0 + perpage * (page - 1);
+  const finalNumber = firstNumber + 10;
 
   const getUsers = () => {
     console.log("move useEffect");
@@ -44,16 +50,20 @@ const UserList = (props) => {
     getUsers();
   }, []);
 
+  const handleChange = (event) => {
+    console.log(event.target);
+    setPage(event.target.innerHTML);
+  };
+
   if (users == [] || users.logged_in == false) {
     return <p>読み込み中です</p>;
   } else {
-    console.log(currentUser);
-    console.log(users);
+    console.log(page);
 
     return (
       <>
         <div className="userList">
-          {users.map((user) => {
+          {users.slice(firstNumber, finalNumber).map((user) => {
             return (
               <User
                 user={user}
@@ -63,6 +73,14 @@ const UserList = (props) => {
               />
             );
           })}
+
+          <Pagination
+            // limit={10}
+            // offset={10}
+            value={3}
+            total={100}
+            onClick={(event) => handleChange(event)}
+          />
         </div>
       </>
     );
