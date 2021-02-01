@@ -3,7 +3,7 @@ import { useHistory, useLocation, Redirect } from "react-router-dom";
 import User from "./User";
 import axios from "axios";
 import Pagination from "@material-ui/lab/Pagination";
-// import Pagination from "material-ui-flat-pagination";
+import { makeStyles } from "@material-ui/styles";
 
 const UserList = (props) => {
   const [users, setUsers] = useState([]),
@@ -12,9 +12,19 @@ const UserList = (props) => {
 
   const history = useHistory();
 
+  const useStyles = makeStyles({
+    pagination: {
+      display: "inline-block",
+      textAlign: "center",
+    },
+  });
+  const classes = useStyles();
+
   const perpage = 10;
   const firstNumber = 0 + perpage * (page - 1);
   const finalNumber = firstNumber + 10;
+  const totalPage = Math.ceil(users.length / perpage);
+  console.log(totalPage);
 
   const getUsers = () => {
     console.log("move useEffect");
@@ -22,7 +32,6 @@ const UserList = (props) => {
       .get("http://localhost:3001/users", { withCredentials: true })
       .then((results) => {
         setUsers(results.data);
-        console.log(users);
       })
       .catch((data) => {
         console.log(data);
@@ -50,15 +59,15 @@ const UserList = (props) => {
     getUsers();
   }, []);
 
-  const handleChange = (event) => {
-    console.log(event.target);
-    setPage(event.target.innerHTML);
+  const handleChange = (event, value) => {
+    setPage(value);
   };
 
   if (users == [] || users.logged_in == false) {
     return <p>読み込み中です</p>;
   } else {
     console.log(page);
+    console.log(firstNumber, finalNumber);
 
     return (
       <>
@@ -73,15 +82,13 @@ const UserList = (props) => {
               />
             );
           })}
-
-          <Pagination
-            // limit={10}
-            // offset={10}
-            value={3}
-            total={100}
-            onClick={(event) => handleChange(event)}
-          />
         </div>
+        <Pagination
+          className={classes.pagination}
+          count={totalPage}
+          page={page}
+          onChange={handleChange}
+        />
       </>
     );
   }
