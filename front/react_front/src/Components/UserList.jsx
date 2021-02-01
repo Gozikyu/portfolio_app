@@ -2,13 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 import User from "./User";
 import axios from "axios";
-import Pagination from "material-ui-flat-pagination";
+import Pagination from "@material-ui/lab/Pagination";
+import { makeStyles } from "@material-ui/styles";
 
 const UserList = (props) => {
   const [users, setUsers] = useState([]),
-    [currentUser, setCurrentUser] = useState("");
+    [currentUser, setCurrentUser] = useState(""),
+    [page, setPage] = useState(1);
 
   const history = useHistory();
+
+  const useStyles = makeStyles({
+    pagination: {
+      display: "inline-block",
+      textAlign: "center",
+    },
+  });
+  const classes = useStyles();
+
+  const perpage = 10;
+  const firstNumber = 0 + perpage * (page - 1);
+  const finalNumber = firstNumber + 10;
+  const totalPage = Math.ceil(users.length / perpage);
+  console.log(totalPage);
 
   const getUsers = () => {
     console.log("move useEffect");
@@ -16,7 +32,6 @@ const UserList = (props) => {
       .get("http://localhost:3001/users", { withCredentials: true })
       .then((results) => {
         setUsers(results.data);
-        console.log(users);
       })
       .catch((data) => {
         console.log(data);
@@ -44,15 +59,20 @@ const UserList = (props) => {
     getUsers();
   }, []);
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
   if (users == [] || users.logged_in == false) {
     return <p>読み込み中です</p>;
   } else {
-    console.log(currentUser);
+    console.log(page);
+    console.log(firstNumber, finalNumber);
 
     return (
       <>
         <div className="userList">
-          {users.map((user) => {
+          {users.slice(firstNumber, finalNumber).map((user) => {
             return (
               <User
                 user={user}
@@ -63,6 +83,12 @@ const UserList = (props) => {
             );
           })}
         </div>
+        <Pagination
+          className={classes.pagination}
+          count={totalPage}
+          page={page}
+          onChange={handleChange}
+        />
       </>
     );
   }

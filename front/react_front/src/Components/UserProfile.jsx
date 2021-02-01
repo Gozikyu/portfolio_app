@@ -20,6 +20,8 @@ const UserProfile = () => {
       });
   }, []);
 
+  console.log("hoge");
+
   return (
     <div className="UserProfile">
       <p> id:{user.id}</p>
