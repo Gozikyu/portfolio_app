@@ -8,6 +8,7 @@ import UserEdit from "./UserEdit";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import Auth from "./Auth";
+import GoogleMapComponent from "./GoogleMapComponent";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -108,6 +109,8 @@ const Routing = () => {
             )}
           />
           {/* </Auth> */}
+
+          <Route exact path="/map" component={GoogleMapComponent} />
         </Switch>
       </Router>
     </div>
