@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import PlaceInfo from "./PlaceInfo";
+import GymList from "./GymList";
+import Grid from "@material-ui/core/Grid";
 
 const containerStyle = {
-  width: "800px",
-  height: "800px",
+  width: "100%",
+  height: "500px",
 };
 
 const center = {
@@ -17,9 +19,6 @@ const GoogleMapComponent = () => {
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_googleMapsApiKey,
   });
-
-  console.log(isLoaded);
-
   // const [map, setMap] = useState(null);
 
   // const onLoad = useCallback(function callback(map) {

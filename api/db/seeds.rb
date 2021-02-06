@@ -18,3 +18,13 @@ User.create!(name: 'admin',
                password_confirmation: password,
                admin: false)
 end
+
+Gym.create!(name:'千代田区立スポーツセンター',
+            longitude: 35.69162013055158, 
+            latitude:139.76768223023518
+            )
+
+Gym.create!(name:'品川区立総合体育館',
+            longitude: 35.62452448976542,
+            latitude:139.72881284175224
+            )
