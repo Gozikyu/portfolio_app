@@ -22,7 +22,7 @@ const UserList = (props) => {
 
   const perpage = 10;
   const firstNumber = 0 + perpage * (page - 1);
-  const finalNumber = firstNumber + 10;
+  const finalNumber = firstNumber + perpage;
   const totalPage = Math.ceil(users.length / perpage);
   console.log(totalPage);
 

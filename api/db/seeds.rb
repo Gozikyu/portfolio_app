@@ -20,11 +20,11 @@ User.create!(name: 'admin',
 end
 
 Gym.create!(name:'千代田区立スポーツセンター',
-            longitude: 35.69162013055158, 
-            latitude:139.76768223023518
+            latitude: 35.689467815981274, 
+            longitude: 139.76783385524607
             )
 
 Gym.create!(name:'品川区立総合体育館',
-            longitude: 35.62452448976542,
-            latitude:139.72881284175224
+            latitude: 35.62449209011926,
+            longitude: 139.72876494113675
             )

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
-import User from "./User";
 import axios from "axios";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/styles";
@@ -23,14 +22,13 @@ const GymList = (props) => {
 
   const perpage = 10;
   const firstNumber = 0 + perpage * (page - 1);
-  const finalNumber = firstNumber + 10;
+  const finalNumber = firstNumber + perpage;
   const totalPage = Math.ceil(gyms.length / perpage);
-  console.log(totalPage);
 
-  const getUsers = () => {
+  const getGyms = () => {
     console.log("move useEffect");
     axios
-      .get("http://localhost:3001/gyms/index", { withCredentials: true })
+      .get("http://localhost:3001/gyms", { withCredentials: true })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);
@@ -58,7 +56,7 @@ const GymList = (props) => {
 
   useEffect(() => {
     checkLoginStatus();
-    getUsers();
+    getGyms();
   }, []);
 
   const handleChange = (event, value) => {
@@ -71,8 +69,8 @@ const GymList = (props) => {
     return (
       <>
         <div className="userList">
-          {gyms.map((gym) => {
-            return <p>{gym.name}</p>;
+          {gyms.slice(firstNumber, finalNumber).map((gym) => {
+            return <p key={gym.id}>{gym.name}</p>;
           })}
         </div>
         <Pagination
