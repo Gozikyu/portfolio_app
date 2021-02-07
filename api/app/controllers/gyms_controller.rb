@@ -7,8 +7,6 @@ class GymsController < ApplicationController
   def create
     @gym = Gym.create(registrations_params)
     render json: @gym
-    # @gym = Gym.all
-    # render json: @gym
   end
 
   def registrations_params

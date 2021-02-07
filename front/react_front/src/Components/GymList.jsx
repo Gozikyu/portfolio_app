@@ -70,7 +70,12 @@ const GymList = (props) => {
       <>
         <div className="userList">
           {gyms.slice(firstNumber, finalNumber).map((gym) => {
-            return <p key={gym.id}>{gym.name}</p>;
+            return (
+              <p key={gym.id}>
+                {gym.name}
+                {gym.latitude}
+              </p>
+            );
           })}
         </div>
         <Pagination

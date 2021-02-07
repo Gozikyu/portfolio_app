@@ -34,8 +34,8 @@ const PlaceInfo = () => {
           <Marker
             key={gym.id}
             position={{
-              lat: gym.latitude,
-              lng: gym.longitude,
+              lat: parseFloat(gym.latitude),
+              lng: parseFloat(gym.longitude),
             }}
             onMouseOver={() => {
               setSelected(gym);
@@ -54,8 +54,8 @@ const PlaceInfo = () => {
           // MarkerにマウスオーバーされたときにInfoWindowが表示されます。
           <InfoWindow
             position={{
-              lat: selected.latitude,
-              lng: selected.longitude,
+              lat: parseFloat(selected.latitude),
+              lng: parseFloat(selected.longitude),
             }}
             onCloseClick={() => {
               setSelected(null);
