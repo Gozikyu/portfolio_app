@@ -10,7 +10,7 @@ class GymsController < ApplicationController
   end
 
   def registrations_params
-    params.require(:gym).permit(:name, :latitude, :longitude)
+    params.require(:gym).permit(:name, :latitude, :longitude, :url)
   end
 
 end

@@ -8,7 +8,8 @@ const GymRegistraion = () => {
 
   const [gymName, setGymName] = useState(""),
     [latitude, setLatitude] = useState(""),
-    [longitude, setLongitude] = useState("");
+    [longitude, setLongitude] = useState(""),
+    [url, setUrl] = useState("");
 
   const inputGymName = useCallback(
     (event) => {
@@ -29,6 +30,13 @@ const GymRegistraion = () => {
       setLongitude(event.target.value);
     },
     [setLongitude]
+  );
+
+  const inputUrl = useCallback(
+    (event) => {
+      setUrl(event.target.value);
+    },
+    [setUrl]
   );
 
   return (
@@ -52,7 +60,7 @@ const GymRegistraion = () => {
         rows={1}
         required={true}
         value={latitude}
-        type={"email"}
+        type={"text"}
         onChange={inputLatitude}
       />
       <TextInput
@@ -62,9 +70,20 @@ const GymRegistraion = () => {
         rows={1}
         required={true}
         value={longitude}
-        type={"password"}
+        type={"text"}
         onChange={inputLongtude}
       />
+      <TextInput
+        fullWidth={true}
+        label={"ジムのURL"}
+        multiline={false}
+        rows={1}
+        required={true}
+        value={url}
+        type={"text"}
+        onChange={inputUrl}
+      />
+
       <div className="module-spacer--medium" />
       <div className="center">
         <PrimaryButton
@@ -91,6 +110,7 @@ const GymRegistraion = () => {
                     name: gymName,
                     latitude: latitude,
                     longitude: longitude,
+                    url: url,
                   },
                 },
                 { withCredentials: true }
@@ -104,12 +124,6 @@ const GymRegistraion = () => {
             // event.preventDefault()
           }}
         />
-        <div className="help">
-          {" "}
-          {/* <p onClick={() => dispatch(push("/signin"))}>
-            アカウントをお持ちの方はこちら
-          </p> */}
-        </div>
       </div>
     </div>
   );

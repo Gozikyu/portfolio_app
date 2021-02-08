@@ -21,10 +21,12 @@ end
 
 Gym.create!(name:'千代田区立スポーツセンター',
             latitude: 35.689467815981274, 
-            longitude: 139.76783385524607
+            longitude: 139.76783385524607,
+            url: 'https://www.spst-chiyoda.jp'
             )
 
 Gym.create!(name:'品川区立総合体育館',
             latitude: 35.62449209011926,
-            longitude: 139.72876494113675
+            longitude: 139.72876494113675,
+            url:'http://www.ssa-or.biz/shisetsu/sougou/index.html'
             )

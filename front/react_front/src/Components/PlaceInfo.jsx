@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Marker, InfoWindow } from "@react-google-maps/api";
-import pin from "../assets/img/mappin.png";
+import pin from "../assets/img/gym.png";
 import axios from "axios";
 
 const PlaceInfo = () => {
@@ -40,6 +40,7 @@ const PlaceInfo = () => {
             onMouseOver={() => {
               setSelected(gym);
               // マウスオーバーで<InfoWindow>が描画されます。
+              console.log(selected);
             }}
             icon={{
               url: pin,
@@ -61,7 +62,9 @@ const PlaceInfo = () => {
               setSelected(null);
             }}
           >
-            <div>{selected.name}</div>
+            <a href={selected.url} target="_blank">
+              <div>{selected.name}</div>
+            </a>
           </InfoWindow>
         ) : null}
       </>
