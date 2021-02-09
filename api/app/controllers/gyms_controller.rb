@@ -2,6 +2,7 @@ class GymsController < ApplicationController
   def index
     @gym = Gym.all
     render json: @gym
+    # render json: @training
   end
 
   def create
