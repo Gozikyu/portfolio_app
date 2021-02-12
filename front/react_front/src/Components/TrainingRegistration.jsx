@@ -4,7 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import PullDownComponent from "./PullDownComponent";
 
-const TrainingRegistration = () => {
+const TrainingRegistration = (props) => {
   const history = useHistory();
 
   const [menu, setMenu] = useState(""),
@@ -13,12 +13,12 @@ const TrainingRegistration = () => {
     [partner, setPartner] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
-    [gymsName, setGymsName] = useState([]),
+    [gymsName, setGymsName] = useState({}),
     [isLoaded, setIsLoaded] = useState(false);
 
-  const gender = ["男性のみ", "女性のみ", "どちらでも可"];
+  const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
-  const url = "http://localhost:3001/trainings/" + id;
+  const url = "http://localhost:3001/trainings/";
 
   const checkLoginStatus = () => {
     axios
@@ -41,11 +41,9 @@ const TrainingRegistration = () => {
       .get("http://localhost:3001/gyms", { withCredentials: true })
       .then((results) => {
         results.data.map((gym) => {
-          gymsName.push(gym.name);
+          gymsName[gym.name] = gym.name;
         });
-        // setGyms(results.data);
         setIsLoaded(true);
-        console.log(gymsName);
       })
       .catch((data) => {
         console.log(data);
@@ -84,7 +82,6 @@ const TrainingRegistration = () => {
     },
     [setPartner]
   );
-
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
@@ -112,14 +109,13 @@ const TrainingRegistration = () => {
           type={"text"}
           onChange={inputDate}
         />
-        <TextInput
-          fullWidth={true}
+
+        <PullDownComponent
+          items={gymsName}
           label={"場所"}
-          multiline={false}
-          rows={1}
           required={true}
+          fullWidth={true}
           value={location}
-          type={"text"}
           onChange={inputLocation}
         />
 
@@ -128,12 +124,8 @@ const TrainingRegistration = () => {
           label={"希望パートナー"}
           required={true}
           fullWidth={true}
-        />
-        <PullDownComponent
-          items={gymsName}
-          label={"場所"}
-          required={true}
-          fullWidth={true}
+          value={partner}
+          onChange={inputPartner}
         />
 
         <div className="module-spacer--medium" />
@@ -144,6 +136,15 @@ const TrainingRegistration = () => {
               if (date === "" || location === "" || partner === "") {
                 alert("必須項目が入力されていません。");
                 return false;
+              }
+              {
+                if (partner == "男性のみ") {
+                  setPartner("male");
+                } else if (partner == "女性のみ") {
+                  setPartner("female");
+                } else {
+                  setPartner("both");
+                }
               }
 
               axios
@@ -160,7 +161,7 @@ const TrainingRegistration = () => {
                   { withCredentials: true }
                 )
                 .then((response) => {
-                  console.log("registration res", response);
+                  props.setChangedTraining(true);
                 })
                 .catch((error) => {
                   console.log("registration error", error);

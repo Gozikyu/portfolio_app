@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import TrainingRegistration from "./TrainingRegistration";
-import TrainingList from "./TrainingLIst";
+import TrainingList from "./TrainingList";
 
 const UserProfile = () => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]),
+    [changedTraining, setChangedTraining] = useState(false);
+
   const location = useLocation();
   const id = location.pathname.split("users/")[1];
   const url = "http://localhost:3001/users/" + id;
@@ -22,14 +24,18 @@ const UserProfile = () => {
       });
   }, []);
 
-  console.log("hoge");
-
   return (
     <div className="UserProfile">
       <p> id:{user.id}</p>
       {user.name}
-      <TrainingRegistration />
-      <TrainingList />
+      <TrainingRegistration
+        changedTraining={changedTraining}
+        setChangedTraining={setChangedTraining}
+      />
+      <TrainingList
+        changedTraining={changedTraining}
+        setChangedTraining={setChangedTraining}
+      />
     </div>
   );
 };

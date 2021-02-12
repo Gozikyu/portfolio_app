@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/styles";
+import TrainingDeleteButton from "./TrainingDeleteButton";
 
 const TrainingList = (props) => {
   const [trainings, setTrainings] = useState([]),
     [page, setPage] = useState(1),
     [url, setUrl] = useState(""),
+    // [changedTraining, setChangedTraining] = useState(false),
     [isLoaded, setIsLoaded] = useState(false);
 
   const history = useHistory();
@@ -30,7 +32,6 @@ const TrainingList = (props) => {
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         setUrl("http://localhost:3001/trainings/" + response.data.user.id);
-        // const url = "http://localhost:3001/trainings/" + id;
         if (response.data.logged_in) {
           return;
         } else {
@@ -41,7 +42,6 @@ const TrainingList = (props) => {
   };
 
   const getTraining = () => {
-    console.log(url);
     axios
       .get(url, { withCredentials: true })
       .then((results) => {
@@ -60,7 +60,11 @@ const TrainingList = (props) => {
 
   useEffect(() => {
     getTraining();
-  }, [url]);
+  }, [url, props.changedTraining]);
+
+  // const changingTraining = useCallback(() => {
+  //   setChangedTraining(true);
+  // }, [setChangedTraining]);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -74,10 +78,16 @@ const TrainingList = (props) => {
         <div className="userList">
           {trainings.slice(firstNumber, finalNumber).map((training) => {
             return (
-              <p key={training.id}>
-                {training.menu}
-                {training.date}
-              </p>
+              <>
+                <p key={training.id}>
+                  {training.menu}
+                  {training.date}
+                </p>
+                <TrainingDeleteButton
+                  training={training}
+                  setChangedTraining={props.setChangedTraining}
+                />
+              </>
             );
           })}
         </div>

@@ -29,6 +29,11 @@ const SelectFromComponent = (props) => {
     setItem(event.target.value);
   };
 
+  //   for (let key in props.items) {
+  //     alert(key);
+  //     alert(props.items[key]);
+  //   }
+
   return (
     <div>
       <FormControl className={textStyle} required={props.required}>
@@ -36,17 +41,16 @@ const SelectFromComponent = (props) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={item}
-          onChange={handleChange}
+          value={props.value}
+          onChange={props.onChange}
         >
-          {props.items.map((item) => {
+          {Object.keys(props.items).map((key, i) => {
             return (
-              <MenuItem key={item.id} value={item}>
-                {item}
+              <MenuItem key={i} value={props.items[key]}>
+                {key}
               </MenuItem>
             );
           })}
-
           {/* <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem> */}

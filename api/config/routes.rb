@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   get '/trainings/:id',   to: 'trainings#show'
-  post '/trainings/:id',   to: 'trainings#create'
+  post '/trainings',   to: 'trainings#create'
   delete '/trainings/:id',   to: 'trainings#destroy'
   resources :users
 end

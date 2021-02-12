@@ -8,7 +8,7 @@ class TrainingsController < ApplicationController
     end 
 
     def create
-        @training = current_user.trainings.build(training_params)
+        @training = current_user.trainings.create!(training_params)
         if @training.save
             render json: @training
           else
@@ -23,7 +23,7 @@ class TrainingsController < ApplicationController
     # end
     
     def destroy
-        if @micropost.destroy
+        if @training.destroy
             render json: { status: 200, message: 'トレーニング予定削除成功' }
         else
             render json: { status: 404, message: 'トレーニング予定削除失敗' }
@@ -32,7 +32,7 @@ class TrainingsController < ApplicationController
 
     private
     def training_params
-        params.require(:training).permit(:meni, :date, :location, :partner)
+        params.require(:training).permit(:menu, :date, :location, :partner)
     end
 
     def correct_user
