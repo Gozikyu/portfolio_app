@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
   get '/trainings/:id',   to: 'trainings#show'
   post '/trainings/:id',   to: 'trainings#create'
+  delete '/trainings/:id',   to: 'trainings#destroy'
   resources :users
 end

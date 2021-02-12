@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import TrainingRegistration from "./TrainingRegistration";
+import TrainingList from "./TrainingLIst";
 
 const UserProfile = () => {
   const [user, setUser] = useState([]);
@@ -28,6 +29,7 @@ const UserProfile = () => {
       <p> id:{user.id}</p>
       {user.name}
       <TrainingRegistration />
+      <TrainingList />
     </div>
   );
 };

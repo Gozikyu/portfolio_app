@@ -16,18 +16,17 @@ class TrainingsController < ApplicationController
         end
     end
 
-    def update
-        @user = User.find(params[:id])
-        @user.update(registrations_params)
-        render json: @user
-    end
+    # def update
+    #     @user = User.find(params[:id])
+    #     @user.update(registrations_params)
+    #     render json: @user
+    # end
     
     def destroy
-        @user = User.find(params[:id])
-        if @user.destroy
-            render json: { status: 200, message: 'ユーザー削除成功' }
+        if @micropost.destroy
+            render json: { status: 200, message: 'トレーニング予定削除成功' }
         else
-            render json: { status: 404, message: 'ユーザー削除失敗' }
+            render json: { status: 404, message: 'トレーニング予定削除失敗' }
         end
     end
 
@@ -35,5 +34,10 @@ class TrainingsController < ApplicationController
     def training_params
         params.require(:training).permit(:meni, :date, :location, :partner)
     end
+
+    def correct_user
+        @training = current_user.trainings.find_by(id: params[:id])
+    end
+  
     
 end
