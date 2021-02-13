@@ -3,12 +3,13 @@ import { TextInput, PrimaryButton } from "./UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import PullDownComponent from "./PullDownComponent";
+import DatePickerComponent from "./DatePickerComponent";
 
 const TrainingRegistration = (props) => {
   const history = useHistory();
 
   const [menu, setMenu] = useState(""),
-    [date, setDate] = useState(""),
+    [date, setDate] = useState(new Date()),
     [location, setLocation] = useState(""),
     [partner, setPartner] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
@@ -63,8 +64,8 @@ const TrainingRegistration = (props) => {
   );
 
   const inputDate = useCallback(
-    (event) => {
-      setDate(event.target.value);
+    (date) => {
+      setDate(date);
     },
     [setDate]
   );
@@ -99,7 +100,7 @@ const TrainingRegistration = (props) => {
           type={"text"}
           onChange={inputMenu}
         />
-        <TextInput
+        {/* <TextInput
           fullWidth={true}
           label={"日にち"}
           multiline={false}
@@ -108,6 +109,14 @@ const TrainingRegistration = (props) => {
           value={date}
           type={"text"}
           onChange={inputDate}
+        /> */}
+
+        <DatePickerComponent
+          date={date}
+          inputDate={inputDate}
+          label={"トレーニング日"}
+          required={true}
+          fullWidth={true}
         />
 
         <PullDownComponent
@@ -162,6 +171,7 @@ const TrainingRegistration = (props) => {
                 )
                 .then((response) => {
                   props.setChangedTraining(true);
+                  alert("トレーニングの登録が完了しました");
                 })
                 .catch((error) => {
                   console.log("registration error", error);

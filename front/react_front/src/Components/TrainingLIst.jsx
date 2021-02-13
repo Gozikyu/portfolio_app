@@ -62,10 +62,6 @@ const TrainingList = (props) => {
     getTraining();
   }, [url, props.changedTraining]);
 
-  // const changingTraining = useCallback(() => {
-  //   setChangedTraining(true);
-  // }, [setChangedTraining]);
-
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -76,10 +72,10 @@ const TrainingList = (props) => {
     return (
       <>
         <div className="userList">
-          {trainings.slice(firstNumber, finalNumber).map((training) => {
+          {trainings.slice(firstNumber, finalNumber).map((training, i) => {
             return (
-              <>
-                <p key={training.id}>
+              <li key={i}>
+                <p>
                   {training.menu}
                   {training.date}
                 </p>
@@ -87,7 +83,7 @@ const TrainingList = (props) => {
                   training={training}
                   setChangedTraining={props.setChangedTraining}
                 />
-              </>
+              </li>
             );
           })}
         </div>
