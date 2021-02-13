@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { PrimaryButton } from "./UIkit/index";
 
 const TrainingDeleteButton = (props) => {
-  const [deleted, setDeleted] = useState(false);
-
   const trainingUrl = "http://localhost:3001/trainings/" + props.training.id;
 
   return (
