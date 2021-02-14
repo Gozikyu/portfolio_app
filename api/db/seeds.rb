@@ -32,11 +32,19 @@ Gym.create!(name:'品川区立総合体育館',
 
 # Sample trainings
 user = User.first
-menu = 'ベンチプレス'
-date = DateTime.now
-location = 'hoge gym'
-partner = 'both'
-user.trainings.create!(menu: menu, date: date, location: location, partner: partner)
+another= User.second
+
+menu1 = 'ベンチプレス'
+menu2='スクワット'
+date1 = DateTime.now
+date2=DateTime.now + 3.days
+location1 = 'hoge gym'
+location2='foo gym'
+partner1 = 'both'
+partner2 = 'male'
+
+user.trainings.create!(menu: menu1, date: date1, location: location1, partner: partner1)
+another.trainings.create!(menu: menu2, date: date2, location: location2, partner: partner2)
 
 # 50.times do
 #   menu = 'ベンチプレス'
