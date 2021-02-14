@@ -15,7 +15,7 @@ FactoryBot.define do
 
   factory :invalid_training, class: Training do
     menu { 'スクワット' }
-    date { '' }
+    date {}
     location { 'Gym2' }
     partner { 'male' }
   end
