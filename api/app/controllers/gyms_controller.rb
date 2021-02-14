@@ -18,10 +18,8 @@ class GymsController < ApplicationController
       render json: { status: 404, message: 'ジム削除失敗' }
     end
   end
-  
 
   def registrations_params
     params.require(:gym).permit(:name, :latitude, :longitude, :url)
   end
-
 end

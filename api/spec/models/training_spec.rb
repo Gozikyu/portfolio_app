@@ -4,11 +4,11 @@ RSpec.describe Training, type: :model do
   before do
     @user = FactoryBot.build(:user)
     @training = @user.trainings.new(
-    menu: "ベンチプレス",
-    date:"2021-02-08",
-    location: "Gym1",
-    partner: "both"
-)
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
   end
 
   it 'should be vaild' do
