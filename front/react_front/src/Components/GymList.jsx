@@ -3,12 +3,14 @@ import { useHistory, useLocation, Redirect } from "react-router-dom";
 import axios from "axios";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/styles";
+import GymDeleteButton from "./GymDeleteButton";
 
 const GymList = (props) => {
   const [gyms, setGyms] = useState([]),
     [currentUser, setCurrentUser] = useState(""),
     [page, setPage] = useState(1),
-    [isLoaded, setIsLoaded] = useState(false);
+    [isLoaded, setIsLoaded] = useState(false),
+    [changeState, setChangeState] = useState(false);
 
   const history = useHistory();
 
@@ -59,6 +61,10 @@ const GymList = (props) => {
     getGyms();
   }, []);
 
+  useEffect(() => {
+    getGyms();
+  }, [changeState]);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -69,12 +75,15 @@ const GymList = (props) => {
     return (
       <>
         <div className="userList">
-          {gyms.slice(firstNumber, finalNumber).map((gym) => {
+          {gyms.slice(firstNumber, finalNumber).map((gym, i) => {
             return (
-              <p key={gym.id}>
-                {gym.name}
-                {gym.latitude}
-              </p>
+              <div key={i}>
+                <p>
+                  {gym.name}
+                  {gym.latitude}
+                </p>
+                <GymDeleteButton gym={gym} setChangeState={setChangeState} />
+              </div>
             );
           })}
         </div>

@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   get '/gyms',   to: 'gyms#index'
   post '/gyms',   to: 'gyms#create'
+  delete '/gyms/:id',   to: 'gyms#destroy'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { PrimaryButton } from "./UIkit/index";
 
 const TrainingDeleteButton = (props) => {
@@ -8,9 +7,6 @@ const TrainingDeleteButton = (props) => {
 
   return (
     <div>
-      {/* <Link to={userProfileurl}>{props.user.name}</Link> */}
-      {/* {props.user.id} */}
-      {/* {props.currentUser.admin && ( */}
       <PrimaryButton
         label={"トレーニングを削除する"}
         onClick={() => {

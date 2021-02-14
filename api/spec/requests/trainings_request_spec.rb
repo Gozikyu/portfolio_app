@@ -9,8 +9,8 @@ RSpec.describe "Trainings", type: :request do
 
     describe 'GET /show' do
         it 'renders a successful response' do
-          get '/trainings/'+ @user.id.to_s
-          expect(response).to be_successful
+            get '/trainings/'+ @user.id.to_s
+            expect(response).to be_successful
         end
     end 
 
@@ -21,7 +21,7 @@ RSpec.describe "Trainings", type: :request do
           end.to change(@user.trainings, :count).by(1)
         end
 
-        it 'should not be registered with valid params' do
+        it 'should not be registered with invalid params' do
             expect do
                 post '/trainings', params: { training: FactoryBot.attributes_for(:invalid_training) }
             end.to change(@user.trainings, :count).by(0)
