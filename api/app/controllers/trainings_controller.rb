@@ -8,12 +8,15 @@ class TrainingsController < ApplicationController
   end
 
   def create
-    @training = current_user.trainings.create!(training_params)
-    if @training.save
-      render json: @training
-    else
-      render json: { status: 404, message: 'トレーニング登録失敗' }
-    end
+    @training = current_user.trainings.create(training_params)
+    render json: @training
+
+    # @training = current_user.trainings.create(training_params)
+    # if @training.save
+    #   render json: @training
+    # else
+    #   render json: { status: 404, message: 'トレーニング登録失敗' }
+    # end
   end
 
   # def update
