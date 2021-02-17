@@ -7,7 +7,7 @@ RSpec.describe 'Trainings', type: :request do
     @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
   end
 
-  describe 'GET /show' do
+  describe 'GET /index' do
     it 'renders a successful response' do
       get "/trainings/#{@user.id}"
       expect(response).to be_successful

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import PullDownComponent from "./PullDownComponent";
 import DatePickerComponent from "./DatePickerComponent";
 
-const TrainingRegistration = (props) => {
+const TrainingSearchForm = (props) => {
   const history = useHistory();
 
   const [menu, setMenu] = useState(""),
@@ -14,18 +14,20 @@ const TrainingRegistration = (props) => {
     [partner, setPartner] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
+    [searchedTrainings, setSearchedTrainings] = useState([]),
+    [allTrainings, setAllTrainings] = useState({}),
     [gymsName, setGymsName] = useState({}),
     [isLoaded, setIsLoaded] = useState(false);
 
   const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
-  const url = "http://localhost:3001/trainings/";
+  const url = "http://localhost:3001/trainings";
 
   const dateFormat = (date) => {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
-    var trainingDate = year + "/" + month + "/" + day;
+    var trainingDate = year + "-" + month + "-" + day;
     return trainingDate;
   };
 
@@ -45,6 +47,18 @@ const TrainingRegistration = (props) => {
       });
   };
 
+  const getAllTrainings = () => {
+    axios
+      .get("http://localhost:3001/trainings", { withCredentials: true })
+      .then((results) => {
+        setAllTrainings(results.data);
+        setIsLoaded(true);
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
+
   const getGyms = () => {
     axios
       .get("http://localhost:3001/gyms", { withCredentials: true })
@@ -61,6 +75,7 @@ const TrainingRegistration = (props) => {
 
   useEffect(() => {
     checkLoginStatus();
+    getAllTrainings();
     getGyms();
   }, []);
 
@@ -73,8 +88,7 @@ const TrainingRegistration = (props) => {
 
   const inputDate = useCallback(
     (date) => {
-      setDate(dateFormat(date));
-      console.log(dateFormat(date));
+      setDate(date);
     },
     [setDate]
   );
@@ -92,6 +106,7 @@ const TrainingRegistration = (props) => {
     },
     [setPartner]
   );
+
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
@@ -109,17 +124,6 @@ const TrainingRegistration = (props) => {
           type={"text"}
           onChange={inputMenu}
         />
-        {/* <TextInput
-          fullWidth={true}
-          label={"日にち"}
-          multiline={false}
-          rows={1}
-          required={true}
-          value={date}
-          type={"text"}
-          onChange={inputDate}
-        /> */}
-
         <DatePickerComponent
           date={date}
           inputDate={inputDate}
@@ -127,7 +131,6 @@ const TrainingRegistration = (props) => {
           required={true}
           fullWidth={true}
         />
-
         <PullDownComponent
           items={gymsName}
           label={"場所"}
@@ -136,7 +139,6 @@ const TrainingRegistration = (props) => {
           value={location}
           onChange={inputLocation}
         />
-
         <PullDownComponent
           items={gender}
           label={"希望パートナー"}
@@ -145,31 +147,30 @@ const TrainingRegistration = (props) => {
           value={partner}
           onChange={inputPartner}
         />
-
         <div className="module-spacer--medium" />
         <div className="center">
           <PrimaryButton
-            label={"トレーニングを登録する"}
+            label={"トレーニングを検索する"}
             onClick={() => {
-              if (date === "" || location === "" || partner === "") {
-                alert("必須項目が入力されていません。");
-                return false;
-              }
-              {
-                if (partner == "男性のみ") {
-                  setPartner("male");
-                } else if (partner == "女性のみ") {
-                  setPartner("female");
-                } else {
-                  setPartner("both");
-                }
-              }
+              //   if (date === "" || location === "" || partner === "") {
+              //     alert("必須項目が入力されていません。");
+              //     return false;
+              //   }
+              //   {
+              //     if (partner == "男性のみ") {
+              //       setPartner("male");
+              //     } else if (partner == "女性のみ") {
+              //       setPartner("female");
+              //     } else {
+              //       setPartner("both");
+              //     }
+              //   }
 
               axios
                 .post(
-                  url,
+                  "http://localhost:3001/trainings/search",
                   {
-                    training: {
+                    search: {
                       menu: menu,
                       date: date,
                       location: location,
@@ -179,9 +180,10 @@ const TrainingRegistration = (props) => {
                   { withCredentials: true }
                 )
                 .then((response) => {
+                  setSearchedTrainings(response.data);
+                  // props.setChangedTraining(true);
                   console.log(response);
                   console.log(date);
-                  props.setChangedTraining(true);
                   alert("トレーニングの登録が完了しました");
                 })
                 .catch((error) => {
@@ -191,9 +193,16 @@ const TrainingRegistration = (props) => {
             }}
           />
         </div>
+        {searchedTrainings.length === 0 ? (
+          <></>
+        ) : (
+          searchedTrainings.map((searchedTraining, i) => {
+            return <p key={i}>{searchedTraining.menu}</p>;
+          })
+        )}
       </div>
     );
   }
 };
 
-export default TrainingRegistration;
+export default TrainingSearchForm;

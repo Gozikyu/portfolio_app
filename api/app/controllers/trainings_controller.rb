@@ -1,22 +1,23 @@
+require "time"
+
 class TrainingsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: [:destroy]
 
-  def show
-    @user = User.find(params[:id])
-    render json: @user.trainings
+  def index
+    @training=Training.all
+    render json: @training.where(menu:'ベンチプレス')
   end
+
+  def show
+    @training = User.find(params[:id])
+    render json: @training.trainings
+  end
+
 
   def create
     @training = current_user.trainings.create(training_params)
     render json: @training
-
-    # @training = current_user.trainings.create(training_params)
-    # if @training.save
-    #   render json: @training
-    # else
-    #   render json: { status: 404, message: 'トレーニング登録失敗' }
-    # end
   end
 
   # def update
@@ -24,6 +25,12 @@ class TrainingsController < ApplicationController
   #     @user.update(registrations_params)
   #     render json: @user
   # end
+
+  def search
+    #Viewのformで取得したパラメータをモデルに渡す
+    @training=Training.all
+    render json:@training.where("date LIKE ?", '%'+ date_format(params[:search][:date])+"%").where("location LIKE ?",params[:search][:location]).where("partner LIKE ?",params[:search][:partner]).where("menu LIKE ?","%" + params[:search][:menu].to_s + "%")
+  end
 
   def destroy
     if @training.destroy
@@ -41,5 +48,10 @@ class TrainingsController < ApplicationController
 
   def correct_user
     @training = current_user.trainings.find_by(id: params[:id])
+  end
+
+  def date_format(date)
+    training_date=Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
+    return training_date
   end
 end

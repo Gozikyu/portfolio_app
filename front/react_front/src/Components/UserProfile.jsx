@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 import TrainingRegistration from "./TrainingRegistration";
 import TrainingList from "./TrainingList";
+import TrainingSearchForm from "./TrainingSearchForm";
 
 const UserProfile = () => {
   const [user, setUser] = useState([]),
@@ -75,6 +76,7 @@ const UserProfile = () => {
           changedTraining={changedTraining}
           setChangedTraining={setChangedTraining}
         />
+        <TrainingSearchForm />
       </div>
     );
   } else {
