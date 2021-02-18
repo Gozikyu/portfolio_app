@@ -4,10 +4,12 @@ import { useHistory, useLocation } from "react-router-dom";
 import TrainingRegistration from "./TrainingRegistration";
 import TrainingList from "./TrainingList";
 import TrainingSearchForm from "./TrainingSearchForm";
+import CalendarComponent from "./CalendarComponent";
 
 const UserProfile = () => {
   const [user, setUser] = useState([]),
     [currentUser, setCurrentUser] = useState(false),
+    [trainings, setTrainings] = useState([]),
     [isLoaded, setIsLoaded] = useState(false),
     [changedTraining, setChangedTraining] = useState(false);
 
@@ -22,7 +24,6 @@ const UserProfile = () => {
       .then((response) => {
         if (response.data.logged_in) {
           const loginUserId = response.data.user.id;
-          console.log(loginUserId);
           if (urlId == loginUserId) {
             setCurrentUser(true);
             setIsLoaded(true);
@@ -43,16 +44,14 @@ const UserProfile = () => {
       });
   };
 
-  useEffect(() => {
-    checkCorrectUser();
-  }, []);
-
-  const getUser = () => {
+  const getTraining = () => {
     axios
-      .get(url)
+      .get("http://localhost:3001/trainings/" + urlId, {
+        withCredentials: true,
+      })
       .then((results) => {
-        console.log(results);
-        setUser(results.data);
+        setTrainings(results.data);
+        setIsLoaded(true);
       })
       .catch((data) => {
         console.log(data);
@@ -60,8 +59,21 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
+    checkCorrectUser();
+    getTraining();
     getUser();
   }, []);
+
+  const getUser = () => {
+    axios
+      .get(url)
+      .then((results) => {
+        setUser(results.data);
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
 
   if (currentUser) {
     return (
@@ -77,6 +89,7 @@ const UserProfile = () => {
           setChangedTraining={setChangedTraining}
         />
         <TrainingSearchForm />
+        <CalendarComponent trainings={trainings} />
       </div>
     );
   } else {

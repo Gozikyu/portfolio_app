@@ -29,7 +29,7 @@ class TrainingsController < ApplicationController
   def search
     #Viewのformで取得したパラメータをモデルに渡す
     @training=Training.all
-    render json:@training.where("date LIKE ?", '%'+ date_format(params[:search][:date])+"%").where("location LIKE ?",params[:search][:location]).where("partner LIKE ?",params[:search][:partner]).where("menu LIKE ?","%" + params[:search][:menu].to_s + "%")
+    render json:@training.where("date LIKE ?", '%'+ date_format(params[:search][:date])+"%").where("location LIKE ?","%" + params[:search][:location]+ "%").where("partner LIKE ?","%" + params[:search][:partner]+ "%").where("menu LIKE ?","%" + params[:search][:menu].to_s + "%")
   end
 
   def destroy
