@@ -1,7 +1,8 @@
 /**
  * 各種モジュールのインストール
  */
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 // FullCalendarコンポーネント。
 import FullCalendar from "@fullcalendar/react";
@@ -17,6 +18,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 const CalendarComponent = (props) => {
   const training = [];
+  const history = useHistory();
 
   const setTraining = () => {
     props.trainings.map((userTraining) => {
@@ -24,6 +26,8 @@ const CalendarComponent = (props) => {
         id: userTraining.id,
         title: userTraining.menu,
         start: userTraining.date,
+        allDay: true,
+        url: "http://localhost:3000/users",
       };
 
       training.push(t);
@@ -60,6 +64,7 @@ const CalendarComponent = (props) => {
           end: "dayGridMonth,timeGridWeek",
         }}
         events={training}
+        handleDateClick
       />
     </div>
   );

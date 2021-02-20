@@ -14,28 +14,16 @@ const center = {
   lng: 139.767125,
 };
 
-const GoogleMapComponent = () => {
+const GoogleMapComponent = (props) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_googleMapsApiKey,
   });
-  // const [map, setMap] = useState(null);
-
-  // const onLoad = useCallback(function callback(map) {
-  //   const bounds = new window.google.maps.LatLngBounds();
-  //   map.fitBounds(bounds);
-  //   setMap(map);
-  // }, []);
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
-  //API読み込み後に再レンダーを引き起こさないため、useStateを使わず、useRefとuseCallbackを使っています。
-
-  // const onUnmount = useCallback(function callback(map) {
-  //   setMap(null);
-  // }, []);
 
   return isLoaded ? (
     <GoogleMap
@@ -46,8 +34,7 @@ const GoogleMapComponent = () => {
       // onUnmount={onUnmount}
     >
       {/* Child components, such as markers, info windows, etc. */}
-      <Marker position={{ lat: -34.397, lng: 150.644 }} />
-      <PlaceInfo />
+      <PlaceInfo gyms={props.gyms} />
       <></>
     </GoogleMap>
   ) : (

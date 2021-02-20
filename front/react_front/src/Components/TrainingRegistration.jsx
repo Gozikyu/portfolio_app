@@ -74,7 +74,6 @@ const TrainingRegistration = (props) => {
   const inputDate = useCallback(
     (date) => {
       setDate(dateFormat(date));
-      console.log(dateFormat(date));
     },
     [setDate]
   );

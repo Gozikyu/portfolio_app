@@ -11,6 +11,7 @@ import Auth from "./Auth";
 import GoogleMapComponent from "./GoogleMapComponent";
 import GymsAndMap from "./GymsAndMap";
 import GymRegistraion from "./GymRegistration";
+import TrainingPage from "./TrainingPage";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -114,6 +115,11 @@ const Routing = () => {
 
           <Route exact path="/gyms" component={GymsAndMap} />
           <Route exact path="/gyms/registration" component={GymRegistraion} />
+          <Route
+            exact
+            path="/users/:userId/trainings/:trainingId"
+            component={TrainingPage}
+          />
         </Switch>
       </Router>
     </div>

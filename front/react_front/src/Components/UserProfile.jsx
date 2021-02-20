@@ -29,7 +29,7 @@ const UserProfile = () => {
             setIsLoaded(true);
             return;
           } else {
-            // history.push("/");
+            history.push("/");
           }
         } else {
           alert("ログインしてください");
