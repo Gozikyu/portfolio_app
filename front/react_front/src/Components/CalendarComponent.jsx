@@ -35,7 +35,6 @@ const CalendarComponent = (props) => {
   };
 
   setTraining();
-  console.log(training);
 
   return (
     <div>

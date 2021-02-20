@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { PrimaryButton } from "./UIkit/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
+import TopPage from "./UserMyPage";
+import UserMyPage from "./UserMyPage";
 import UserList from "./UserList";
 import UserProfile from "./UserProfile";
 import UserEdit from "./UserEdit";
@@ -30,7 +32,6 @@ const Routing = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
-        console.log("registration res", response.data);
         if (response.data.logged_in) {
           setLoggedInStatus(true);
           setCurrentUserId(response.data.user.id);
@@ -61,7 +62,6 @@ const Routing = () => {
                   withCredentials: true,
                 })
                 .then((response) => {
-                  console.log("registration res", response);
                   logout();
                 })
                 .catch((error) => {
@@ -76,7 +76,8 @@ const Routing = () => {
       )}
       <Router>
         <Switch>
-          <Route exact path="/users/:id" component={UserProfile} />
+          <Route exact path="/" component={TopPage} />
+          <Route exact path="/users/:id" component={UserMyPage} />
           <Route exact path="/signup" component={SignUp} />
 
           <Route

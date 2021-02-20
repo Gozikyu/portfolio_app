@@ -5,7 +5,6 @@ import pin from "../assets/img/gym.png";
 const PlaceInfo = (props) => {
   const [selected, setSelected] = useState(null);
 
-  console.log(Array.isArray(props.gyms));
   if (props.gyms == undefined || props.gyms.length == 0) {
     return "loading";
   } else if (!Array.isArray(props.gyms)) {

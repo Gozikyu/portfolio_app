@@ -35,7 +35,6 @@ const TrainingSearchForm = (props) => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
-        console.log("registration res", response.data);
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
         if (response.data.logged_in) {
@@ -197,7 +196,11 @@ const TrainingSearchForm = (props) => {
           <></>
         ) : (
           searchedTrainings.map((searchedTraining, i) => {
-            return <p key={i}>{searchedTraining.menu}</p>;
+            return (
+              <p key={i}>
+                {searchedTraining.user_id} {searchedTraining.menu}
+              </p>
+            );
           })
         )}
       </div>

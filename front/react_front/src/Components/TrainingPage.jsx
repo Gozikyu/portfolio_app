@@ -45,15 +45,8 @@ const TrainingPage = (props) => {
         setTraining(
           trainingData.data.find((training) => training.id == trainingId)
         );
-        // axios
-        //   .get("http://localhost:3001/gyms", { withCredentials: true })
-        //   .then((results) => {
-        //     gym.push(results.data.find((gym) => gym.name == training.location));
-        //     setIsLoaded(true);
-        //   })
-        //   .catch((data) => {
-        //     console.log(data);
-        //   });
+
+        console.log(training);
       })
       .catch((data) => {
         console.log(data);
@@ -64,8 +57,6 @@ const TrainingPage = (props) => {
     axios
       .get("http://localhost:3001/gyms", { withCredentials: true })
       .then((results) => {
-        // gym.push(results.data.find((gym) => gym.name == training.location));
-        //     setIsLoaded(true);
         setGym(results.data.find((gym) => gym.name == training.location));
         setIsLoaded(true);
         console.log(gym);
@@ -75,10 +66,6 @@ const TrainingPage = (props) => {
       });
   };
 
-  //   const getTrainingAndGym = () => {
-  //     getTraining.then(getGyms);
-  //   };
-
   useEffect(() => {
     getTraining();
   }, []);
@@ -87,11 +74,7 @@ const TrainingPage = (props) => {
     getGyms();
   }, [training]);
 
-  //   useEffect(() => {
-  //     getTraining();
-  //   }, [trainingId]);
-
-  return true ? (
+  return isLoaded ? (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={6} className={classes.clild}>
         <GoogleMapComponent gyms={gym} />

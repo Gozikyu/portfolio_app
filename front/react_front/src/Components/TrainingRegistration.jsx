@@ -33,7 +33,6 @@ const TrainingRegistration = (props) => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
-        console.log("registration res", response.data);
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
         if (response.data.logged_in) {
@@ -178,8 +177,6 @@ const TrainingRegistration = (props) => {
                   { withCredentials: true }
                 )
                 .then((response) => {
-                  console.log(response);
-                  console.log(date);
                   props.setChangedTraining(true);
                   alert("トレーニングの登録が完了しました");
                 })
