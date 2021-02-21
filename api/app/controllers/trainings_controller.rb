@@ -1,19 +1,18 @@
-require "time"
+require 'time'
 
 class TrainingsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: [:destroy]
 
   def index
-    @training=Training.all
-    render json: @training.where(menu:'ベンチプレス')
+    @training = Training.all
+    render json: @training.where(menu: 'ベンチプレス')
   end
 
   def show
     @training = User.find(params[:id])
     render json: @training.trainings
   end
-
 
   def create
     @training = current_user.trainings.create(training_params)
@@ -27,9 +26,13 @@ class TrainingsController < ApplicationController
   # end
 
   def search
-    #Viewのformで取得したパラメータをモデルに渡す
-    @training=Training.all
-    render json:@training.where("date LIKE ?", '%'+ date_format(params[:search][:date])+"%").where("location LIKE ?","%" + params[:search][:location]+ "%").where("partner LIKE ?","%" + params[:search][:partner]+ "%").where("menu LIKE ?","%" + params[:search][:menu].to_s + "%")
+    # Viewのformで取得したパラメータをモデルに渡す
+    @training = Training.all
+    render json: @training.where('(date LIKE ?) AND (location LIKE ?) AND (partner LIKE ?) AND (menu LIKE ?)',
+                                 "%#{date_format(params[:search][:date])}%",
+                                 "%#{params[:search][:location]}%",
+                                 "%#{params[:search][:partner]}%",
+                                 "%#{params[:search][:menu]}%")
   end
 
   def destroy
@@ -51,7 +54,6 @@ class TrainingsController < ApplicationController
   end
 
   def date_format(date)
-    training_date=Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
-    return training_date
+    Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
   end
 end

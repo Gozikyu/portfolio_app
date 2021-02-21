@@ -77,7 +77,7 @@ const Routing = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={TopPage} />
-          <Route exact path="/users/:id" component={UserMyPage} />
+          <Route exact path="/users/:id" component={UserProfile} />
           <Route exact path="/signup" component={SignUp} />
 
           <Route

@@ -28,13 +28,29 @@ RSpec.describe 'Trainings', type: :request do
     end
   end
 
-  describe 'DELETE /destroy' do
-    it 'login_user should delete own trainings' do
-      expect do
-        delete "/trainings/#{@training.id}"
-      end.to change(@user.trainings, :count).by(-1)
+  describe 'POST /search' do
+    it 'correct trainings should be searched' do
+      post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
+      json = JSON.parse(response.body)
+      expect(json[0]['menu']).to eq('スクワット')
+      expect(json.length).to eq(1)
     end
 
+    describe 'DELETE /destroy' do
+      it 'login_user should delete own trainings' do
+        expect do
+          delete "/trainings/#{@training.id}"
+        end.to change(@user.trainings, :count).by(-1)
+      end
+
+      # it 'should not delete trainings of another' do
+      #   @another = FactoryBot.create(:Another)
+      #   post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
+      #   expect do
+      #     delete "/trainings/#{@training.id}"
+      #   end.to change(@user.trainings, :count).by(0)
+      # end
+    end
     # it 'should not delete trainings of another' do
     #   @another = FactoryBot.create(:Another)
     #   post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
