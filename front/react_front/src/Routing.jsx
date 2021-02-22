@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { PrimaryButton } from "./UIkit/index";
+import { PrimaryButton } from "./Components/UIkit/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
-import TopPage from "./UserMyPage";
-import UserMyPage from "./UserMyPage";
-import UserList from "./UserList";
-import UserProfile from "./UserProfile";
-import UserEdit from "./UserEdit";
-import SignUp from "./SignUp";
-import SignIn from "./SignIn";
-import Auth from "./Auth";
-import GoogleMapComponent from "./GoogleMapComponent";
-import GymsAndMap from "./GymsAndMap";
-import GymRegistraion from "./GymRegistration";
-import TrainingPage from "./TrainingPage";
+import TopPage from "./Components/TopPage";
+import UserMyPage from "./Components/UserMyPage";
+import UserList from "./Components/UserList";
+import UserProfile from "./Components/UserProfile";
+import UserEdit from "./Components/UserEdit";
+import SignUp from "./Components/SignUp";
+import SignIn from "./Components/SignIn";
+import Auth from "./Components/Auth";
+import GoogleMapComponent from "./Components/GoogleMapComponent";
+import GymsAndMap from "./Components/GymsAndMap";
+import GymRegistraion from "./Components/GymRegistration";
+import TrainingPage from "./Components/TrainingPage";
+import Header from "./Components/Header";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState("");
+  const [loginUserId, setLoginUserId] = useState("");
   const [loading, setLoading] = useState(true);
 
   const login = () => {
@@ -34,7 +35,7 @@ const Routing = () => {
       .then((response) => {
         if (response.data.logged_in) {
           setLoggedInStatus(true);
-          setCurrentUserId(response.data.user.id);
+          setLoginUserId(response.data.user.id);
         } else {
           setLoggedInStatus(false);
         }
@@ -51,7 +52,7 @@ const Routing = () => {
 
   return (
     <div className="App">
-      id: {currentUserId}
+      id: {loginUserId}
       {loggedInStatus && (
         <PrimaryButton
           label={"ログアウトする"}
@@ -75,16 +76,17 @@ const Routing = () => {
         />
       )}
       <Router>
+        <Header loginUserId={loginUserId} />
         <Switch>
           <Route exact path="/" component={TopPage} />
-          <Route exact path="/users/:id" component={UserProfile} />
+          <Route exact path="/users/:id" component={UserMyPage} />
           <Route exact path="/signup" component={SignUp} />
 
           <Route
             exact
             path={"/users/:id/edit"}
             render={(props) => (
-              <UserEdit {...props} currentUserId={currentUserId} />
+              <UserEdit {...props} loginUserId={loginUserId} />
             )}
           />
           <Route

@@ -111,7 +111,7 @@ const TrainingSearchForm = (props) => {
   } else {
     return (
       <div className="c-section-container">
-        <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
+        <h2 className="u-text__headline u-text-center">トレーニング検索</h2>
         <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
@@ -183,7 +183,7 @@ const TrainingSearchForm = (props) => {
                   // props.setChangedTraining(true);
                   console.log(response);
                   console.log(date);
-                  alert("トレーニングの登録が完了しました");
+                  alert("トレーニングの検索が完了しました");
                 })
                 .catch((error) => {
                   console.log("registration error", error);
