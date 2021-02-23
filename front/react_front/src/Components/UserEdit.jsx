@@ -21,8 +21,6 @@ const UserEdit = (props) => {
       .then((response) => {
         if (response.data.logged_in) {
           const currentUserId = response.data.user.id;
-          console.log(urlId);
-          console.log(currentUserId);
           if (urlId == currentUserId) {
             setCurrentUser(true);
             return;

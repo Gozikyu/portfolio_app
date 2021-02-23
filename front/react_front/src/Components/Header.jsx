@@ -34,7 +34,7 @@ const Header = (props) => {
   const history = useHistory();
 
   const pushToMyPage = () => {
-    history.push("/users/" + props.loginUserId);
+    history.push("/users/" + props.loginUser.id);
   };
 
   const pushToTopPage = () => {
@@ -74,7 +74,7 @@ const Header = (props) => {
                 {/* <MenuIcon /> */}
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                News
+                {props.loginUser.name}
               </Typography>
               <Button color="inherit" onClick={() => pushToMyPage()}>
                 My Page

@@ -16,12 +16,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TrainingPage = (props) => {
-  const [training, setTraining] = useState([]),
-    [gym, setGym] = useState([]),
-    [isLoaded, setIsLoaded] = useState(false);
+  const [training, setTraining] = useState([""]),
+    [gym, setGym] = useState([""]);
 
   const location = useLocation();
-  const history = useHistory();
   const userId = location.pathname.split("/")[2];
   const trainingId = location.pathname.split("/")[4];
 
@@ -43,10 +41,10 @@ const TrainingPage = (props) => {
       .get(url, { withCredentials: true })
       .then((trainingData) => {
         setTraining(
-          trainingData.data.find((training) => training.id == trainingId)
+          trainingData.data.find(
+            (eachTraining) => eachTraining.id.toString() == trainingId
+          )
         );
-
-        console.log(training);
       })
       .catch((data) => {
         console.log(data);
@@ -58,8 +56,6 @@ const TrainingPage = (props) => {
       .get("http://localhost:3001/gyms", { withCredentials: true })
       .then((results) => {
         setGym(results.data.find((gym) => gym.name == training.location));
-        setIsLoaded(true);
-        console.log(gym);
       })
       .catch((data) => {
         console.log(data);
@@ -74,7 +70,7 @@ const TrainingPage = (props) => {
     getGyms();
   }, [training]);
 
-  return isLoaded ? (
+  return !training.length ? (
     <Grid container spacing={3} className={classes.root}>
       <Grid item xs={6} className={classes.clild}>
         <GoogleMapComponent gyms={gym} />

@@ -18,7 +18,7 @@ import Header from "./Components/Header";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
-  const [loginUserId, setLoginUserId] = useState("");
+  const [loginUser, setLoginUser] = useState("");
   const [loading, setLoading] = useState(true);
 
   const login = () => {
@@ -35,7 +35,7 @@ const Routing = () => {
       .then((response) => {
         if (response.data.logged_in) {
           setLoggedInStatus(true);
-          setLoginUserId(response.data.user.id);
+          setLoginUser(response.data.user);
         } else {
           setLoggedInStatus(false);
         }
@@ -52,31 +52,8 @@ const Routing = () => {
 
   return (
     <div className="App">
-      id: {loginUserId}
-      {loggedInStatus && (
-        <PrimaryButton
-          label={"ログアウトする"}
-          onClick={
-            () =>
-              axios
-                .delete("http://localhost:3001/logout", {
-                  withCredentials: true,
-                })
-                .then((response) => {
-                  logout();
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                  alert(
-                    "ログアウトできませんでした。通信環境をご確認ください。"
-                  );
-                })
-            // event.preventDefault()
-          }
-        />
-      )}
       <Router>
-        <Header loginUserId={loginUserId} />
+        <Header loginUser={loginUser} />
         <Switch>
           <Route exact path="/" component={TopPage} />
           <Route exact path="/users/:id" component={UserMyPage} />
@@ -85,9 +62,7 @@ const Routing = () => {
           <Route
             exact
             path={"/users/:id/edit"}
-            render={(props) => (
-              <UserEdit {...props} loginUserId={loginUserId} />
-            )}
+            render={(props) => <UserEdit {...props} loginUser={loginUser} />}
           />
           <Route
             exact
