@@ -38,9 +38,12 @@ const TrainingRegistration = (props) => {
         if (response.data.logged_in) {
           return;
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
+      })
+      .catch((data) => {
+        console.log(data);
       });
   };
 

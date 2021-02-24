@@ -36,13 +36,16 @@ const TrainingSearchForm = (props) => {
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
-        SetId(response.data.user.id);
+        // SetId(response.data.user.id);
         if (response.data.logged_in) {
           return;
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
+      })
+      .catch((data) => {
+        console.log(data);
       });
   };
 

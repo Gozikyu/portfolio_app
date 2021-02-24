@@ -29,8 +29,8 @@ const UserEdit = (props) => {
             history.push("/");
           }
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       })
       .catch((error) => {

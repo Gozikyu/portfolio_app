@@ -31,7 +31,7 @@ const SignIn = (props) => {
   console.log("signin");
   return (
     <div className="c-section-container">
-      <h2 className="u-text__headline u-text-center">SIGN IN</h2>
+      <h2 className="u-text__headline u-text-center">ログイン</h2>
       <div className="module-spacer--medium" />
       <TextInput
         fullWidth={true}
@@ -97,13 +97,11 @@ const SignIn = (props) => {
             // event.preventDefault()
           }
         />
-
-        <div className="module-spacer--medium" />
         <div className="help">
-          {/* <p onClick={() => dispatch(push("/signup"))}>
+          <p onClick={() => history.push("/signup")}>
             アカウントをお持ちでない方はこちら
           </p>
-          <p onClick={() => dispatch(push("/signin/reset"))}>
+          {/* <p onClick={() => dispatch(push("/signin/reset"))}>
             パスワードを忘れた方はこちら
           </p> */}
         </div>

@@ -34,8 +34,8 @@ const UserMyPage = () => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       })
       .catch((error) => {

@@ -50,8 +50,8 @@ const GymList = (props) => {
         if (response.data.logged_in) {
           return;
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       });
   };

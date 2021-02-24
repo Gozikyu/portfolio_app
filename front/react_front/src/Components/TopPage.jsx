@@ -45,8 +45,8 @@ const TopPage = () => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       })
       .catch((error) => {
@@ -63,7 +63,6 @@ const TopPage = () => {
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);
-        console.log(results);
       })
       .catch((data) => {
         console.log(data);
