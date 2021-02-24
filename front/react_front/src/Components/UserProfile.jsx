@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
-import TrainingRegistration from "./TrainingRegistration";
+import TrainingRegistration from "./Component/TrainingRegistration";
 import TrainingList from "./TrainingList";
-import TrainingSearchForm from "./TrainingSearchForm";
-import CalendarComponent from "./CalendarComponent";
+import TrainingSearchForm from "./Component/TrainingSearchForm";
+import CalendarComponent from "./Component/CalendarComponent";
 
 const UserProfile = () => {
   const [user, setUser] = useState([]),
@@ -32,8 +32,6 @@ const UserProfile = () => {
             history.push("/");
           }
         } else {
-          // alert("ログインしてください");
-          // history.push("/signin");
         }
       })
       .catch((error) => {

@@ -8,18 +8,18 @@ import {
   Redirect,
 } from "react-router-dom";
 import axios from "axios";
-import TopPage from "./Components/TopPage";
-import UserMyPage from "./Components/UserMyPage";
+import TopPage from "./Components/Page/TopPage";
+import TrainingPage from "./Components/Page/TrainingPage";
+import UserMyPage from "./Components/Page/UserMyPage";
 import UserList from "./Components/UserList";
 import UserProfile from "./Components/UserProfile";
-import UserEdit from "./Components/UserEdit";
-import SignUp from "./Components/SignUp";
-import SignIn from "./Components/SignIn";
-import Auth from "./Components/Auth";
-import GoogleMapComponent from "./Components/GoogleMapComponent";
+import UserEdit from "./Components/Page/UserEdit";
+import SignUp from "./Components/Page/SignUp";
+import SignIn from "./Components/Page/SignIn";
+import Auth from "./Auth";
+import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
 import GymsAndMap from "./Components/GymsAndMap";
-import GymRegistraion from "./Components/GymRegistration";
-import TrainingPage from "./Components/TrainingPage";
+import GymRegistraion from "./Components/Component/GymRegistration";
 import Header from "./Components/Header";
 
 const Routing = () => {
@@ -68,51 +68,52 @@ const Routing = () => {
         <Router>
           {loggedInStatus ? <Redirect to={"/signin"} /> : <p>moo</p>}
           <Header loginUser={loginUser} />
-          <Switch>
-            <Route exact path="/" component={TopPage} />
-            <Route exact path="/users/:id" component={UserMyPage} />
-            <Route exact path="/signup" component={SignUp} />
+          <Auth>
+            <Switch>
+              <Route exact path="/" component={TopPage} />
+              <Route exact path="/users/:id" component={UserMyPage} />
+              <Route exact path="/signup" component={SignUp} />
 
-            <Route
-              exact
-              path={"/users/:id/edit"}
-              render={(props) => <UserEdit {...props} loginUser={loginUser} />}
-            />
-            <Route
-              exact
-              path={"/signin"}
-              render={(props) => (
-                <SignIn
-                  {...props}
-                  loggedInStatus={loggedInStatus}
-                  login={login}
-                />
-              )}
-            />
+              <Route
+                exact
+                path={"/users/:id/edit"}
+                render={(props) => (
+                  <UserEdit {...props} loginUser={loginUser} />
+                )}
+              />
+              <Route
+                exact
+                path={"/signin"}
+                render={(props) => (
+                  <SignIn
+                    {...props}
+                    loggedInStatus={loggedInStatus}
+                    login={login}
+                  />
+                )}
+              />
 
-            {/* <Auth
-            exact
-            path={"/users"}
-            loggedInStatus={loggedInStatus}
-            loading={loading}
-          > */}
-            <Route
-              exact
-              path={"/users"}
-              render={(props) => (
-                <UserList {...props} loggedInStatus={loggedInStatus} />
-              )}
-            />
-            {/* </Auth> */}
+              <Route
+                exact
+                path={"/users"}
+                render={(props) => (
+                  <UserList {...props} loggedInStatus={loggedInStatus} />
+                )}
+              />
 
-            <Route exact path="/gyms" component={GymsAndMap} />
-            <Route exact path="/gyms/registration" component={GymRegistraion} />
-            <Route
-              exact
-              path="/users/:userId/trainings/:trainingId"
-              component={TrainingPage}
-            />
-          </Switch>
+              <Route exact path="/gyms" component={GymsAndMap} />
+              <Route
+                exact
+                path="/gyms/registration"
+                component={GymRegistraion}
+              />
+              <Route
+                exact
+                path="/users/:userId/trainings/:trainingId"
+                component={TrainingPage}
+              />
+            </Switch>
+          </Auth>
         </Router>
       </div>
     );

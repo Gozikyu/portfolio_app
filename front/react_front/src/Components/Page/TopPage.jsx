@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
-import GoogleMapComponent from "./GoogleMapComponent";
-import TrainingSearchForm from "./TrainingSearchForm";
+import GoogleMapComponent from "../Component/GoogleMapComponent";
+import TrainingSearchForm from "../Component/TrainingSearchForm";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 // import Header from "./Header";

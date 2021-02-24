@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import GoogleMapComponent from "./GoogleMapComponent";
+import GoogleMapComponent from "./Component/GoogleMapComponent";
 import GymList from "./GymList";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";

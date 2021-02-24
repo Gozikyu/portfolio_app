@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { TextInput, PrimaryButton } from "./UIkit/index";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";

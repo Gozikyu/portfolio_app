@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
-import GoogleMapComponent from "./GoogleMapComponent";
+import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 

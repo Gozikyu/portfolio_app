@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { TextInput, PrimaryButton } from "./UIkit/index";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 

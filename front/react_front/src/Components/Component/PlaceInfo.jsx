@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Marker, InfoWindow } from "@react-google-maps/api";
-import pin from "../assets/img/gym.png";
+import pin from "../../assets/img/gym.png";
 
 const PlaceInfo = (props) => {
   const [selected, setSelected] = useState(null);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const [loggedInStatus, setLoggedInStatus] = useState(true);
+
   const classes = useStyles();
   const history = useHistory();
 
@@ -49,6 +51,7 @@ const Header = (props) => {
         })
         .then((response) => {
           alert("ログアウトしました");
+          history.push("/signin");
         })
         .catch((error) => {
           console.log("registration error", error);
