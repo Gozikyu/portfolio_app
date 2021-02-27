@@ -32,7 +32,7 @@ RSpec.describe 'Trainings', type: :request do
     it 'correct trainings should be searched' do
       post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
       expect(response).to have_http_status(200)
-      expect(response).to match(FactoryBot.attributes_for(:valid_training))
+      expect(response.body).to match(FactoryBot.attributes_for(:valid_training))
       # json = JSON.parse(response.body)
       # expect(json[0]['menu']).to eq('スクワット')
       # expect(response.body.length).to eq(1)
