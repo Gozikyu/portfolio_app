@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 import TrainingRegistration from "./Component/TrainingRegistration";
-import TrainingList from "./TrainingList";
+// import TrainingList from "./TrainingList";
 import TrainingSearchForm from "./Component/TrainingSearchForm";
 import CalendarComponent from "./Component/CalendarComponent";
 
@@ -82,10 +82,10 @@ const UserProfile = () => {
           changedTraining={changedTraining}
           setChangedTraining={setChangedTraining}
         />
-        <TrainingList
+        {/* <TrainingList
           changedTraining={changedTraining}
           setChangedTraining={setChangedTraining}
-        />
+        /> */}
         <TrainingSearchForm />
         <CalendarComponent trainings={trainings} />
       </div>
