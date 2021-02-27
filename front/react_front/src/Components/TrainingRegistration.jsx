@@ -21,11 +21,18 @@ const TrainingRegistration = (props) => {
 
   const url = "http://localhost:3001/trainings/";
 
+  const dateFormat = (date) => {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var trainingDate = year + "/" + month + "/" + day;
+    return trainingDate;
+  };
+
   const checkLoginStatus = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
-        console.log("registration res", response.data);
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
         if (response.data.logged_in) {
@@ -65,7 +72,7 @@ const TrainingRegistration = (props) => {
 
   const inputDate = useCallback(
     (date) => {
-      setDate(date);
+      setDate(dateFormat(date));
     },
     [setDate]
   );

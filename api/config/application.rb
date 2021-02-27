@@ -57,5 +57,8 @@ module Myapp
     # ログイン状態を保持する為に署名つきCookieへの保存を有効にする
     # cookies.permanent.signed[:user_id] = user.id
     # cookies.permanent[:remember_token] = user.remember_token
+
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
   end
 end

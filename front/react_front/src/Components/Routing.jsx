@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { PrimaryButton } from "./UIkit/index";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
+import TopPage from "./UserMyPage";
+import UserMyPage from "./UserMyPage";
 import UserList from "./UserList";
 import UserProfile from "./UserProfile";
 import UserEdit from "./UserEdit";
@@ -11,6 +13,7 @@ import Auth from "./Auth";
 import GoogleMapComponent from "./GoogleMapComponent";
 import GymsAndMap from "./GymsAndMap";
 import GymRegistraion from "./GymRegistration";
+import TrainingPage from "./TrainingPage";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -29,7 +32,6 @@ const Routing = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
-        console.log("registration res", response.data);
         if (response.data.logged_in) {
           setLoggedInStatus(true);
           setCurrentUserId(response.data.user.id);
@@ -60,7 +62,6 @@ const Routing = () => {
                   withCredentials: true,
                 })
                 .then((response) => {
-                  console.log("registration res", response);
                   logout();
                 })
                 .catch((error) => {
@@ -75,6 +76,7 @@ const Routing = () => {
       )}
       <Router>
         <Switch>
+          <Route exact path="/" component={TopPage} />
           <Route exact path="/users/:id" component={UserProfile} />
           <Route exact path="/signup" component={SignUp} />
 
@@ -114,6 +116,11 @@ const Routing = () => {
 
           <Route exact path="/gyms" component={GymsAndMap} />
           <Route exact path="/gyms/registration" component={GymRegistraion} />
+          <Route
+            exact
+            path="/users/:userId/trainings/:trainingId"
+            component={TrainingPage}
+          />
         </Switch>
       </Router>
     </div>
