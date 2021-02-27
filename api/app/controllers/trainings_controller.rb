@@ -1,8 +1,8 @@
 require 'time'
 
 class TrainingsController < ApplicationController
-  before_action :logged_in_user, only: %i[create destroy]
-  before_action :correct_user, only: [:destroy]
+  # before_action :logged_in_user, only: %i[create destroy]
+  # before_action :correct_user, only: [:destroy]
 
   def index
     @training = Training.all
