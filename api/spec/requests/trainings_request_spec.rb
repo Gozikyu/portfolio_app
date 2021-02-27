@@ -11,6 +11,7 @@ RSpec.describe 'Trainings', type: :request do
     it 'renders a successful response' do
       get "/trainings/#{@user.id}"
       expect(response).to be_successful
+      expect(JSON.parse(response.body).length).to eq(1)
     end
   end
 
@@ -32,8 +33,8 @@ RSpec.describe 'Trainings', type: :request do
     it 'correct trainings should be searched' do
       post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
       expect(response).to have_http_status(200)
-      expect(response.body).to match(FactoryBot.attributes_for(:valid_training))
-      # json = JSON.parse(response.body)
+      json = JSON.parse(response.body)
+      expect(json).to match(FactoryBot.attributes_for(:valid_training))
       # expect(json[0]['menu']).to eq('スクワット')
       # expect(response.body.length).to eq(1)
     end
