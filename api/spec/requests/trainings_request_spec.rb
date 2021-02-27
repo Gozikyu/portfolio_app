@@ -28,13 +28,13 @@ RSpec.describe 'Trainings', type: :request do
     end
   end
 
-  describe 'POST /search' do
-    it 'correct trainings should be searched' do
-      post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
-      json = JSON.parse(response.body)
-      expect(json[0]['menu']).to eq('スクワット')
-      expect(json.length).to eq(1)
-    end
+  # describe 'POST /search' do
+  #   it 'correct trainings should be searched' do
+  #     post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
+  #     json = JSON.parse(response.body)
+  #     expect(json[0]['menu']).to eq('スクワット')
+  #     expect(json.length).to eq(1)
+  #   end
 
     describe 'DELETE /destroy' do
       it 'login_user should delete own trainings' do
