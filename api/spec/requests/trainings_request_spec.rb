@@ -30,6 +30,7 @@ RSpec.describe 'Trainings', type: :request do
 
   describe 'POST /search' do
     it 'correct trainings should be searched' do
+      @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
       post '/trainings/search', params: { search: FactoryBot.attributes_for(:valid_training) }
       json = JSON.parse(response.body)
       # expect(json[0]['menu']).to eq('スクワット')
@@ -40,7 +41,6 @@ RSpec.describe 'Trainings', type: :request do
   describe 'DELETE /destroy' do
     it 'should not delete trainings of another' do
       @another = FactoryBot.create(:Another)
-      @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
       post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
         delete "/trainings/#{@training.id}"
