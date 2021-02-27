@@ -35,7 +35,7 @@ RSpec.describe 'Trainings', type: :request do
   #     expect(json.length).to eq(1)
   #   end
   # end
-  
+
   describe 'DELETE /destroy' do
     it 'login_user should delete own trainings' do
       expect do
