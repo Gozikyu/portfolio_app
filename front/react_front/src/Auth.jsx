@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Auth = (props) => {
@@ -13,7 +13,7 @@ const Auth = (props) => {
         if (response.data.logged_in) {
           return;
         } else {
-          alert("please login");
+          alert("ログインして下さい");
           history.push("/signin");
         }
       });
@@ -24,15 +24,7 @@ const Auth = (props) => {
   }, []);
 
   if (props.loading) {
-    console.log(props.loading);
-    console.log(props.loggedInStatus);
-    return <p>読み込み中です!!!!</p>;
-    // } else if (props.loading == false && props.loggedInStatus == false) {
-    //   console.log(props.loading);
-    //   console.log(props.loggedInStatus);
-    //   alert("ログインが必要です");
-    //   // return "hoge";
-    //   return <Redirect to={"/singin"} />;
+    return <p>読み込み中です</p>;
   } else {
     return props.children;
   }

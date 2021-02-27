@@ -5,6 +5,12 @@ User.create!(name: 'admin',
              password_confirmation: 'password',
              admin: true)
 
+User.create!(name: 'guest',
+             email: 'guest@gmail.com',
+             password: 'password',
+             password_confirmation: 'password',
+             admin: false)
+
 # No admin users
 99.times do |n|
   name  = Faker::Name.name

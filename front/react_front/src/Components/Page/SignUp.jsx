@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { TextInput, PrimaryButton } from "./UIkit/index";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -138,10 +138,9 @@ const SignUp = () => {
           }}
         />
         <div className="help">
-          {" "}
-          {/* <p onClick={() => dispatch(push("/signin"))}>
+          <p onClick={() => history.push("/signin")}>
             アカウントをお持ちの方はこちら
-          </p> */}
+          </p>
         </div>
       </div>
     </div>

@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import PlaceInfo from "./PlaceInfo";
-import GymList from "./GymList";
-import Grid from "@material-ui/core/Grid";
 
 const containerStyle = {
   width: "100%",

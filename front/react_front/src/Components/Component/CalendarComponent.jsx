@@ -1,19 +1,8 @@
-/**
- * 各種モジュールのインストール
- */
 import React from "react";
 import { useHistory } from "react-router-dom";
-
-// FullCalendarコンポーネント。
 import FullCalendar from "@fullcalendar/react";
-
-// FullCalendarで週表示を可能にするモジュール。
 import timeGridPlugin from "@fullcalendar/timegrid";
-
-// FullCalendarで月表示を可能にするモジュール。
 import dayGridPlugin from "@fullcalendar/daygrid";
-
-// FullCalendarで日付や時間が選択できるようになるモジュール。
 import interactionPlugin from "@fullcalendar/interaction";
 
 const CalendarComponent = (props) => {
@@ -27,7 +16,11 @@ const CalendarComponent = (props) => {
         title: userTraining.menu,
         start: userTraining.date,
         allDay: true,
-        url: "http://localhost:3000/users",
+        url:
+          "http://localhost:3000/users/" +
+          userTraining.user_id +
+          "/trainings/" +
+          userTraining.id,
       };
 
       training.push(t);

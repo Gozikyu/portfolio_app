@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { TextInput, PrimaryButton } from "./UIkit/index";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import PullDownComponent from "./PullDownComponent";
 import DatePickerComponent from "./DatePickerComponent";
 
-const TrainingRegistration = (props) => {
+const TrainingSearchForm = (props) => {
   const history = useHistory();
 
   const [menu, setMenu] = useState(""),
@@ -14,18 +14,20 @@ const TrainingRegistration = (props) => {
     [partner, setPartner] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
+    [searchedTrainings, setSearchedTrainings] = useState([]),
+    [allTrainings, setAllTrainings] = useState({}),
     [gymsName, setGymsName] = useState({}),
     [isLoaded, setIsLoaded] = useState(false);
 
   const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
-  const url = "http://localhost:3001/trainings/";
+  const url = "http://localhost:3001/trainings";
 
   const dateFormat = (date) => {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
-    var trainingDate = year + "/" + month + "/" + day;
+    var trainingDate = year + "-" + month + "-" + day;
     return trainingDate;
   };
 
@@ -34,13 +36,28 @@ const TrainingRegistration = (props) => {
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
-        SetId(response.data.user.id);
+        // SetId(response.data.user.id);
         if (response.data.logged_in) {
           return;
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
+
+  const getAllTrainings = () => {
+    axios
+      .get("http://localhost:3001/trainings", { withCredentials: true })
+      .then((results) => {
+        setAllTrainings(results.data);
+        setIsLoaded(true);
+      })
+      .catch((data) => {
+        console.log(data);
       });
   };
 
@@ -60,6 +77,7 @@ const TrainingRegistration = (props) => {
 
   useEffect(() => {
     checkLoginStatus();
+    getAllTrainings();
     getGyms();
   }, []);
 
@@ -72,7 +90,7 @@ const TrainingRegistration = (props) => {
 
   const inputDate = useCallback(
     (date) => {
-      setDate(dateFormat(date));
+      setDate(date);
     },
     [setDate]
   );
@@ -90,12 +108,13 @@ const TrainingRegistration = (props) => {
     },
     [setPartner]
   );
+
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
     return (
       <div className="c-section-container">
-        <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
+        <h2 className="u-text__headline u-text-center">トレーニング検索</h2>
         <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
@@ -107,17 +126,6 @@ const TrainingRegistration = (props) => {
           type={"text"}
           onChange={inputMenu}
         />
-        {/* <TextInput
-          fullWidth={true}
-          label={"日にち"}
-          multiline={false}
-          rows={1}
-          required={true}
-          value={date}
-          type={"text"}
-          onChange={inputDate}
-        /> */}
-
         <DatePickerComponent
           date={date}
           inputDate={inputDate}
@@ -125,7 +133,6 @@ const TrainingRegistration = (props) => {
           required={true}
           fullWidth={true}
         />
-
         <PullDownComponent
           items={gymsName}
           label={"場所"}
@@ -134,7 +141,6 @@ const TrainingRegistration = (props) => {
           value={location}
           onChange={inputLocation}
         />
-
         <PullDownComponent
           items={gender}
           label={"希望パートナー"}
@@ -143,31 +149,30 @@ const TrainingRegistration = (props) => {
           value={partner}
           onChange={inputPartner}
         />
-
         <div className="module-spacer--medium" />
         <div className="center">
           <PrimaryButton
-            label={"トレーニングを登録する"}
+            label={"トレーニングを検索する"}
             onClick={() => {
-              if (date === "" || location === "" || partner === "") {
-                alert("必須項目が入力されていません。");
-                return false;
-              }
-              {
-                if (partner == "男性のみ") {
-                  setPartner("male");
-                } else if (partner == "女性のみ") {
-                  setPartner("female");
-                } else {
-                  setPartner("both");
-                }
-              }
+              //   if (date === "" || location === "" || partner === "") {
+              //     alert("必須項目が入力されていません。");
+              //     return false;
+              //   }
+              //   {
+              //     if (partner == "男性のみ") {
+              //       setPartner("male");
+              //     } else if (partner == "女性のみ") {
+              //       setPartner("female");
+              //     } else {
+              //       setPartner("both");
+              //     }
+              //   }
 
               axios
                 .post(
-                  url,
+                  "http://localhost:3001/trainings/search",
                   {
-                    training: {
+                    search: {
                       menu: menu,
                       date: date,
                       location: location,
@@ -177,8 +182,11 @@ const TrainingRegistration = (props) => {
                   { withCredentials: true }
                 )
                 .then((response) => {
-                  props.setChangedTraining(true);
-                  alert("トレーニングの登録が完了しました");
+                  setSearchedTrainings(response.data);
+                  // props.setChangedTraining(true);
+                  console.log(response);
+                  console.log(date);
+                  alert("トレーニングの検索が完了しました");
                 })
                 .catch((error) => {
                   console.log("registration error", error);
@@ -187,9 +195,20 @@ const TrainingRegistration = (props) => {
             }}
           />
         </div>
+        {searchedTrainings.length === 0 ? (
+          <></>
+        ) : (
+          searchedTrainings.map((searchedTraining, i) => {
+            return (
+              <p key={i}>
+                {searchedTraining.user_id} {searchedTraining.menu}
+              </p>
+            );
+          })
+        )}
       </div>
     );
   }
 };
 
-export default TrainingRegistration;
+export default TrainingSearchForm;

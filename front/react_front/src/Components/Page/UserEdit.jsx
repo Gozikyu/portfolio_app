@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { TextInput, PrimaryButton } from "./UIkit/index";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -21,8 +21,6 @@ const UserEdit = (props) => {
       .then((response) => {
         if (response.data.logged_in) {
           const currentUserId = response.data.user.id;
-          console.log(urlId);
-          console.log(currentUserId);
           if (urlId == currentUserId) {
             setCurrentUser(true);
             return;
@@ -31,8 +29,8 @@ const UserEdit = (props) => {
             history.push("/");
           }
         } else {
-          alert("ログインしてください");
-          history.push("/signin");
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       })
       .catch((error) => {
