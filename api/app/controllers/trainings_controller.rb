@@ -36,7 +36,7 @@ class TrainingsController < ApplicationController
   end
 
   def destroy
-    if @training.destroy
+    if @training && @training.destroy
       render json: { status: 200, message: 'トレーニング予定削除成功' }
     else
       render json: { status: 404, message: 'トレーニング予定削除失敗' }
