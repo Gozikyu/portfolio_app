@@ -1,8 +1,8 @@
 require 'time'
 
 class TrainingsController < ApplicationController
-  # before_action :logged_in_user, only: %i[create destroy]
-  # before_action :correct_user, only: [:destroy]
+  before_action :logged_in_user, only: %i[create destroy]
+  before_action :correct_user, only: [:destroy]
 
   def index
     @training = Training.all
@@ -36,7 +36,7 @@ class TrainingsController < ApplicationController
   end
 
   def destroy
-    if @training.destroy
+    if @training && @training.destroy
       render json: { status: 200, message: 'トレーニング予定削除成功' }
     else
       render json: { status: 404, message: 'トレーニング予定削除失敗' }
