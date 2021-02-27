@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before do
-    @user = FactoryBot.build(:user)
+    @user = FactoryBot.create(:user)
   end
 
   it 'should be vaild' do
@@ -66,4 +66,23 @@ RSpec.describe User, type: :model do
     @user.save
     expect(@user.reload.email).to eq mixed_case_email.downcase
   end
+
+  it "associated microposts should be destroyed" do
+    @training = @user.trainings.create!(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
+    expect do
+      @user.destroy
+    end.to change(Training, :count).by(-1)
+  end
+  # test "associated microposts should be destroyed" do
+  #   @user.save
+  #   @user.microposts.create!(content: 'Lorem ipsum')
+  #   assert_difference 'Micropost.count', -1 do 
+  #     @user.destroy
+  #   end
+  # end
 end
