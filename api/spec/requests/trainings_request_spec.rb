@@ -40,6 +40,7 @@ RSpec.describe 'Trainings', type: :request do
   describe 'DELETE /destroy' do
     it 'should not delete trainings of another' do
       @another = FactoryBot.create(:Another)
+      @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
       post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
         delete "/trainings/#{@training.id}"
