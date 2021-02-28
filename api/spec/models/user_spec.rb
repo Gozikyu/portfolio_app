@@ -67,7 +67,7 @@ RSpec.describe User, type: :model do
     expect(@user.reload.email).to eq mixed_case_email.downcase
   end
 
-  it "associated microposts should be destroyed" do
+  it "associated trainings should be destroyed" do
     @training = @user.trainings.create!(
       menu: 'ベンチプレス',
       date: '2021-02-08',
@@ -78,11 +78,4 @@ RSpec.describe User, type: :model do
       @user.destroy
     end.to change(Training, :count).by(-1)
   end
-  # test "associated microposts should be destroyed" do
-  #   @user.save
-  #   @user.microposts.create!(content: 'Lorem ipsum')
-  #   assert_difference 'Micropost.count', -1 do 
-  #     @user.destroy
-  #   end
-  # end
 end

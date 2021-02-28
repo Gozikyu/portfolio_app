@@ -10,7 +10,7 @@ RSpec.describe TrainingRelationship, type: :model do
       location: 'Gym1',
       partner: 'both'
     )
-    @relationship =Relationship.create(training_id: @user)
+    @relationship =TrainingRelationship.create(followingT_id: @training.id, follower_id: @user.id)
   end
 
   it "should be valid" do
@@ -23,7 +23,16 @@ RSpec.describe TrainingRelationship, type: :model do
   end
 
   it "should require a followed_id" do
-    @relationship.training_id = nil
+    @relationship.followingT_id = nil
     expect(@relationship).not_to be_valid
+  end
+
+  it "should follow and unfollow a training" do
+    expect(@another.following?(@training)).to eq false
+    @another.follow(@training)
+    expect(@another.following?(@training)).to eq true
+    expect(@training.followed_by?(@another)).to eq true
+    @another.unfollow(@training)
+    expect(@another.following?(@training)).to eq false
   end
 end

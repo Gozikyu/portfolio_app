@@ -106,3 +106,20 @@ User.all.map{|user|
     user.trainings.create!(menu: menu, date: date, location: location, partner: partner)
   end
 }
+
+user=User.first
+user_trainings=user.trainings.all
+users=User.all
+trainings=Training.all
+
+followers=users[1..3]
+followingTs=trainings[3..5]
+followers.map{|follower|
+  user_trainings.map{|user_training|
+    follower.follow(user_training)
+  }
+}
+followingTs.map{|followingT|
+  user.follow(followingT)
+}
+

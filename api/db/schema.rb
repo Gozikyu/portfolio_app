@@ -22,13 +22,13 @@ ActiveRecord::Schema.define(version: 2021_02_27_063038) do
   end
 
   create_table "training_relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "training_id"
+    t.integer "followingT_id"
     t.integer "follower_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["follower_id"], name: "index_training_relationships_on_follower_id"
-    t.index ["training_id", "follower_id"], name: "index_training_relationships_on_training_id_and_follower_id", unique: true
-    t.index ["training_id"], name: "index_training_relationships_on_training_id"
+    t.index ["followingT_id", "follower_id"], name: "index_training_relationships_on_followingT_id_and_follower_id", unique: true
+    t.index ["followingT_id"], name: "index_training_relationships_on_followingT_id"
   end
 
   create_table "trainings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
