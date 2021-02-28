@@ -2,6 +2,10 @@
 
 class User < ApplicationRecord
   has_many :trainings, dependent: :destroy
+  has_many :active_relationships, class_name:  "Training_Relationship",
+  foreign_key: "follower_id",
+  dependent:   :destroy
+
   before_save { self.email = email.downcase }
   validates(:name, presence: true, length: { maximum: 50 })
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
