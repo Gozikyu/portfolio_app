@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   post '/trainings/search', to: 'trainings#search'
   delete '/trainings/:id', to: 'trainings#destroy'
   resources :users
+  post 'users/:user_id/trainings/:training_id', to: 'users#follow_training'
+  get 'users/:user_id/trainings/:training_id', to: 'users#followed_training?'
+  delete 'users/:user_id/trainings/:training_id', to: 'users#unfollow_training'
 end

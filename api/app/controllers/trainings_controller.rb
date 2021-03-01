@@ -54,6 +54,10 @@ class TrainingsController < ApplicationController
   end
 
   def date_format(date)
+    if date then
     Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
+    else
+    date
+    end
   end
 end
