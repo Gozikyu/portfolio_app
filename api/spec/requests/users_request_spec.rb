@@ -4,6 +4,12 @@ RSpec.describe 'Users', type: :request do
   before do
     @user = FactoryBot.create(:user)
     @another = FactoryBot.create(:Another)
+    @training = @user.trainings.create(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
   end
 
   describe 'GET /show' do
@@ -58,13 +64,6 @@ RSpec.describe 'Users', type: :request do
       patch user_path(@another), params: { user: { admine: true } }
       expect(@another.admin).to eq false
     end
-
-    # it 'redirects to the user' do
-    # user = User.create! valid_attributes
-    # patch user_url(user), params: { user: new_attributes }
-    # user.reload
-    # expect(response).to redirect_to(user_url(user))
-    # end
   end
 
   describe 'DELETE /destroy' do
@@ -83,70 +82,33 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  # let(:valid_attributes) do
-  #     { name: 'test', email: 'test@mail.com' }
-  #   end
+  describe 'POST /follow_training' do
+    it 'follow training successfully' do
+      expect do
+        post "/users/#{@user.id}/trainings/#{@training.id}"
+      end.to change(@user.followingTs, :count).by(1)
+    end
+  end
 
-  # let(:invalid_attributes) do
-  # { name: '', email: 'test@mail.com' }
-  # end
+  describe 'GET /followed_training?' do
+    it 'check not followed training' do
+      get "/users/#{@user.id}/trainings/#{@training.id}"
+      expect(JSON.parse(response.body)['followed']).to eq false
+    end
 
-  # describe 'GET /show' do
-  # it 'renders a successful response' do
-  #     user = User.create! valid_attributes
-  #     get user_url(user)
-  #     expect(response).to be_successful
-  # end
-  # end
+    it 'check followed training' do
+      @user.follow(@training)
+      get "/users/#{@user.id}/trainings/#{@training.id}"
+      expect(JSON.parse(response.body)['followed']).to eq true
+    end
+  end
 
-  # describe 'GET /new' do
-  # it 'renders a successful response' do
-  #     get new_user_url
-  #     expect(response).to be_successful
-  # end
-  # end
-
-  # describe 'POST /create' do
-  # context 'with valid parameters' do
-  #     it 'creates a new User' do
-  #     expect do
-  #         post users_url, params: { user: valid_attributes }
-  #     end.to change(User, :count).by(1)
-  #     end
-
-  #     it 'redirects to the created user' do
-  #     post users_url, params: { user: valid_attributes }
-  #     expect(response).to redirect_to(user_url(User.last))
-  #     end
-  # end
-
-  # context 'with invalid parameters' do
-  #     it 'does not create a new User' do
-  #     expect do
-  #         post users_url, params: { user: invalid_attributes }
-  #     end.to change(User, :count).by(0)
-  #     end
-
-  #     it "renders a successful response (i.e. to display the 'new' template)" do
-  #     post users_url, params: { user: invalid_attributes }
-  #     expect(response).to be_successful
-  #     end
-  # end
-  # end
-
-  # context 'with invalid parameters' do
-  #     it "renders a successful response (i.e. to display the 'edit' template)" do
-  #     user = User.create! valid_attributes
-  #     patch user_url(user), params: { user: invalid_attributes }
-  #     expect(response).to be_successful
-  #     end
-  # end
-  # end
-
-  # it 'redirects to the users list' do
-  #     user = User.create! valid_attributes
-  #     delete user_url(user)
-  #     expect(response).to redirect_to(users_url)
-  # end
-  # end
+  describe 'DELETE /unfollow_training' do
+    it 'unfollow training successfully' do
+      @user.follow(@training)
+      expect do
+        delete "/users/#{@user.id}/trainings/#{@training.id}"
+      end.to change(@user.followingTs, :count).by(-1)
+    end
+  end
 end

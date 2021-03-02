@@ -10,8 +10,13 @@ class TrainingsController < ApplicationController
   end
 
   def show
-    @training = User.find(params[:id])
-    render json: @training.trainings
+    @training = Training.find(params[:id])
+    render json: @training
+  end
+
+  def user_training
+    @user = User.find(params[:id])
+    render json: @user.trainings
   end
 
   def create
@@ -26,7 +31,6 @@ class TrainingsController < ApplicationController
   # end
 
   def search
-    # Viewのformで取得したパラメータをモデルに渡す
     @training = Training.all
     render json: @training.where('(date LIKE ?) AND (location LIKE ?) AND (partner LIKE ?) AND (menu LIKE ?)',
                                  "%#{date_format(params[:search][:date])}%",
@@ -36,11 +40,16 @@ class TrainingsController < ApplicationController
   end
 
   def destroy
-    if @training.destroy
+    if @training && @training.destroy
       render json: { status: 200, message: 'トレーニング予定削除成功' }
     else
       render json: { status: 404, message: 'トレーニング予定削除失敗' }
     end
+  end
+
+  def getting_followers
+    @training = Training.find(params[:id])
+    render json: @training.followers
   end
 
   private
@@ -54,6 +63,10 @@ class TrainingsController < ApplicationController
   end
 
   def date_format(date)
-    Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
+    if date
+      Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
+    else
+      date
+    end
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before do
-    @user = FactoryBot.build(:user)
+    @user = FactoryBot.create(:user)
   end
 
   it 'should be vaild' do
@@ -65,5 +65,17 @@ RSpec.describe User, type: :model do
     @user.email = mixed_case_email
     @user.save
     expect(@user.reload.email).to eq mixed_case_email.downcase
+  end
+
+  it 'associated trainings should be destroyed' do
+    @training = @user.trainings.create!(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
+    expect do
+      @user.destroy
+    end.to change(Training, :count).by(-1)
   end
 end

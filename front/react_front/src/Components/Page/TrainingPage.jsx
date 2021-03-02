@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
+import { TextInput, PrimaryButton } from "../UIkit/index";
 import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
 
 const TrainingPage = (props) => {
   const [training, setTraining] = useState([""]),
-    [gym, setGym] = useState([""]);
+    [gym, setGym] = useState([""]),
+    [loginUser, setLoginUser] = useState(""),
+    [isFollowed, setIsFollowed] = useState(false),
+    [changeState, setChangeState] = useState(false),
+    [followers, setFollowers] = useState([]);
 
   const location = useLocation();
   const userId = location.pathname.split("/")[2];
@@ -34,11 +40,51 @@ const TrainingPage = (props) => {
     return trainingDate;
   };
 
-  const url = "http://localhost:3001/trainings/" + userId;
+  const followTraining = () => {
+    axios
+      .post(
+        "http://localhost:3001/users/" +
+          loginUser.id +
+          "/trainings/" +
+          trainingId,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setChangeState(!changeState);
+        alert("トレーニングの参加申請が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
+  const unfollowTraining = () => {
+    axios
+      .delete(
+        "http://localhost:3001/users/" +
+          loginUser.id +
+          "/trainings/" +
+          trainingId,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setChangeState(!changeState);
+        alert("トレーニングの参加申請取消が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
 
   const getTraining = () => {
     axios
-      .get(url, { withCredentials: true })
+      .get("http://localhost:3001/trainings/" + userId, {
+        withCredentials: true,
+      })
       .then((trainingData) => {
         setTraining(
           trainingData.data.find(
@@ -62,12 +108,65 @@ const TrainingPage = (props) => {
       });
   };
 
+  const checkLoginStatus = () => {
+    axios
+      .get("http://localhost:3001/login", { withCredentials: true })
+      .then((response) => {
+        if (response.data.logged_in) {
+          setLoginUser(response.data.user);
+        } else {
+        }
+      })
+      .catch((error) => {
+        console.log("ログインステータスエラー", error);
+      });
+  };
+
+  const checkFollowed = () => {
+    axios
+      .get(
+        "http://localhost:3001/users/" +
+          loginUser.id +
+          "/trainings/" +
+          trainingId,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setIsFollowed(response.data.followed);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
+  const getFollowers = () => {
+    axios
+      .get("http://localhost:3001/trainings/" + training.id + "/followers", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setFollowers(response.data);
+        console.log(followers);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   useEffect(() => {
     getTraining();
+    checkLoginStatus();
   }, []);
 
   useEffect(() => {
+    checkFollowed();
+  }, [changeState, loginUser]);
+
+  useEffect(() => {
     getGyms();
+    getFollowers();
   }, [training]);
 
   return !training.length ? (
@@ -79,6 +178,27 @@ const TrainingPage = (props) => {
         <p>メニュー：　{training.menu}</p>
         <p>日時：　{dateFormat(training.date)}</p>
         <p>場所：　{training.location}</p>
+        {isFollowed ? (
+          <PrimaryButton
+            label={"参加申請取り消し"}
+            onClick={() => unfollowTraining()}
+          />
+        ) : (
+          <PrimaryButton
+            label={"トレーニングへの参加申請"}
+            onClick={() => followTraining()}
+          />
+        )}
+        <div>
+          <h1>参加希望者</h1>
+          {followers.map((follower, i) => {
+            return (
+              <p key={i}>
+                <Link to={"/users/" + follower.id}>{follower.name}</Link>
+              </p>
+            );
+          })}
+        </div>
       </Grid>
     </Grid>
   ) : (

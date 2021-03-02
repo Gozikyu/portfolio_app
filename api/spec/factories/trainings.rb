@@ -3,7 +3,7 @@ FactoryBot.define do
     menu { 'ベンチプレス' }
     date { '2021-02-08' }
     location { 'Gym1' }
-    partner { 'felame' }
+    partner { 'female' }
   end
 
   factory :valid_training, class: Training do
