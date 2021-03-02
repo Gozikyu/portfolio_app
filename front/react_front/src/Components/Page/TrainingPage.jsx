@@ -5,6 +5,7 @@ import { TextInput, PrimaryButton } from "../UIkit/index";
 import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +22,8 @@ const TrainingPage = (props) => {
     [gym, setGym] = useState([""]),
     [loginUser, setLoginUser] = useState(""),
     [isFollowed, setIsFollowed] = useState(false),
-    [changeState, setChangeState] = useState(false);
+    [changeState, setChangeState] = useState(false),
+    [followers, setFollowers] = useState([]);
 
   const location = useLocation();
   const userId = location.pathname.split("/")[2];
@@ -36,49 +38,6 @@ const TrainingPage = (props) => {
     var day = dateObject.getDate();
     var trainingDate = year + "/" + month + "/" + day;
     return trainingDate;
-  };
-
-  const url = "http://localhost:3001/trainings/" + userId;
-
-  const getTraining = () => {
-    axios
-      .get(url, { withCredentials: true })
-      .then((trainingData) => {
-        setTraining(
-          trainingData.data.find(
-            (eachTraining) => eachTraining.id.toString() == trainingId
-          )
-        );
-      })
-      .catch((data) => {
-        console.log(data);
-      });
-  };
-
-  const getGyms = () => {
-    axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
-      .then((results) => {
-        setGym(results.data.find((gym) => gym.name == training.location));
-      })
-      .catch((data) => {
-        console.log(data);
-      });
-  };
-
-  const checkLoginStatus = () => {
-    axios
-      .get("http://localhost:3001/login", { withCredentials: true })
-      .then((response) => {
-        if (response.data.logged_in) {
-          loggedInUser = response.data.user;
-          setLoginUser(response.data.user);
-        } else {
-        }
-      })
-      .catch((error) => {
-        console.log("ログインステータスエラー", error);
-      });
   };
 
   const followTraining = () => {
@@ -121,6 +80,48 @@ const TrainingPage = (props) => {
       });
   };
 
+  const getTraining = () => {
+    axios
+      .get("http://localhost:3001/trainings/" + userId, {
+        withCredentials: true,
+      })
+      .then((trainingData) => {
+        setTraining(
+          trainingData.data.find(
+            (eachTraining) => eachTraining.id.toString() == trainingId
+          )
+        );
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
+
+  const getGyms = () => {
+    axios
+      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .then((results) => {
+        setGym(results.data.find((gym) => gym.name == training.location));
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
+
+  const checkLoginStatus = () => {
+    axios
+      .get("http://localhost:3001/login", { withCredentials: true })
+      .then((response) => {
+        if (response.data.logged_in) {
+          setLoginUser(response.data.user);
+        } else {
+        }
+      })
+      .catch((error) => {
+        console.log("ログインステータスエラー", error);
+      });
+  };
+
   const checkFollowed = () => {
     axios
       .get(
@@ -140,6 +141,20 @@ const TrainingPage = (props) => {
       });
   };
 
+  const getFollowers = () => {
+    axios
+      .get("http://localhost:3001/trainings/" + training.id + "/followers", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setFollowers(response.data);
+        console.log(followers);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   useEffect(() => {
     getTraining();
     checkLoginStatus();
@@ -151,6 +166,7 @@ const TrainingPage = (props) => {
 
   useEffect(() => {
     getGyms();
+    getFollowers();
   }, [training]);
 
   return !training.length ? (
@@ -173,6 +189,16 @@ const TrainingPage = (props) => {
             onClick={() => followTraining()}
           />
         )}
+        <div>
+          <h1>参加希望者</h1>
+          {followers.map((follower, i) => {
+            return (
+              <p key={i}>
+                <Link to={"/users/" + follower.id}>{follower.name}</Link>
+              </p>
+            );
+          })}
+        </div>
       </Grid>
     </Grid>
   ) : (

@@ -10,8 +10,13 @@ class TrainingsController < ApplicationController
   end
 
   def show
-    @training = User.find(params[:id])
-    render json: @training.trainings
+    @training = Training.find(params[:id])
+    render json: @training
+  end
+
+  def user_training
+    @user = User.find(params[:id])
+    render json: @user.trainings
   end
 
   def create
@@ -42,6 +47,12 @@ class TrainingsController < ApplicationController
       render json: { status: 404, message: 'トレーニング予定削除失敗' }
     end
   end
+
+  def get_followers
+    @training = Training.find(params[:id])
+    render json: @training.followers
+  end
+
 
   private
 
