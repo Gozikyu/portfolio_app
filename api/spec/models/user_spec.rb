@@ -67,7 +67,7 @@ RSpec.describe User, type: :model do
     expect(@user.reload.email).to eq mixed_case_email.downcase
   end
 
-  it "associated trainings should be destroyed" do
+  it 'associated trainings should be destroyed' do
     @training = @user.trainings.create!(
       menu: 'ベンチプレス',
       date: '2021-02-08',

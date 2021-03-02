@@ -47,11 +47,10 @@ class TrainingsController < ApplicationController
     end
   end
 
-  def get_followers
+  def getting_followers
     @training = Training.find(params[:id])
     render json: @training.followers
   end
-
 
   private
 
@@ -64,10 +63,10 @@ class TrainingsController < ApplicationController
   end
 
   def date_format(date)
-    if date then
-    Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
+    if date
+      Time.parse(date).in_time_zone('Tokyo').strftime('%Y-%m-%d')
     else
-    date
+      date
     end
   end
 end

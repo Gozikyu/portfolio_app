@@ -51,5 +51,4 @@ RSpec.describe 'Trainings', type: :request do
       expect(JSON.parse(response.body)[0]['name']).to match @user.name
     end
   end
-
 end

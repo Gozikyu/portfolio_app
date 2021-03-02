@@ -3,12 +3,11 @@
 class User < ApplicationRecord
   has_many :trainings, dependent: :destroy
 
-  has_many :active_relationships, class_name:  "TrainingRelationship",
-  foreign_key: "follower_id",
-  dependent:   :destroy
+  has_many :active_relationships, class_name: 'TrainingRelationship',
+                                  foreign_key: 'follower_id',
+                                  dependent: :destroy
 
   has_many :followingTs, through: :active_relationships
-
 
   before_save { self.email = email.downcase }
   validates(:name, presence: true, length: { maximum: 50 })
@@ -21,15 +20,14 @@ class User < ApplicationRecord
 
   def follow(training)
     # self.followingTs << training
-    self.active_relationships.create(follower_id: self.id, followingT_id: training.id)
+    active_relationships.create(follower_id: id, followingT_id: training.id)
   end
 
   def unfollow(training)
-    self.active_relationships.find_by(followingT_id: training.id).destroy
+    active_relationships.find_by(followingT_id: training.id).destroy
   end
 
   def following?(training)
-    self.followingTs.include?(training)
+    followingTs.include?(training)
   end
-  
 end

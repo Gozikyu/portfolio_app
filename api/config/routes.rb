@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/trainings', to: 'trainings#create'
   post '/trainings/search', to: 'trainings#search'
   delete '/trainings/:id', to: 'trainings#destroy'
-  get '/trainings/:id/followers', to: 'trainings#get_followers'
+  get '/trainings/:id/followers', to: 'trainings#getting_followers'
   resources :users
   post 'users/:user_id/trainings/:training_id', to: 'users#follow_training'
   get 'users/:user_id/trainings/:training_id', to: 'users#followed_training?'

@@ -111,8 +111,4 @@ RSpec.describe 'Users', type: :request do
       end.to change(@user.followingTs, :count).by(-1)
     end
   end
-
-
-
-
 end

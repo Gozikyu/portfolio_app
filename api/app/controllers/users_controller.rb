@@ -35,26 +35,25 @@ class UsersController < ApplicationController
 
   def follow_training
     @user = User.find(params[:user_id])
-    @training =Training.find(params[:training_id])
+    @training = Training.find(params[:training_id])
     @user.follow(@training)
   end
 
   def unfollow_training
     @user = User.find(params[:user_id])
-    @training =Training.find(params[:training_id])
+    @training = Training.find(params[:training_id])
     @user.unfollow(@training)
   end
 
   def followed_training?
     @user = User.find(params[:user_id])
-    @training =Training.find(params[:training_id])
-    if  @user.following?(@training)
+    @training = Training.find(params[:training_id])
+    if @user.following?(@training)
       render json: { followed: true }
     else
       render json: { followed: false }
     end
   end
-
 
   private
 
