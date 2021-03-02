@@ -5,6 +5,7 @@ RSpec.describe 'Trainings', type: :request do
     @user = FactoryBot.create(:user)
     post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
     @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
+    @user.follow(@training)
   end
 
   describe 'GET /user_training' do
@@ -43,4 +44,12 @@ RSpec.describe 'Trainings', type: :request do
       end.to change(@user.trainings, :count).by(0)
     end
   end
+
+  describe 'GET /get_followers' do
+    it 'followers should be rendered' do
+      get "/trainings/#{@training.id}/followers"
+      expect(JSON.parse(response.body)[0]['name']).to match @user.name
+    end
+  end
+
 end

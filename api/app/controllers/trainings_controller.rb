@@ -31,7 +31,6 @@ class TrainingsController < ApplicationController
   # end
 
   def search
-    # Viewのformで取得したパラメータをモデルに渡す
     @training = Training.all
     render json: @training.where('(date LIKE ?) AND (location LIKE ?) AND (partner LIKE ?) AND (menu LIKE ?)',
                                  "%#{date_format(params[:search][:date])}%",
