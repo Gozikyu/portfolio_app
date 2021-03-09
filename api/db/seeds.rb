@@ -103,7 +103,8 @@ User.all.map{|user|
     start_date=Date.parse('2021/3/1')
     end_date=Date.parse('2021/6/1')
     date=Random.rand(start_date..end_date)
-    user.trainings.create!(menu: menu, date: date, location: location, partner: partner)
+    limit_number=Random.rand(1..3)
+    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number)
   end
 }
 
