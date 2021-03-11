@@ -31,6 +31,33 @@ const TrainingSearchForm = (props) => {
     return trainingDate;
   };
 
+  const searchTrainings = () => {
+    axios
+      .post(
+        "http://localhost:3001/trainings/search",
+        {
+          search: {
+            menu: menu,
+            date: date,
+            location: location,
+            partner: partner,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        setSearchedTrainings(response.data);
+        // props.setChangedTraining(true);
+        console.log(response);
+        console.log(date);
+        alert("トレーニングの検索が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+    // event.preventDefault()
+  };
+
   const checkLoginStatus = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
@@ -153,46 +180,7 @@ const TrainingSearchForm = (props) => {
         <div className="center">
           <PrimaryButton
             label={"トレーニングを検索する"}
-            onClick={() => {
-              //   if (date === "" || location === "" || partner === "") {
-              //     alert("必須項目が入力されていません。");
-              //     return false;
-              //   }
-              //   {
-              //     if (partner == "男性のみ") {
-              //       setPartner("male");
-              //     } else if (partner == "女性のみ") {
-              //       setPartner("female");
-              //     } else {
-              //       setPartner("both");
-              //     }
-              //   }
-
-              axios
-                .post(
-                  "http://localhost:3001/trainings/search",
-                  {
-                    search: {
-                      menu: menu,
-                      date: date,
-                      location: location,
-                      partner: partner,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  setSearchedTrainings(response.data);
-                  // props.setChangedTraining(true);
-                  console.log(response);
-                  console.log(date);
-                  alert("トレーニングの検索が完了しました");
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                });
-              // event.preventDefault()
-            }}
+            onClick={() => searchTrainings()}
           />
         </div>
         {searchedTrainings.length === 0 ? (

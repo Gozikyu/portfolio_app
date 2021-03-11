@@ -159,6 +159,11 @@
   cursor: pointer;
 }
 
+.warning {
+  color: red;
+  font-weight: bold;
+}
+
 @media screen and (min-width: 576px) {
   /*********** Module Spacer ***********/
   .module-spacer--extra-extra-small {

@@ -26,6 +26,7 @@ const TrainingPage = (props) => {
     [followers, setFollowers] = useState([]);
 
   const location = useLocation();
+  const history = useHistory();
   const userId = location.pathname.split("/")[2];
   const trainingId = location.pathname.split("/")[4];
 
@@ -148,7 +149,6 @@ const TrainingPage = (props) => {
       })
       .then((response) => {
         setFollowers(response.data);
-        console.log(followers);
       })
       .catch((error) => {
         console.log("registration error", error);
@@ -159,6 +159,10 @@ const TrainingPage = (props) => {
     getTraining();
     checkLoginStatus();
   }, []);
+
+  useEffect(() => {
+    getTraining();
+  }, [changeState]);
 
   useEffect(() => {
     checkFollowed();
@@ -178,19 +182,49 @@ const TrainingPage = (props) => {
         <p>メニュー：　{training.menu}</p>
         <p>日時：　{dateFormat(training.date)}</p>
         <p>場所：　{training.location}</p>
-        {isFollowed ? (
+
+        {training.user_id == loginUser.id ? (
+          <PrimaryButton
+            label={"トレーニングを削除する"}
+            onClick={() => {
+              if (window.confirm("削除してよろしいですか？")) {
+                console.log(training.id);
+                axios
+                  .delete("http://localhost:3001/trainings/" + training.id, {
+                    withCredentials: true,
+                  })
+                  .then((response) => {
+                    console.log("registration res", response);
+                    alert("指定したトレーニングを削除しました");
+                    history.push("/users/" + loginUser.id);
+                  })
+                  .catch((error) => {
+                    console.log("registration error", error);
+                    alert(
+                      "トレーニングを削除できませんでした。通信環境をご確認ください"
+                    );
+                  });
+              }
+            }}
+          />
+        ) : isFollowed ? (
           <PrimaryButton
             label={"参加申請取り消し"}
             onClick={() => unfollowTraining()}
           />
+        ) : followers.length >= training.limit_number ? (
+          <p class="warning">トレーニングの参加人数上限に達しています</p>
         ) : (
           <PrimaryButton
             label={"トレーニングへの参加申請"}
             onClick={() => followTraining()}
           />
         )}
+
         <div>
-          <h1>参加希望者</h1>
+          <h1>
+            参加希望者 {followers.length}/{training.limit_number}
+          </h1>
           {followers.map((follower, i) => {
             return (
               <p key={i}>
