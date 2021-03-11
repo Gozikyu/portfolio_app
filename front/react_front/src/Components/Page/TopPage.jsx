@@ -5,7 +5,6 @@ import GoogleMapComponent from "../Component/GoogleMapComponent";
 import TrainingSearchForm from "../Component/TrainingSearchForm";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-// import Header from "./Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,8 +44,6 @@ const TopPage = () => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
         } else {
-          // alert("ログインしてください");
-          // history.push("/signin");
         }
       })
       .catch((error) => {
@@ -69,64 +66,10 @@ const TopPage = () => {
       });
   };
 
-  //   const checkCorrectUser = () => {
-  //     axios
-  //       .get("http://localhost:3001/login", { withCredentials: true })
-  //       .then((response) => {
-  //         if (response.data.logged_in) {
-  //           const loginUserId = response.data.user.id;
-  //           if (urlId == loginUserId) {
-  //             setCurrentUser(true);
-  //             setIsLoaded(true);
-  //             return;
-  //           } else {
-  //             history.push("/");
-  //           }
-  //         } else {
-  //           alert("ログインしてください");
-  //           history.push("/signin");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         alert(
-  //           "ログインステータスエラーが起きました。通信環境をお確かめください。"
-  //         );
-  //         console.log("ログインステータスエラー", error);
-  //       });
-  //   };
-
-  //   const getTraining = () => {
-  //     axios
-  //       .get("http://localhost:3001/trainings/" + urlId, {
-  //         withCredentials: true,
-  //       })
-  //       .then((results) => {
-  //         setTrainings(results.data);
-  //         setIsLoaded(true);
-  //       })
-  //       .catch((data) => {
-  //         console.log(data);
-  //       });
-  //   };
-
   useEffect(() => {
     getLoginUser();
     getGyms();
-    // checkCorrectUser();
-    // getTraining();
-    // getUser();
   }, []);
-
-  //   const getUser = () => {
-  //     axios
-  //       .get(url)
-  //       .then((results) => {
-  //         setUser(results.data);
-  //       })
-  //       .catch((data) => {
-  //         console.log(data);
-  //       });
-  //   };
 
   return (
     <Grid container spacing={3} className={classes.root}>
