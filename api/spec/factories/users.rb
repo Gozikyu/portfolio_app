@@ -17,6 +17,15 @@ FactoryBot.define do
     admin { false }
   end
 
+  factory :Another2, class: User do
+    name { 'Another2' }
+    email { 'another2@gmail.com' }
+    password { 'password' }
+    password_confirmation { 'password' }
+    admin { false }
+  end
+
+
   factory :UpdatedUser, class: User do
     name { 'Hoge' }
     email { 'update@gmail.com' }

@@ -4,11 +4,13 @@ RSpec.describe 'Users', type: :request do
   before do
     @user = FactoryBot.create(:user)
     @another = FactoryBot.create(:Another)
+    @another2 = FactoryBot.create(:Another2)
     @training = @user.trainings.create(
       menu: 'ベンチプレス',
       date: '2021-02-08',
       location: 'Gym1',
-      partner: 'both'
+      partner: 'both',
+      limit_number: 1
     )
   end
 
@@ -84,9 +86,24 @@ RSpec.describe 'Users', type: :request do
 
   describe 'POST /follow_training' do
     it 'follow training successfully' do
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+      expect do
+        post "/users/#{@another.id}/trainings/#{@training.id}"
+      end.to change(@training.followers, :count).by(1)
+    end
+
+    it 'follow should be canceled when followers have reached limit_number' do
+      post "/users/#{@another.id}/trainings/#{@training.id}"
+      expect do
+        post "/users/#{@another2.id}/trainings/#{@training.id}"
+      end.to change(@training.followers, :count).by(0)
+    end
+
+    it 'training owner should not follower own training' do
+      post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       expect do
         post "/users/#{@user.id}/trainings/#{@training.id}"
-      end.to change(@user.followingTs, :count).by(1)
+      end.to change(@training.followers, :count).by(0)
     end
   end
 
