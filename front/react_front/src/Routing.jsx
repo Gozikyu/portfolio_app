@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { PrimaryButton } from "./Components/UIkit/index";
 import {
   BrowserRouter as Router,
   Route,

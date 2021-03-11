@@ -10,6 +10,7 @@ class Training < ApplicationRecord
   validates(:location, presence: true)
   validates(:partner, presence: true,
                       inclusion: { in: %w[male female both] })
+  validates(:limit_number, presence: true)
 
   def followed_by?(user)
     followers.include?(user)

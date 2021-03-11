@@ -32,11 +32,12 @@ class TrainingsController < ApplicationController
 
   def search
     @training = Training.all
-    render json: @training.where('(date LIKE ?) AND (location LIKE ?) AND (partner LIKE ?) AND (menu LIKE ?)',
+    render json: @training.where('(date LIKE ?) AND (location LIKE ?) AND (partner LIKE ?) AND (menu LIKE ?) AND (limit_number LIKE ?)',
                                  "%#{date_format(params[:search][:date])}%",
                                  "%#{params[:search][:location]}%",
                                  "%#{params[:search][:partner]}%",
-                                 "%#{params[:search][:menu]}%")
+                                 "%#{params[:search][:menu]}%",
+                                 "%#{params[:search][:limit_number]}%")
   end
 
   def destroy
@@ -55,7 +56,7 @@ class TrainingsController < ApplicationController
   private
 
   def training_params
-    params.require(:training).permit(:menu, :date, :location, :partner)
+    params.require(:training).permit(:menu, :date, :location, :partner, :limit_number)
   end
 
   def correct_user

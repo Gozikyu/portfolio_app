@@ -45,4 +45,9 @@ RSpec.describe Training, type: :model do
       expect(@training).not_to be_valid
     end
   end
+
+  it 'limit_number should be present' do
+    @training.limit_number = ''
+    expect(@training).not_to be_valid
+  end
 end
