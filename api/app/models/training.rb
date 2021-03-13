@@ -3,7 +3,7 @@ class Training < ApplicationRecord
   has_many :passive_relationships, class_name: 'TrainingRelationship',
                                    foreign_key: 'followingT_id'
   has_many :followers, through: :passive_relationships, source: :follower
-  has_many :chats
+  has_many :chats, dependent: :destroy
 
   validates(:date, presence: true)
   validates(:location, presence: true)

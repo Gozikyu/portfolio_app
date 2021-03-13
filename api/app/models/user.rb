@@ -6,7 +6,7 @@ class User < ApplicationRecord
                                   foreign_key: 'follower_id',
                                   dependent: :destroy
   has_many :followingTs, through: :active_relationships
-  has_many :chats
+  has_many :chats, dependent: :destroy
 
   before_save { self.email = email.downcase }
   validates(:name, presence: true, length: { maximum: 50 })
