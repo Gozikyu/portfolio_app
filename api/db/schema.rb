@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_104657) do
+ActiveRecord::Schema.define(version: 2021_03_12_233523) do
+
+  create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "training_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["training_id"], name: "index_chats_on_training_id"
+    t.index ["user_id", "created_at"], name: "index_chats_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_chats_on_user_id"
+  end
 
   create_table "gyms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -52,5 +63,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_104657) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "chats", "trainings"
+  add_foreign_key "chats", "users"
   add_foreign_key "trainings", "users"
 end

@@ -2,12 +2,11 @@
 
 class User < ApplicationRecord
   has_many :trainings, dependent: :destroy
-
   has_many :active_relationships, class_name: 'TrainingRelationship',
                                   foreign_key: 'follower_id',
                                   dependent: :destroy
-
   has_many :followingTs, through: :active_relationships
+  has_many :chats
 
   before_save { self.email = email.downcase }
   validates(:name, presence: true, length: { maximum: 50 })
