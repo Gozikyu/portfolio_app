@@ -59,9 +59,15 @@ class TrainingsController < ApplicationController
     params.require(:training).permit(:menu, :date, :location, :partner, :limit_number)
   end
 
+  # def correct_user
+  #   @training = current_user.trainings.find_by(id: params[:id])
+  # end
+
   def correct_user
-    @training = current_user.trainings.find_by(id: params[:id])
+    @training = Training.find(params[:id])
+    render status: 404 unless current_user.id == @training.user_id
   end
+
 
   def date_format(date)
     if date

@@ -65,6 +65,29 @@ const TrainingSearchForm = (props) => {
     // event.preventDefault()
   };
 
+  const createChat = () => {
+    axios
+      .post(
+        "http://localhost:3001/chats",
+        {
+          chat: {
+            content: "test",
+            training_id: 1,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        // props.setChangedTraining(true);
+        console.log(response);
+        alert("test done");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+    // event.preventDefault()
+  };
+
   const checkLoginStatus = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
@@ -202,6 +225,7 @@ const TrainingSearchForm = (props) => {
             label={"トレーニングを検索する"}
             onClick={() => searchTrainings()}
           />
+          <PrimaryButton label={"chat test"} onClick={() => createChat()} />
         </div>
         {searchedTrainings.length === 0 ? (
           <></>
