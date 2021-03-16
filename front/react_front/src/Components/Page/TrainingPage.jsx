@@ -6,6 +6,8 @@ import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import ChatForm from "../Component/ChatForm";
+import ChatComponent from "../Component/ChatComponent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -233,6 +235,8 @@ const TrainingPage = (props) => {
             );
           })}
         </div>
+        {/* <ChatForm training={training} /> */}
+        <ChatComponent />
       </Grid>
     </Grid>
   ) : (

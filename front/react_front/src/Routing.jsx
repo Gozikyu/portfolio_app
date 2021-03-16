@@ -16,7 +16,7 @@ import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
 import Auth from "./Auth";
-import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
+// import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
 import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
 import Header from "./Components/Header";

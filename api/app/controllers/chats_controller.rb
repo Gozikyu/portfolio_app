@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
         
     def create
         @training = Training.find(params[:chat][:training_id])
-        if current_user.following?(@training)
+        if @training.user_id == current_user.id || current_user.following?(@training)
             @chat = current_user.chats.create!(chat_params)
             render json: @chat
         else 
