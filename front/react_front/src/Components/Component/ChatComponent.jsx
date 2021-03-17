@@ -46,6 +46,18 @@ const ChatComponent = (props) => {
     [changeState, setChangeState] = useState(false);
   const classes = useStyles();
 
+  const dateFormat = (date) => {
+    // var year = date.getFullYear();
+    var month = date.slice(5, 7);
+    var day = date.slice(8, 10);
+    var time = date.slice(11, 16);
+    var trainingDate = month + "/" + day + " " + time;
+    return trainingDate;
+  };
+
+  var obj = document.getElementById("style-1");
+  console.log(obj);
+
   const checkLoginStatus = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
@@ -93,45 +105,21 @@ const ChatComponent = (props) => {
     [setChangeState]
   );
 
+  const resetChat = useCallback(() => {
+    setTrainingChats("");
+  }, [setTrainingChats]);
+
   console.log(changeState);
   return isLoaded ? (
     <div className={classes.container}>
       <Paper className={classes.paper} zdepth={2}>
         <Paper id="style-1" className={classes.messagesBody}>
-          <MessageLeft
-            message="あめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName=""
-            avatarDisp={true}
-          />
-          <MessageLeft
-            message="xxxxxhttps://yahoo.co.jp xxxxxxxxxあめんぼあかいなあいうえおあいうえおかきくけこさぼあかいなあいうえおあいうえおかきくけこさぼあかいなあいうえおあいうえおかきくけこさいすせそ"
-            timestamp="MM/DD 00:00"
-            photoURL=""
-            displayName="テスト"
-            avatarDisp={false}
-          />
-          <MessageRight
-            message="messageRあめんぼあかいなあいうえおあめんぼあかいなあいうえおあめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName="まさりぶ"
-            avatarDisp={true}
-          />
-          <MessageRight
-            message="messageRあめんぼあかいなあいうえおあめんぼあかいなあいうえお"
-            timestamp="MM/DD 00:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName="まさりぶ"
-            avatarDisp={false}
-          />
           {trainingChats.map((trainingChat, i) => {
             return trainingChat.user_id == loginUser.id ? (
               <MessageRight
                 key={i}
                 message={trainingChat.content}
-                timestamp="MM/DD 00:00"
+                timestamp={dateFormat(trainingChat.created_at)}
                 photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
                 displayName="まさりぶ"
                 avatarDisp={false}
@@ -139,7 +127,7 @@ const ChatComponent = (props) => {
             ) : (
               <MessageLeft
                 message={trainingChat.content}
-                timestamp="MM/DD 00:00"
+                timestamp={dateFormat(trainingChat.created_at)}
                 photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
                 displayName="まさりぶ"
                 avatarDisp={false}
@@ -147,7 +135,11 @@ const ChatComponent = (props) => {
             );
           })}
         </Paper>
-        <ChatInput changingState={changingState} currentState={changeState} />
+        <ChatInput
+          changingState={changingState}
+          currentState={changeState}
+          resetChat={resetChat}
+        />
       </Paper>
     </div>
   ) : (

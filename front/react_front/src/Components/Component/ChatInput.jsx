@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -25,7 +25,12 @@ const ChatInput = (props) => {
   const [chat, setChat] = useState("");
   const classes = useStyles();
 
-  console.log(props.currentState);
+  useEffect(() => {
+    const scrollArea = document.getElementById("style-1");
+    if (scrollArea) {
+      scrollArea.scrollTop = scrollArea.scrollHeight;
+    }
+  });
 
   return (
     <>
@@ -56,7 +61,9 @@ const ChatInput = (props) => {
               )
               .then((response) => {
                 console.log("registration res", response);
+                // props.resetChat();
                 props.changingState(!props.currentState);
+                console.log("created chat");
               })
               .catch((error) => {
                 console.log("registration error", error);
