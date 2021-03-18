@@ -25,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   container: {
-    // width: "100vw",
-    height: "100vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -54,9 +52,6 @@ const ChatComponent = (props) => {
     var trainingDate = month + "/" + day + " " + time;
     return trainingDate;
   };
-
-  var obj = document.getElementById("style-1");
-  console.log(obj);
 
   const checkLoginStatus = () => {
     axios
@@ -109,7 +104,6 @@ const ChatComponent = (props) => {
     setTrainingChats("");
   }, [setTrainingChats]);
 
-  console.log(changeState);
   return isLoaded ? (
     <div className={classes.container}>
       <Paper className={classes.paper} zdepth={2}>

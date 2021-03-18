@@ -6,20 +6,27 @@ import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
-import ChatForm from "../Component/ChatForm";
 import ChatComponent from "../Component/ChatComponent";
+import TableComponent from "../Component/TabeleComponent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "500px",
     margin: "0 auto",
+    width: "80%",
   },
   clild: {
     display: "inline-block",
   },
+  table: {
+    display: "block",
+    margin: "0 auto",
+    width: "70%",
+  },
 }));
 
 const TrainingPage = (props) => {
+  const classes = useStyles();
+
   const [training, setTraining] = useState([""]),
     [gym, setGym] = useState([""]),
     [loginUser, setLoginUser] = useState(""),
@@ -31,17 +38,6 @@ const TrainingPage = (props) => {
   const history = useHistory();
   const userId = location.pathname.split("/")[2];
   const trainingId = location.pathname.split("/")[4];
-
-  const classes = useStyles();
-
-  const dateFormat = (date) => {
-    const dateObject = new Date(date);
-    var year = dateObject.getFullYear();
-    var month = dateObject.getMonth() + 1;
-    var day = dateObject.getDate();
-    var trainingDate = year + "/" + month + "/" + day;
-    return trainingDate;
-  };
 
   const followTraining = () => {
     axios
@@ -177,14 +173,17 @@ const TrainingPage = (props) => {
 
   return !training.length ? (
     <Grid container spacing={3} className={classes.root}>
-      <Grid item xs={6} className={classes.clild}>
+      <Grid item xs={6}>
+        <div className={classes.table}>
+          <TableComponent
+            className={classes.component}
+            training={training}
+            followers={followers}
+          />
+        </div>
         <GoogleMapComponent gyms={gym} />
       </Grid>
-      <Grid item xs={6} className={classes.clild}>
-        <p>メニュー：　{training.menu}</p>
-        <p>日時：　{dateFormat(training.date)}</p>
-        <p>場所：　{training.location}</p>
-
+      <Grid item xs={6}>
         {training.user_id == loginUser.id ? (
           <PrimaryButton
             label={"トレーニングを削除する"}
@@ -222,20 +221,6 @@ const TrainingPage = (props) => {
             onClick={() => followTraining()}
           />
         )}
-
-        <div>
-          <h1>
-            参加希望者 {followers.length}/{training.limit_number}
-          </h1>
-          {followers.map((follower, i) => {
-            return (
-              <p key={i}>
-                <Link to={"/users/" + follower.id}>{follower.name}</Link>
-              </p>
-            );
-          })}
-        </div>
-        {/* <ChatForm training={training} /> */}
         <ChatComponent />
       </Grid>
     </Grid>
