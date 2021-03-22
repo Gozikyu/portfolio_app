@@ -54,7 +54,7 @@ const ChatInput = (props) => {
                 {
                   chat: {
                     content: chat,
-                    training_id: 1,
+                    training_id: props.training.id,
                   },
                 },
                 { withCredentials: true }
@@ -63,7 +63,6 @@ const ChatInput = (props) => {
                 console.log("registration res", response);
                 // props.resetChat();
                 props.changingState(!props.currentState);
-                console.log("created chat");
               })
               .catch((error) => {
                 console.log("registration error", error);

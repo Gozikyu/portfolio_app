@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
   get '/gyms', to: 'gyms#index'
   post '/gyms', to: 'gyms#create'
@@ -17,11 +15,11 @@ Rails.application.routes.draw do
   get '/trainings/:id/followers', to: 'trainings#getting_followers'
 
   resources :users
-  post 'users/:user_id/trainings/:training_id', to: 'users#follow_training'
+  get 'users/trainings/:training_id', to: 'users#follow_training'
   get 'users/:user_id/trainings/:training_id', to: 'users#followed_training?'
   delete 'users/:user_id/trainings/:training_id', to: 'users#unfollow_training'
 
-  get '/chats', to: 'chats#index'
+  get '/chats/:id', to: 'chats#show'
   post '/chats', to: 'chats#create'
   delete '/chats/:id', to: 'chats#destroy'
 end

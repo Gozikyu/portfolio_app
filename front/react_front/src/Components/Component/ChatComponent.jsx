@@ -55,10 +55,13 @@ const ChatComponent = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get("http://localhost:3001/login/", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
+          console.log(response);
         } else {
         }
       })
@@ -73,7 +76,7 @@ const ChatComponent = (props) => {
 
   const getChats = () => {
     axios
-      .get("http://localhost:3001/chats/", {
+      .get("http://localhost:3001/chats/" + props.training.id, {
         withCredentials: true,
       })
       .then((chats) => {
@@ -109,6 +112,8 @@ const ChatComponent = (props) => {
       <Paper className={classes.paper} zdepth={2}>
         <Paper id="style-1" className={classes.messagesBody}>
           {trainingChats.map((trainingChat, i) => {
+            console.log(trainingChat.id);
+            console.log(loginUser.id);
             return trainingChat.user_id == loginUser.id ? (
               <MessageRight
                 key={i}
@@ -133,6 +138,7 @@ const ChatComponent = (props) => {
           changingState={changingState}
           currentState={changeState}
           resetChat={resetChat}
+          training={props.training}
         />
       </Paper>
     </div>

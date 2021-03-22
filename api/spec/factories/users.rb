@@ -25,7 +25,6 @@ FactoryBot.define do
     admin { false }
   end
 
-
   factory :UpdatedUser, class: User do
     name { 'Hoge' }
     email { 'update@gmail.com' }

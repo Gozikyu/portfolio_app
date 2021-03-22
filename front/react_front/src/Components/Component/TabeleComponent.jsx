@@ -48,27 +48,27 @@ export default function BasicTable(props) {
     return trainingDate;
   };
 
-  const getFollowers = () => {
-    axios
-      .get(
-        "http://localhost:3001/trainings/" + props.training.id + "/followers",
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        setFollowers(response.data);
-      })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
-  };
+  // const getFollowers = () => {
+  //   axios
+  //     .get(
+  //       "http://localhost:3001/trainings/" + props.training.id + "/followers",
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .then((response) => {
+  //       setFollowers(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("registration error", error);
+  //     });
+  // };
 
-  useEffect(() => {
-    getFollowers();
-  }, []);
+  // useEffect(() => {
+  //   getFollowers();
+  // }, []);
 
-  return followers[0] ? (
+  return followers ? (
     <TableContainer component={Paper} className={classes.table}>
       <Table aria-label="simple table">
         <TableBody>
@@ -80,10 +80,15 @@ export default function BasicTable(props) {
           </TableRow>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>
-              参加者
+              参加者{" "}
+              {"(" +
+                props.followers.length +
+                "/" +
+                props.training.limit_number +
+                ")"}
             </TableCell>
             <TableCell align="center">
-              {followers.map((follower) => {
+              {props.followers.map((follower) => {
                 return <p className={classes.followers}>{follower.name}</p>;
               })}
             </TableCell>

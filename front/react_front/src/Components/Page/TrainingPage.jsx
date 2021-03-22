@@ -41,23 +41,20 @@ const TrainingPage = (props) => {
 
   const followTraining = () => {
     axios
-      .post(
-        "http://localhost:3001/users/" +
-          loginUser.id +
-          "/trainings/" +
-          trainingId,
-        {
-          withCredentials: true,
-        }
-      )
+      .get("http://localhost:3001/users/" + "trainings/" + trainingId, {
+        withCredentials: true,
+      })
       .then((response) => {
+        console.log(changeState);
         setChangeState(!changeState);
         alert("トレーニングの参加申請が完了しました");
+        console.log(changeState);
       })
       .catch((error) => {
         console.log("registration error", error);
       });
   };
+  console.log(changeState);
 
   const unfollowTraining = () => {
     axios
@@ -71,8 +68,10 @@ const TrainingPage = (props) => {
         }
       )
       .then((response) => {
+        console.log(changeState);
         setChangeState(!changeState);
         alert("トレーニングの参加申請取消が完了しました");
+        console.log(changeState);
       })
       .catch((error) => {
         console.log("registration error", error);
@@ -169,7 +168,9 @@ const TrainingPage = (props) => {
   useEffect(() => {
     getGyms();
     getFollowers();
-  }, [training]);
+  }, [training, changeState]);
+
+  console.log(followers);
 
   return !training.length ? (
     <Grid container spacing={3} className={classes.root}>
@@ -221,7 +222,7 @@ const TrainingPage = (props) => {
             onClick={() => followTraining()}
           />
         )}
-        <ChatComponent />
+        <ChatComponent training={training} />
       </Grid>
     </Grid>
   ) : (

@@ -18,5 +18,4 @@ RSpec.describe Chat, type: :model do
     @chat.training_id = ''
     expect(@chat).not_to be_valid
   end
-
 end

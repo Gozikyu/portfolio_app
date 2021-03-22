@@ -5,7 +5,14 @@ RSpec.describe 'Users', type: :request do
     @user = FactoryBot.create(:user)
     @another = FactoryBot.create(:Another)
     @another2 = FactoryBot.create(:Another2)
-    @training = @user.trainings.create(
+    @own_training = @user.trainings.create(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both',
+      limit_number: 1
+    )
+    @another_training = @another.trainings.create(
       menu: 'ベンチプレス',
       date: '2021-02-08',
       location: 'Gym1',
@@ -88,43 +95,45 @@ RSpec.describe 'Users', type: :request do
     it 'follow training successfully' do
       post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       expect do
-        post "/users/#{@another.id}/trainings/#{@training.id}"
-      end.to change(@training.followers, :count).by(1)
+        get "/users/trainings/#{@another_training.id}"
+      end.to change(@another_training.followers, :count).by(1)
     end
 
     it 'follow should be canceled when followers have reached limit_number' do
-      post "/users/#{@another.id}/trainings/#{@training.id}"
+      post '/login', params: { user: { email: 'another2@gmail.com', password: 'password' } }
+      get "/users/trainings/#{@another_training.id}"
       expect do
-        post "/users/#{@another2.id}/trainings/#{@training.id}"
-      end.to change(@training.followers, :count).by(0)
+        post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
+        get "/users/trainings/#{@another_training.id}"
+      end.to change(@another_training.followers, :count).by(0)
     end
 
     it 'training owner should not follower own training' do
       post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       expect do
-        post "/users/#{@user.id}/trainings/#{@training.id}"
-      end.to change(@training.followers, :count).by(0)
+        post "/users/trainings/#{@own_training.id}"
+      end.to change(@own_training.followers, :count).by(0)
     end
   end
 
   describe 'GET /followed_training?' do
     it 'check not followed training' do
-      get "/users/#{@user.id}/trainings/#{@training.id}"
+      get "/users/#{@user.id}/trainings/#{@another_training.id}"
       expect(JSON.parse(response.body)['followed']).to eq false
     end
 
     it 'check followed training' do
-      @user.follow(@training)
-      get "/users/#{@user.id}/trainings/#{@training.id}"
+      @user.follow(@another_training)
+      get "/users/#{@user.id}/trainings/#{@another_training.id}"
       expect(JSON.parse(response.body)['followed']).to eq true
     end
   end
 
   describe 'DELETE /unfollow_training' do
     it 'unfollow training successfully' do
-      @user.follow(@training)
+      @user.follow(@another_training)
       expect do
-        delete "/users/#{@user.id}/trainings/#{@training.id}"
+        delete "/users/#{@user.id}/trainings/#{@another_training.id}"
       end.to change(@user.followingTs, :count).by(-1)
     end
   end

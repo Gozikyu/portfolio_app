@@ -82,11 +82,10 @@ RSpec.describe User, type: :model do
   it 'associated chats should be destroyed' do
     @chat = @user.chats.create!(
       content: 'test',
-      training_id: '1',
+      training_id: '1'
     )
     expect do
       @user.destroy
     end.to change(Chat, :count).by(-1)
   end
-
 end

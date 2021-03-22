@@ -34,12 +34,12 @@ class UsersController < ApplicationController
   end
 
   def follow_training
-    @user = User.find(params[:user_id])
     @training = Training.find(params[:training_id])
-    if (@user.name != current_user.name) && (@training.limit_number > @training.followers.length)
-      @user.follow(@training)
+    @owner = User.find(@training.user_id)
+    if (@owner.id != current_user.id) && (@training.limit_number > @training.followers.length)
+      current_user.follow(@training)
     else
-      render json: { status: 404, message: '参加人数上限に達しています' } 
+      render json: { status: current_user.id, message: '参加人数上限に達しています' }
     end
   end
 
@@ -64,5 +64,4 @@ class UsersController < ApplicationController
   def registrations_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
-
 end
