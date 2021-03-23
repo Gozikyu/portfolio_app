@@ -13,8 +13,8 @@ User.create!(name: 'guest',
 
 # No admin users
 99.times do |n|
-  name  = Faker::Name.name
-  email = "example-#{n + 1}@railstutorial.org"
+  name  = Gimei.unique.first.hiragana
+  email = "example-#{n + 1}@gmail.com"
   password = 'password'
   User.create!(name: name,
                email: email,
@@ -103,7 +103,8 @@ User.all.map{|user|
     start_date=Date.parse('2021/3/1')
     end_date=Date.parse('2021/6/1')
     date=Random.rand(start_date..end_date)
-    user.trainings.create!(menu: menu, date: date, location: location, partner: partner)
+    limit_number=Random.rand(1..3)
+    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number)
   end
 }
 

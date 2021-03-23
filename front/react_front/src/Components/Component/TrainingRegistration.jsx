@@ -12,6 +12,7 @@ const TrainingRegistration = (props) => {
     [date, setDate] = useState(new Date()),
     [location, setLocation] = useState(""),
     [partner, setPartner] = useState(""),
+    [limitNumber, setLimitNumber] = useState(1),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
     [gymsName, setGymsName] = useState({}),
@@ -87,6 +88,11 @@ const TrainingRegistration = (props) => {
     },
     [setPartner]
   );
+
+  const inputLimitNumber = useCallback((event) => {
+    setLimitNumber(event.target.value);
+  });
+
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
@@ -131,6 +137,15 @@ const TrainingRegistration = (props) => {
           onChange={inputPartner}
         />
 
+        <PullDownComponent
+          items={{ 1: 1, 2: 2, 3: 3 }}
+          label={"参加人数上限"}
+          required={true}
+          fullWidth={true}
+          value={limitNumber}
+          onChange={inputLimitNumber}
+        />
+
         <div className="module-spacer--medium" />
         <div className="center">
           <PrimaryButton
@@ -159,6 +174,7 @@ const TrainingRegistration = (props) => {
                       date: date,
                       location: location,
                       partner: partner,
+                      limit_number: limitNumber,
                     },
                   },
                   { withCredentials: true }

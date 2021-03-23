@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { PrimaryButton } from "./Components/UIkit/index";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,10 +16,11 @@ import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
 import Auth from "./Auth";
-import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
+// import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
 import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
 import Header from "./Components/Header";
+import NotFound from "./Components/Page/NotFound";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -66,7 +66,7 @@ const Routing = () => {
     return (
       <div className="App">
         <Router>
-          {loggedInStatus ? <Redirect to={"/signin"} /> : <p>moo</p>}
+          {loggedInStatus ? <Redirect to={"/signin"} /> : <></>}
           <Header loginUser={loginUser} />
           <Auth>
             <Switch>
@@ -112,6 +112,7 @@ const Routing = () => {
                 path="/users/:userId/trainings/:trainingId"
                 component={TrainingPage}
               />
+              <Route component={NotFound} />
             </Switch>
           </Auth>
         </Router>

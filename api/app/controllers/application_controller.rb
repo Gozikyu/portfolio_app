@@ -25,4 +25,8 @@ class ApplicationController < ActionController::API
   def admin_user
     render json: { status: 500, message: '現在のユーザーはadminユーザーではありません。' } unless current_user.admin
   end
+
+  def test
+    render json: { message: 'test' }
+  end
 end

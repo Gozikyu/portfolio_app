@@ -12,6 +12,7 @@ const TrainingSearchForm = (props) => {
     [date, setDate] = useState(new Date()),
     [location, setLocation] = useState(""),
     [partner, setPartner] = useState(""),
+    [limitNumber, setLimitNumber] = useState(1),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
     [searchedTrainings, setSearchedTrainings] = useState([]),
@@ -19,7 +20,12 @@ const TrainingSearchForm = (props) => {
     [gymsName, setGymsName] = useState({}),
     [isLoaded, setIsLoaded] = useState(false);
 
-  const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
+  const gender = {
+    指定しない: "",
+    男性のみ: "male",
+    女性のみ: "female",
+    どちらでも可: "both",
+  };
 
   const url = "http://localhost:3001/trainings";
 
@@ -29,6 +35,57 @@ const TrainingSearchForm = (props) => {
     var day = date.getDate();
     var trainingDate = year + "-" + month + "-" + day;
     return trainingDate;
+  };
+
+  const searchTrainings = () => {
+    axios
+      .post(
+        "http://localhost:3001/trainings/search",
+        {
+          search: {
+            menu: menu,
+            date: date,
+            location: location,
+            partner: partner,
+            limit_number: limitNumber,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        setSearchedTrainings(response.data);
+        // props.setChangedTraining(true);
+        console.log(response);
+        console.log(date);
+        alert("トレーニングの検索が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+    // event.preventDefault()
+  };
+
+  const createChat = () => {
+    axios
+      .post(
+        "http://localhost:3001/chats",
+        {
+          chat: {
+            content: "test",
+            training_id: 1,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        // props.setChangedTraining(true);
+        console.log(response);
+        alert("test done");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+    // event.preventDefault()
   };
 
   const checkLoginStatus = () => {
@@ -109,6 +166,10 @@ const TrainingSearchForm = (props) => {
     [setPartner]
   );
 
+  const inputLimitNumber = useCallback((event) => {
+    setLimitNumber(event.target.value);
+  });
+
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
@@ -149,51 +210,22 @@ const TrainingSearchForm = (props) => {
           value={partner}
           onChange={inputPartner}
         />
+        <PullDownComponent
+          items={{ 指定しない: "", 1: 1, 2: 2, 3: 3 }}
+          label={"参加人数上限"}
+          required={true}
+          fullWidth={true}
+          value={limitNumber}
+          onChange={inputLimitNumber}
+        />
+
         <div className="module-spacer--medium" />
         <div className="center">
           <PrimaryButton
             label={"トレーニングを検索する"}
-            onClick={() => {
-              //   if (date === "" || location === "" || partner === "") {
-              //     alert("必須項目が入力されていません。");
-              //     return false;
-              //   }
-              //   {
-              //     if (partner == "男性のみ") {
-              //       setPartner("male");
-              //     } else if (partner == "女性のみ") {
-              //       setPartner("female");
-              //     } else {
-              //       setPartner("both");
-              //     }
-              //   }
-
-              axios
-                .post(
-                  "http://localhost:3001/trainings/search",
-                  {
-                    search: {
-                      menu: menu,
-                      date: date,
-                      location: location,
-                      partner: partner,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  setSearchedTrainings(response.data);
-                  // props.setChangedTraining(true);
-                  console.log(response);
-                  console.log(date);
-                  alert("トレーニングの検索が完了しました");
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                });
-              // event.preventDefault()
-            }}
+            onClick={() => searchTrainings()}
           />
+          <PrimaryButton label={"chat test"} onClick={() => createChat()} />
         </div>
         {searchedTrainings.length === 0 ? (
           <></>

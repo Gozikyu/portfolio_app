@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   before do
     @user = FactoryBot.create(:user)
+    @training = @user.trainings.create(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
   end
 
   it 'should be vaild' do
@@ -68,14 +74,18 @@ RSpec.describe User, type: :model do
   end
 
   it 'associated trainings should be destroyed' do
-    @training = @user.trainings.create!(
-      menu: 'ベンチプレス',
-      date: '2021-02-08',
-      location: 'Gym1',
-      partner: 'both'
-    )
     expect do
       @user.destroy
     end.to change(Training, :count).by(-1)
+  end
+
+  it 'associated chats should be destroyed' do
+    @chat = @user.chats.create!(
+      content: 'test',
+      training_id: @training.id
+    )
+    expect do
+      @user.destroy
+    end.to change(Chat, :count).by(-1)
   end
 end

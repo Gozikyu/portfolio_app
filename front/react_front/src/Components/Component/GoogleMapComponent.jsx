@@ -27,7 +27,7 @@ const GoogleMapComponent = (props) => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={10}
+      zoom={11}
       onLoad={onMapLoad}
       // onUnmount={onUnmount}
     >

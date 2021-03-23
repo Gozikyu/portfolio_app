@@ -8,6 +8,10 @@ AsciiComments:
   Enabled: false
 Style/SafeNavigation:
   Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
 
 AllCops:
   TargetRubyVersion: 2.6.6
