@@ -111,7 +111,7 @@ RSpec.describe 'Users', type: :request do
     it 'training owner should not follower own training' do
       post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       expect do
-        post "/users/trainings/#{@own_training.id}"
+        get "/users/trainings/#{@own_training.id}"
       end.to change(@own_training.followers, :count).by(0)
     end
   end
