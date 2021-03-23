@@ -9,7 +9,7 @@ RSpec.describe Chat, type: :model do
       location: 'Gym1',
       partner: 'both'
     )
-    @chat = FactoryBot.create(:valid_chat, user_id:@user.id, training_id:@training.id)
+    @chat = FactoryBot.create(:valid_chat, user_id: @user.id, training_id: @training.id)
   end
 
   it 'should be vaild' do
