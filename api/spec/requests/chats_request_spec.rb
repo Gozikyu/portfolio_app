@@ -5,7 +5,7 @@ RSpec.describe 'Chats', type: :request do
     @user = FactoryBot.create(:user)
     @another = FactoryBot.create(:Another)
     @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
-    @chat = @user.chats.create!(FactoryBot.attributes_for(:valid_chat))
+    @chat = @user.chats.create(content:'test',user_id:@user.id ,training_id:@training.id)
   end
 
   describe 'GET /show' do

@@ -2,7 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Chat, type: :model do
   before do
-    @chat = FactoryBot.create(:valid_chat)
+    @user = FactoryBot.create(:user)
+    @training = @user.trainings.create(
+      menu: 'ベンチプレス',
+      date: '2021-02-08',
+      location: 'Gym1',
+      partner: 'both'
+    )
+    @chat = FactoryBot.create(:valid_chat, user_id:@user.id, training_id:@training.id)
   end
 
   it 'should be vaild' do
