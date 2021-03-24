@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "500px",
     margin: "0 auto",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   clild: {
     display: "inline-block",
@@ -73,10 +76,10 @@ const TopPage = () => {
 
   return (
     <Grid container spacing={3} className={classes.root}>
-      <Grid item xs={6} className={classes.clild}>
+      <Grid item xs={12} sm={6}>
         <GoogleMapComponent gyms={gyms} />
       </Grid>
-      <Grid item xs={6} className={classes.clild}>
+      <Grid item xs={12} sm={6} className={classes.clild}>
         <TrainingSearchForm />
       </Grid>
     </Grid>

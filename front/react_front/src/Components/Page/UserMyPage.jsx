@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "500px",
     margin: "0 auto",
+    width: "100%",
   },
   clild: {
     display: "inline-block",
@@ -71,10 +72,12 @@ const UserMyPage = () => {
   return (
     <div>
       <Grid container spacing={3} className={classes.root}>
-        <Grid item xs={6} className={classes.clild}>
-          <CalendarComponent trainings={trainings} />
+        <Grid item xs={12} sm={6} className={classes.clild}>
+          <div className={classes.calendar}>
+            <CalendarComponent trainings={trainings} />
+          </div>
         </Grid>
-        <Grid item xs={6} className={classes.clild}>
+        <Grid item xs={12} sm={6} className={classes.clild}>
           <TrainingRegistration
             changedTraining={changedTraining}
             setChangedTraining={setChangedTraining}

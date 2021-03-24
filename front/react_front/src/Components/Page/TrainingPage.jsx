@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "0 auto",
     width: "80%",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   clild: {
     display: "inline-block",
@@ -21,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: "0 auto",
     width: "70%",
+
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
+  },
+  chat: {
+    marginBottom: "1rem",
   },
 }));
 
@@ -54,7 +64,6 @@ const TrainingPage = (props) => {
         console.log("registration error", error);
       });
   };
-  console.log(changeState);
 
   const unfollowTraining = () => {
     axios
@@ -76,6 +85,23 @@ const TrainingPage = (props) => {
       .catch((error) => {
         console.log("registration error", error);
       });
+  };
+
+  const deleteTraining = () => {
+    if (window.confirm("削除してよろしいですか？"))
+      axios
+        .delete("http://localhost:3001/trainings/" + training.id, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          console.log("registration res", response);
+          alert("指定したトレーニングを削除しました");
+          history.push("/users/" + loginUser.id);
+        })
+        .catch((error) => {
+          console.log("registration error", error);
+          alert("トレーニングを削除できませんでした。通信環境をご確認ください");
+        });
   };
 
   const getTraining = () => {
@@ -170,11 +196,9 @@ const TrainingPage = (props) => {
     getFollowers();
   }, [training, changeState]);
 
-  console.log(followers);
-
   return !training.length ? (
     <Grid container spacing={3} className={classes.root}>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <div className={classes.table}>
           <TableComponent
             className={classes.component}
@@ -184,29 +208,15 @@ const TrainingPage = (props) => {
         </div>
         <GoogleMapComponent gyms={gym} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
+        <div className={classes.chat}>
+          <ChatComponent training={training} />
+        </div>
         {training.user_id == loginUser.id ? (
           <PrimaryButton
             label={"トレーニングを削除する"}
             onClick={() => {
-              if (window.confirm("削除してよろしいですか？")) {
-                console.log(training.id);
-                axios
-                  .delete("http://localhost:3001/trainings/" + training.id, {
-                    withCredentials: true,
-                  })
-                  .then((response) => {
-                    console.log("registration res", response);
-                    alert("指定したトレーニングを削除しました");
-                    history.push("/users/" + loginUser.id);
-                  })
-                  .catch((error) => {
-                    console.log("registration error", error);
-                    alert(
-                      "トレーニングを削除できませんでした。通信環境をご確認ください"
-                    );
-                  });
-              }
+              deleteTraining();
             }}
           />
         ) : isFollowed ? (
@@ -222,7 +232,6 @@ const TrainingPage = (props) => {
             onClick={() => followTraining()}
           />
         )}
-        <ChatComponent training={training} />
       </Grid>
     </Grid>
   ) : (

@@ -99,7 +99,6 @@ const TrainingRegistration = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
-        <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
           label={"メニュー名"}

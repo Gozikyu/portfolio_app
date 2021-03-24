@@ -176,7 +176,6 @@ const TrainingSearchForm = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング検索</h2>
-        <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
           label={"メニュー名"}
@@ -225,7 +224,6 @@ const TrainingSearchForm = (props) => {
             label={"トレーニングを検索する"}
             onClick={() => searchTrainings()}
           />
-          <PrimaryButton label={"chat test"} onClick={() => createChat()} />
         </div>
         {searchedTrainings.length === 0 ? (
           <></>
