@@ -79,7 +79,7 @@ const UserEdit = (props) => {
   } else {
     return (
       <div className="c-section-container">
-        <h2 className="u-text__headline u-text-center">アカウント登録</h2>
+        <h2 className="u-text__headline u-text-center">アカウント情報変更</h2>
         <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}

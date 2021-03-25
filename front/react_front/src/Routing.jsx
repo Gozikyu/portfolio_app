@@ -15,6 +15,7 @@ import UserProfile from "./Components/UserProfile";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
+import SearchResultPage from "./Components/Page/SearchResultPage";
 import Auth from "./Auth";
 // import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
 import GymsAndMap from "./Components/GymsAndMap";
@@ -112,6 +113,9 @@ const Routing = () => {
                 path="/users/:userId/trainings/:trainingId"
                 component={TrainingPage}
               />
+
+              <Route exact path="/searchResult" component={SearchResultPage} />
+
               <Route component={NotFound} />
             </Switch>
           </Auth>

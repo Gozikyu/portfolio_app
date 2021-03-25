@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import TrainingRegistration from "../Component/TrainingRegistration";
 import CalendarComponent from "../Component/CalendarComponent";
 import { makeStyles } from "@material-ui/core/styles";
@@ -82,6 +82,7 @@ const UserMyPage = () => {
             changedTraining={changedTraining}
             setChangedTraining={setChangedTraining}
           />
+          <a href={"/users/" + loginUser.id + "/edit"}>ユーザー情報変更</a>
         </Grid>
       </Grid>
     </div>

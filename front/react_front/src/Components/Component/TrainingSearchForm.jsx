@@ -58,6 +58,11 @@ const TrainingSearchForm = (props) => {
         console.log(response);
         console.log(date);
         alert("トレーニングの検索が完了しました");
+        // history.push("/searchResult");
+        history.push({
+          pathname: "/searchResult",
+          state: { training: response.data },
+        });
       })
       .catch((error) => {
         console.log("registration error", error);
@@ -225,17 +230,6 @@ const TrainingSearchForm = (props) => {
             onClick={() => searchTrainings()}
           />
         </div>
-        {searchedTrainings.length === 0 ? (
-          <></>
-        ) : (
-          searchedTrainings.map((searchedTraining, i) => {
-            return (
-              <p key={i}>
-                {searchedTraining.user_id} {searchedTraining.menu}
-              </p>
-            );
-          })
-        )}
       </div>
     );
   }

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
-import { TextInput, PrimaryButton } from "../UIkit/index";
+import { PrimaryButton } from "../UIkit/index";
 import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
 import ChatComponent from "../Component/ChatComponent";
 import TableComponent from "../Component/TabeleComponent";
 

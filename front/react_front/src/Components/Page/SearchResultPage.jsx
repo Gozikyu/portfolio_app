@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, useLocation } from "react-router-dom";
-import GoogleMapComponent from "../Component/GoogleMapComponent";
+import { useHistory, Link } from "react-router-dom";
 import TrainingSearchForm from "../Component/TrainingSearchForm";
+import CalendarComponent from "../Component/CalendarComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -10,39 +10,23 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "500px",
     margin: "0 auto",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-    },
+    width: "100%",
   },
   clild: {
     display: "inline-block",
   },
-  sideBar: {
-    float: "right",
-    width: "100%",
-    padding: "20px",
-  },
-  text: {
-    color: "#4dd0e1",
-    fontSize: "1.563rem",
-  },
 }));
 
-const TopPage = () => {
-  const classes = useStyles();
-
-  const [user, setUser] = useState([]),
-    [loginUser, setLoginUser] = useState([]),
-    [gyms, setGyms] = useState([]),
+const SearchResultPage = (props) => {
+  const [loginUser, setLoginUser] = useState([]),
     [currentUser, setCurrentUser] = useState(false),
     [trainings, setTrainings] = useState([]),
     [isLoaded, setIsLoaded] = useState(false),
     [changedTraining, setChangedTraining] = useState(false);
 
-  const location = useLocation();
+  const classes = useStyles();
+
   const history = useHistory();
-  const urlId = location.pathname.split("users/")[1];
-  const url = "http://localhost:3001/users/" + urlId;
 
   const getLoginUser = () => {
     axios
@@ -51,6 +35,8 @@ const TopPage = () => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
         } else {
+          // alert("ログインしてください");
+          // history.push("/signin");
         }
       })
       .catch((error) => {
@@ -61,11 +47,13 @@ const TopPage = () => {
       });
   };
 
-  const getGyms = () => {
+  const getTraining = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get("http://localhost:3001/trainings/" + loginUser.id, {
+        withCredentials: true,
+      })
       .then((results) => {
-        setGyms(results.data);
+        setTrainings(results.data);
         setIsLoaded(true);
       })
       .catch((data) => {
@@ -75,21 +63,26 @@ const TopPage = () => {
 
   useEffect(() => {
     getLoginUser();
-    getGyms();
   }, []);
 
+  useEffect(() => {
+    getTraining();
+  }, [loginUser, changedTraining]);
+
   return (
-    <Grid container spacing={3} className={classes.root}>
-      <Grid item xs={12} sm={6}>
-        <h1 className={classes.text}>ジムマップ</h1>
-        <GoogleMapComponent gyms={gyms} />
+    <div>
+      <Grid container spacing={3} className={classes.root}>
+        <Grid item xs={12} sm={6} className={classes.clild}>
+          <div className={classes.calendar}>
+            <CalendarComponent trainings={props.location.state.training} />
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={6} className={classes.clild}>
+          <TrainingSearchForm />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={6} className={classes.clild}>
-        <TrainingSearchForm />
-        <a href="/gyms/registration">新規にジムを登録する</a>
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 
-export default TopPage;
+export default SearchResultPage;
