@@ -209,7 +209,9 @@ const TrainingPage = (props) => {
       </Grid>
       <Grid item xs={12} sm={6}>
         <div className={classes.chat}>
-          <ChatComponent training={training} />
+          {(isFollowed || training.user_id == loginUser.id) && (
+            <ChatComponent training={training} />
+          )}
         </div>
         {training.user_id == loginUser.id ? (
           <PrimaryButton

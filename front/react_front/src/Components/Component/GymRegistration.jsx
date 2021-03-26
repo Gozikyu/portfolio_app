@@ -11,6 +11,28 @@ const GymRegistraion = () => {
     [longitude, setLongitude] = useState(""),
     [url, setUrl] = useState("");
 
+  const postGym = () => {
+    axios
+      .post(
+        "http://localhost:3001/gyms",
+        {
+          gym: {
+            name: gymName,
+            latitude: latitude,
+            longitude: longitude,
+            url: url,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   const inputGymName = useCallback(
     (event) => {
       setGymName(event.target.value);
@@ -101,27 +123,7 @@ const GymRegistraion = () => {
               alert("経度は-180~0の間で入力してください");
               return false;
             }
-
-            axios
-              .post(
-                "http://localhost:3001/gyms",
-                {
-                  gym: {
-                    name: gymName,
-                    latitude: latitude,
-                    longitude: longitude,
-                    url: url,
-                  },
-                },
-                { withCredentials: true }
-              )
-              .then((response) => {
-                console.log("registration res", response);
-              })
-              .catch((error) => {
-                console.log("registration error", error);
-              });
-            // event.preventDefault()
+            postGym();
           }}
         />
       </div>

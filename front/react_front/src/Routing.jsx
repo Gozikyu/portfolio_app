@@ -73,7 +73,7 @@ const Routing = () => {
             <Switch>
               <Route exact path="/" component={TopPage} />
               <Route exact path="/users/:id" component={UserMyPage} />
-              <Route exact path="/signup" component={SignUp} />
+              {/* <Route exact path="/signup" component={SignUp} /> */}
 
               <Route
                 exact
@@ -82,6 +82,18 @@ const Routing = () => {
                   <UserEdit {...props} loginUser={loginUser} />
                 )}
               />
+              <Route
+                exact
+                path={"/signup"}
+                render={(props) => (
+                  <SignUp
+                    {...props}
+                    loggedInStatus={loggedInStatus}
+                    login={login}
+                  />
+                )}
+              />
+
               <Route
                 exact
                 path={"/signin"}

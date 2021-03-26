@@ -4,7 +4,6 @@ import axios from "axios";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import SendIcon from "@material-ui/icons/Send";
 import Button from "@material-ui/core/Button";
-// import { isPropsValid } from "@fullcalendar/common";
 
 const useStyles = makeStyles((theme) => ({
   wrapForm: {
@@ -15,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapText: {
     width: "100%",
-  },
-  button: {
-    //margin: theme.spacing(1),
   },
 }));
 
@@ -41,12 +37,10 @@ const ChatInput = (props) => {
           className={classes.wrapText}
           value={chat}
           onChange={(event) => setChat(event.target.value)}
-          //margin="normal"
         />
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
           onClick={() => {
             axios
               .post(

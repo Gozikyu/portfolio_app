@@ -61,6 +61,30 @@ const TrainingRegistration = (props) => {
     getGyms();
   }, []);
 
+  const postTraining = () => {
+    axios
+      .post(
+        url,
+        {
+          training: {
+            menu: menu,
+            date: date,
+            location: location,
+            partner: partner,
+            limit_number: limitNumber,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        props.setChangedTraining(true);
+        alert("トレーニングの登録が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   const inputMenu = useCallback(
     (event) => {
       setMenu(event.target.value);
@@ -163,28 +187,7 @@ const TrainingRegistration = (props) => {
                   setPartner("both");
                 }
               }
-
-              axios
-                .post(
-                  url,
-                  {
-                    training: {
-                      menu: menu,
-                      date: date,
-                      location: location,
-                      partner: partner,
-                      limit_number: limitNumber,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  props.setChangedTraining(true);
-                  alert("トレーニングの登録が完了しました");
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                });
+              postTraining();
             }}
           />
         </div>

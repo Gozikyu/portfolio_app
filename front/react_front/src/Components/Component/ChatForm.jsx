@@ -12,6 +12,26 @@ const ChatForm = (props) => {
     [setChat]
   );
 
+  const postChat = () => {
+    axios
+      .post(
+        "http://localhost:3001/chats",
+        {
+          chat: {
+            content: chat,
+            training_id: props.training.id,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   return (
     <>
       <TextInput
@@ -28,24 +48,7 @@ const ChatForm = (props) => {
       <PrimaryButton
         label={"送信"}
         onClick={() => {
-          axios
-            .post(
-              "http://localhost:3001/chats",
-              {
-                chat: {
-                  content: chat,
-                  training_id: props.training.id,
-                },
-              },
-              { withCredentials: true }
-            )
-            .then((response) => {
-              console.log("registration res", response);
-            })
-            .catch((error) => {
-              console.log("registration error", error);
-            });
-          // event.preventDefault()
+          postChat();
         }}
       />
     </>
