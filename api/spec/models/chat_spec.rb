@@ -9,7 +9,7 @@ RSpec.describe Chat, type: :model do
       location: 'Gym1',
       partner: 'both'
     )
-    @chat = FactoryBot.create(:valid_chat, user_id: @user.id, training_id: @training.id)
+    @chat = FactoryBot.create(:valid_chat, user_id: @user.id, training_id: @training.id, user_name: @user.name)
   end
 
   it 'should be vaild' do
@@ -23,6 +23,11 @@ RSpec.describe Chat, type: :model do
 
   it 'training_id should be present' do
     @chat.training_id = ''
+    expect(@chat).not_to be_valid
+  end
+
+  it 'user_name should be present' do
+    @chat.user_name = ''
     expect(@chat).not_to be_valid
   end
 end

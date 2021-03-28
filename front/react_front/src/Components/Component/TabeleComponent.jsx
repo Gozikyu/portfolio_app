@@ -11,7 +11,6 @@ import axios from "axios";
 
 const useStyles = makeStyles({
   table: {
-    // minWidth: 650,
     display: "inline-block",
   },
   followers: {
@@ -37,7 +36,8 @@ const rows = [
 ];
 
 export default function BasicTable(props) {
-  const [followers, setFollowers] = useState([]);
+  const [followers, setFollowers] = useState([]),
+    [host, setHost] = useState("");
   const classes = useStyles();
 
   const dateFormat = (date) => {
@@ -48,25 +48,23 @@ export default function BasicTable(props) {
     return trainingDate;
   };
 
-  // const getFollowers = () => {
-  //   axios
-  //     .get(
-  //       "http://localhost:3001/trainings/" + props.training.id + "/followers",
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     )
-  //     .then((response) => {
-  //       setFollowers(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("registration error", error);
-  //     });
-  // };
+  const getHost = () => {
+    axios
+      .get("http://localhost:3001/users/" + props.training.user_id, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        setHost(response.data);
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
 
-  // useEffect(() => {
-  //   getFollowers();
-  // }, []);
+  useEffect(() => {
+    getHost();
+  }, []);
 
   return followers ? (
     <TableContainer component={Paper} className={classes.table}>
@@ -77,6 +75,12 @@ export default function BasicTable(props) {
               メニュー
             </TableCell>
             <TableCell align="center">{props.training.menu}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell align="center" className={classes.tableItem}>
+              ホスト
+            </TableCell>
+            <TableCell align="center">{host.name}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>

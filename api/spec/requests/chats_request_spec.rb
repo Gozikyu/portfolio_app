@@ -5,7 +5,7 @@ RSpec.describe 'Chats', type: :request do
     @user = FactoryBot.create(:user)
     @another = FactoryBot.create(:Another)
     @training = @user.trainings.create(FactoryBot.attributes_for(:valid_training))
-    @chat = @user.chats.create(content: 'test', user_id: @user.id, training_id: @training.id)
+    @chat = @user.chats.create(content: 'test', user_id: @user.id, training_id: @training.id, user_name: @user.name)
   end
 
   describe 'GET /show' do
@@ -22,7 +22,8 @@ RSpec.describe 'Chats', type: :request do
       expect do
         post '/chats', params: { chat: {
           content: 'test',
-          training_id: @training.id
+          training_id: @training.id,
+          user_name: @user.name
         } }
       end.to change(Chat, :count).by(1)
     end

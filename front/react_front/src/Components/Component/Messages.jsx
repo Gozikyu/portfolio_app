@@ -113,7 +113,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//avatarが左にあるメッセージ（他人）
 export const MessageLeft = (props) => {
   const message = props.message ? props.message : "no message";
   const timestamp = props.timestamp ? props.timestamp : "";
@@ -139,7 +138,6 @@ export const MessageLeft = (props) => {
     </div>
   );
 };
-//自分のメッセージ
 export const MessageRight = (props) => {
   const classes = useStyles();
   const message = props.message ? props.message : "no message";

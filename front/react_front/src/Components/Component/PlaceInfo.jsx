@@ -18,20 +18,16 @@ const PlaceInfo = (props) => {
           }}
           onMouseOver={() => {
             setSelected(props.gyms);
-            // マウスオーバーで<InfoWindow>が描画されます。
-            console.log(selected);
           }}
           icon={{
             url: pin,
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(15, 15),
             scaledSize: new window.google.maps.Size(30, 30),
-            // ここでアイコン表示の設定ができます。
           }}
         />
 
         {selected ? (
-          // MarkerにマウスオーバーされたときにInfoWindowが表示されます。
           <InfoWindow
             position={{
               lat: parseFloat(selected.latitude),
@@ -60,7 +56,6 @@ const PlaceInfo = (props) => {
             }}
             onMouseOver={() => {
               setSelected(gym);
-              // マウスオーバーで<InfoWindow>が描画されます。
               console.log(selected);
             }}
             icon={{
@@ -68,13 +63,11 @@ const PlaceInfo = (props) => {
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
-              // ここでアイコン表示の設定ができます。
             }}
           />
         ))}
 
         {selected ? (
-          // MarkerにマウスオーバーされたときにInfoWindowが表示されます。
           <InfoWindow
             position={{
               lat: parseFloat(selected.latitude),

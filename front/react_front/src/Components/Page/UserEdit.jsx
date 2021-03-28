@@ -15,6 +15,31 @@ const UserEdit = (props) => {
 
   const urlId = location.pathname.split("/")[2];
 
+  const editUser = () => {
+    axios
+      .patch(
+        "http://localhost:3001/users/" + urlId,
+        {
+          user: {
+            name: username,
+            email: email,
+            password: password,
+            password_confirmation: confirmPassword,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+        const createdId = response.data.id;
+        console.log(createdId);
+        history.push({ pathname: "/users/" + createdId });
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
+
   const checkCorrectUser = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
@@ -29,8 +54,6 @@ const UserEdit = (props) => {
             history.push("/");
           }
         } else {
-          // alert("ログインしてください");
-          // history.push("/signin");
         }
       })
       .catch((error) => {
@@ -79,7 +102,7 @@ const UserEdit = (props) => {
   } else {
     return (
       <div className="c-section-container">
-        <h2 className="u-text__headline u-text-center">アカウント登録</h2>
+        <h2 className="u-text__headline u-text-center">アカウント情報変更</h2>
         <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
@@ -151,30 +174,7 @@ const UserEdit = (props) => {
                 alert("パスワードと確認用パスワードが一致しません。");
                 return false;
               }
-
-              axios
-                .patch(
-                  "http://localhost:3001/users/" + urlId,
-                  {
-                    user: {
-                      name: username,
-                      email: email,
-                      password: password,
-                      password_confirmation: confirmPassword,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  console.log("registration res", response);
-                  const createdId = response.data.id;
-                  console.log(createdId);
-                  history.push({ pathname: "/users/" + createdId });
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                });
-              // event.preventDefault()
+              editUser();
             }}
           />
         </div>

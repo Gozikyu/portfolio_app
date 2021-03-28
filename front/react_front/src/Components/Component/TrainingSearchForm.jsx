@@ -14,7 +14,6 @@ const TrainingSearchForm = (props) => {
     [partner, setPartner] = useState(""),
     [limitNumber, setLimitNumber] = useState(1),
     [currentUser, setCurrentUser] = useState(""),
-    [id, SetId] = useState(""),
     [searchedTrainings, setSearchedTrainings] = useState([]),
     [allTrainings, setAllTrainings] = useState({}),
     [gymsName, setGymsName] = useState({}),
@@ -25,16 +24,6 @@ const TrainingSearchForm = (props) => {
     男性のみ: "male",
     女性のみ: "female",
     どちらでも可: "both",
-  };
-
-  const url = "http://localhost:3001/trainings";
-
-  const dateFormat = (date) => {
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var trainingDate = year + "-" + month + "-" + day;
-    return trainingDate;
   };
 
   const searchTrainings = () => {
@@ -54,38 +43,16 @@ const TrainingSearchForm = (props) => {
       )
       .then((response) => {
         setSearchedTrainings(response.data);
-        // props.setChangedTraining(true);
         console.log(response);
         console.log(date);
-        alert("トレーニングの検索が完了しました");
+        history.push({
+          pathname: "/searchResult",
+          state: { training: response.data },
+        });
       })
       .catch((error) => {
         console.log("registration error", error);
       });
-    // event.preventDefault()
-  };
-
-  const createChat = () => {
-    axios
-      .post(
-        "http://localhost:3001/chats",
-        {
-          chat: {
-            content: "test",
-            training_id: 1,
-          },
-        },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        // props.setChangedTraining(true);
-        console.log(response);
-        alert("test done");
-      })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
-    // event.preventDefault()
   };
 
   const checkLoginStatus = () => {
@@ -93,12 +60,9 @@ const TrainingSearchForm = (props) => {
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
-        // SetId(response.data.user.id);
         if (response.data.logged_in) {
           return;
         } else {
-          // alert("ログインしてください");
-          // history.push("/signin");
         }
       })
       .catch((data) => {
@@ -176,7 +140,6 @@ const TrainingSearchForm = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング検索</h2>
-        <div className="module-spacer--medium" />
         <TextInput
           fullWidth={true}
           label={"メニュー名"}
@@ -225,19 +188,7 @@ const TrainingSearchForm = (props) => {
             label={"トレーニングを検索する"}
             onClick={() => searchTrainings()}
           />
-          <PrimaryButton label={"chat test"} onClick={() => createChat()} />
         </div>
-        {searchedTrainings.length === 0 ? (
-          <></>
-        ) : (
-          searchedTrainings.map((searchedTraining, i) => {
-            return (
-              <p key={i}>
-                {searchedTraining.user_id} {searchedTraining.menu}
-              </p>
-            );
-          })
-        )}
       </div>
     );
   }

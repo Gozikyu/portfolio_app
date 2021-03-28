@@ -45,7 +45,6 @@ const ChatComponent = (props) => {
   const classes = useStyles();
 
   const dateFormat = (date) => {
-    // var year = date.getFullYear();
     var month = date.slice(5, 7);
     var day = date.slice(8, 10);
     var time = date.slice(11, 16);
@@ -61,7 +60,6 @@ const ChatComponent = (props) => {
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
-          console.log(response);
         } else {
         }
       })
@@ -82,6 +80,7 @@ const ChatComponent = (props) => {
       .then((chats) => {
         setTrainingChats(chats.data);
         setIsLoaded(true);
+        console.log(chats);
       })
       .catch((data) => {
         console.log(data);
@@ -112,23 +111,21 @@ const ChatComponent = (props) => {
       <Paper className={classes.paper} zdepth={2}>
         <Paper id="style-1" className={classes.messagesBody}>
           {trainingChats.map((trainingChat, i) => {
-            console.log(trainingChat.id);
-            console.log(loginUser.id);
             return trainingChat.user_id == loginUser.id ? (
               <MessageRight
                 key={i}
                 message={trainingChat.content}
                 timestamp={dateFormat(trainingChat.created_at)}
-                photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-                displayName="まさりぶ"
+                photoURL=""
+                displayName={trainingChat.user_name}
                 avatarDisp={false}
               />
             ) : (
               <MessageLeft
                 message={trainingChat.content}
                 timestamp={dateFormat(trainingChat.created_at)}
-                photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-                displayName="まさりぶ"
+                photoURL=""
+                displayName={trainingChat.user_name}
                 avatarDisp={false}
               />
             );
@@ -139,6 +136,7 @@ const ChatComponent = (props) => {
           currentState={changeState}
           resetChat={resetChat}
           training={props.training}
+          loginUser={loginUser}
         />
       </Paper>
     </div>
