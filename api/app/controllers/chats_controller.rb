@@ -3,10 +3,6 @@ class ChatsController < ApplicationController
 
   def show
     @chat = Chat.where(training_id: params[:id])
-    # @chat.map{|chat|
-    #   @user=User.find(chat.user_id)
-    #   chat[user_name]=@user.name
-    # }
     render json: @chat
   end
 
@@ -27,14 +23,6 @@ class ChatsController < ApplicationController
       render json: { status: 500, message: 'トレーニング予定削除失敗' }
     end
   end
-
-  # def get_username
-  #   @chat = Chat.where(training_id: params[:id])
-  #   @chat.map((chat,i)=>{
-  #     @user=User.find(chat.user_id)
-  #     @chat[i][user_name]=@user.name
-  #   })
-  # end
 
   private
 
