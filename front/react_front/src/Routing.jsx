@@ -17,7 +17,6 @@ import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
 import SearchResultPage from "./Components/Page/SearchResultPage";
 import Auth from "./Auth";
-// import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
 import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
 import Header from "./Components/Header";
@@ -38,23 +37,24 @@ const Routing = () => {
     setLoggedInStatus(false);
   };
 
+  console.log(loggedInStatus);
+
   const checkLoginStatus = () => {
     axios
       .get("http://localhost:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
-          console.log(loggedInStatus);
+          setLoggedInStatus(true);
         } else {
           setLoggedInStatus(false);
-          history.push("/signin");
+          // history.push("/signin");
         }
       })
       .catch((error) => {
         console.log("ログインステータスエラー", error);
       });
     setIsLoaded(true);
-    console.log(isloaded);
   };
 
   useEffect(() => {
@@ -67,70 +67,78 @@ const Routing = () => {
     return (
       <div className="App">
         <Router>
-          {loggedInStatus ? <Redirect to={"/signin"} /> : <></>}
-          <Header loginUser={loginUser} />
-          <Auth>
-            <Switch>
-              <Route exact path="/" component={TopPage} />
-              <Route exact path="/users/:id" component={UserMyPage} />
-              {/* <Route exact path="/signup" component={SignUp} /> */}
+          <Header
+            loginUser={loginUser}
+            logout={logout}
+            loggedInStatus={loggedInStatus}
+          />
+          <Switch>
+            <Route
+              exact
+              path={"/signin"}
+              render={(props) => (
+                <SignIn
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
 
-              <Route
-                exact
-                path={"/users/:id/edit"}
-                render={(props) => (
-                  <UserEdit {...props} loginUser={loginUser} />
-                )}
-              />
-              <Route
-                exact
-                path={"/signup"}
-                render={(props) => (
-                  <SignUp
-                    {...props}
-                    loggedInStatus={loggedInStatus}
-                    login={login}
-                  />
-                )}
-              />
+            <Auth loggedInStatus={loggedInStatus}>
+              <Switch>
+                <Route exact path="/" component={TopPage} />
+                <Route exact path="/users/:id" component={UserMyPage} />
 
-              <Route
-                exact
-                path={"/signin"}
-                render={(props) => (
-                  <SignIn
-                    {...props}
-                    loggedInStatus={loggedInStatus}
-                    login={login}
-                  />
-                )}
-              />
+                <Route
+                  exact
+                  path={"/users/:id/edit"}
+                  render={(props) => (
+                    <UserEdit {...props} loginUser={loginUser} />
+                  )}
+                />
+                <Route
+                  exact
+                  path={"/signup"}
+                  render={(props) => (
+                    <SignUp
+                      {...props}
+                      loggedInStatus={loggedInStatus}
+                      login={login}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path={"/users"}
-                render={(props) => (
-                  <UserList {...props} loggedInStatus={loggedInStatus} />
-                )}
-              />
+                <Route
+                  exact
+                  path={"/users"}
+                  render={(props) => (
+                    <UserList {...props} loggedInStatus={loggedInStatus} />
+                  )}
+                />
 
-              <Route exact path="/gyms" component={GymsAndMap} />
-              <Route
-                exact
-                path="/gyms/registration"
-                component={GymRegistraion}
-              />
-              <Route
-                exact
-                path="/users/:userId/trainings/:trainingId"
-                component={TrainingPage}
-              />
+                <Route exact path="/gyms" component={GymsAndMap} />
+                <Route
+                  exact
+                  path="/gyms/registration"
+                  component={GymRegistraion}
+                />
+                <Route
+                  exact
+                  path="/users/:userId/trainings/:trainingId"
+                  component={TrainingPage}
+                />
 
-              <Route exact path="/searchResult" component={SearchResultPage} />
+                <Route
+                  exact
+                  path="/searchResult"
+                  component={SearchResultPage}
+                />
 
-              <Route component={NotFound} />
-            </Switch>
-          </Auth>
+                <Route component={NotFound} />
+              </Switch>
+            </Auth>
+          </Switch>
         </Router>
       </div>
     );
