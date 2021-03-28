@@ -66,7 +66,6 @@ export default function BasicTable(props) {
     getHost();
   }, []);
 
-  console.log(host);
   return followers ? (
     <TableContainer component={Paper} className={classes.table}>
       <Table aria-label="simple table">

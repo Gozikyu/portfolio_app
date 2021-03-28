@@ -49,6 +49,7 @@ const ChatInput = (props) => {
                   chat: {
                     content: chat,
                     training_id: props.training.id,
+                    user_name: props.loginUser.name,
                   },
                 },
                 { withCredentials: true }
