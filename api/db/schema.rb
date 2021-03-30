@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_03_28_061431) do
 
-  create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chats", charset: "utf8", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
     t.bigint "training_id", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_03_28_061431) do
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
-  create_table "gyms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "gyms", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_03_28_061431) do
     t.string "url"
   end
 
-  create_table "training_relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "training_relationships", charset: "utf8", force: :cascade do |t|
     t.integer "followingT_id"
     t.integer "follower_id"
     t.datetime "created_at", precision: 6, null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_03_28_061431) do
     t.index ["followingT_id"], name: "index_training_relationships_on_followingT_id"
   end
 
-  create_table "trainings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "trainings", charset: "utf8", force: :cascade do |t|
     t.string "menu"
     t.datetime "date"
     t.string "location"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_03_28_061431) do
     t.index ["user_id"], name: "index_trainings_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false

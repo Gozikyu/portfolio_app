@@ -28,3 +28,4 @@
 
 # # Added by Yuta
 # ../front/react_front/node_modules/
+.env

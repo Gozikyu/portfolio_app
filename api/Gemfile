@@ -33,10 +33,11 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'gimei'
-  gem 'mimemagic'
+  # gem 'mimemagic'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'dotenv-rails'
 end
 
 group :development do
