@@ -69,9 +69,21 @@ services:
       - public-data:/webapp/public
       - tmp-data:/webapp/tmp
     ports:
-      - 80:80
+      - 3001:80
     depends_on:
       - app
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/usr/src/app
+    command: sh -c "cd react_front && yarn start"
+    ports:
+      - "3000:3000"
+# volumes:
+#   mysql-data:
+#     driver: local
 volumes:
   public-data:
   tmp-data:
