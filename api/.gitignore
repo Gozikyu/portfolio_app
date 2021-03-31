@@ -28,3 +28,5 @@
 
 # # Added by Yuta
 # ../front/react_front/node_modules/
+/environments/db.env
+
