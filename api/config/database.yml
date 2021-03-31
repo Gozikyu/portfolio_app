@@ -36,11 +36,11 @@ default: &default
 
 development:
   <<: *default
-  database: webapp_development
+  database: myapp_development
 
 test:
   <<: *default
-  database: webapp_test
+  database: myapp_test
 
 production:
   <<: *default
