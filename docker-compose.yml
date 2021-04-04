@@ -89,4 +89,4 @@ volumes:
   public-data:
   tmp-data:
   log-data:
-  # db-data:
+  db-data:
