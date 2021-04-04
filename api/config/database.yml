@@ -41,8 +41,8 @@ development:
 test:
   <<: *default
   database: myapp_test
-  host: <%= 'db'|| '127.0.0.1' %>
-  # host: <%= ENV['MYSQL_ROOT_HOST'] || 'db' %>
+  # host: <%= 'db'|| '127.0.0.1' %>
+  # host: <%= '127.0.0.1' || 'db'%>
 
 production:
   <<: *default
