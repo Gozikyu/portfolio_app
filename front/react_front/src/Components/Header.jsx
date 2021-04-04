@@ -46,7 +46,7 @@ const Header = (props) => {
   const logout = () => {
     if (window.confirm("ログアウトしてよろしいですか？")) {
       axios
-        .delete("http://52.195.8.187:3001/logout", {
+        .delete("http://3.112.0.252:3001/logout", {
           withCredentials: true,
         })
         .then((response) => {

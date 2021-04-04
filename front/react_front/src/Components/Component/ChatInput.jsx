@@ -44,7 +44,7 @@ const ChatInput = (props) => {
           onClick={() => {
             axios
               .post(
-                "http://52.195.8.187:3001/chats",
+                "http://3.112.0.252:3001/chats",
                 {
                   chat: {
                     content: chat,

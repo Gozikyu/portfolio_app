@@ -50,7 +50,7 @@ const TrainingPage = (props) => {
 
   const followTraining = () => {
     axios
-      .get("http://52.195.8.187:3001/users/" + "trainings/" + trainingId, {
+      .get("http://3.112.0.252:3001/users/" + "trainings/" + trainingId, {
         withCredentials: true,
       })
       .then((response) => {
@@ -67,7 +67,7 @@ const TrainingPage = (props) => {
   const unfollowTraining = () => {
     axios
       .delete(
-        "http://52.195.8.187:3001/users/" +
+        "http://3.112.0.252:3001/users/" +
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -89,7 +89,7 @@ const TrainingPage = (props) => {
   const deleteTraining = () => {
     if (window.confirm("削除してよろしいですか？"))
       axios
-        .delete("http://52.195.8.187:3001/trainings/" + training.id, {
+        .delete("http://3.112.0.252:3001/trainings/" + training.id, {
           withCredentials: true,
         })
         .then((response) => {
@@ -105,7 +105,7 @@ const TrainingPage = (props) => {
 
   const getTraining = () => {
     axios
-      .get("http://52.195.8.187:3001/trainings/" + userId, {
+      .get("http://3.112.0.252:3001/trainings/" + userId, {
         withCredentials: true,
       })
       .then((trainingData) => {
@@ -122,7 +122,7 @@ const TrainingPage = (props) => {
 
   const getGyms = () => {
     axios
-      .get("http://52.195.8.187:3001/gyms", { withCredentials: true })
+      .get("http://3.112.0.252:3001/gyms", { withCredentials: true })
       .then((results) => {
         setGym(results.data.find((gym) => gym.name == training.location));
       })
@@ -133,7 +133,7 @@ const TrainingPage = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://52.195.8.187:3001/login", { withCredentials: true })
+      .get("http://3.112.0.252:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -148,7 +148,7 @@ const TrainingPage = (props) => {
   const checkFollowed = () => {
     axios
       .get(
-        "http://52.195.8.187:3001/users/" +
+        "http://3.112.0.252:3001/users/" +
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -166,7 +166,7 @@ const TrainingPage = (props) => {
 
   const getFollowers = () => {
     axios
-      .get("http://52.195.8.187:3001/trainings/" + training.id + "/followers", {
+      .get("http://3.112.0.252:3001/trainings/" + training.id + "/followers", {
         withCredentials: true,
       })
       .then((response) => {

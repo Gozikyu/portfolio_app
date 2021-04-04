@@ -15,7 +15,7 @@ const SignUp = (props) => {
   const signIn = () => {
     axios
       .post(
-        "http://52.195.8.187:3001/login",
+        "http://3.112.0.252:3001/login",
         {
           user: {
             email: email,
@@ -40,7 +40,7 @@ const SignUp = (props) => {
   const signUp = () => {
     axios
       .post(
-        "http://52.195.8.187:3001/users",
+        "http://3.112.0.252:3001/users",
         {
           user: {
             name: username,

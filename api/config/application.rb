@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://52.195.8.187:3000'
+        origins 'http://3.112.0.252:3000'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -47,7 +47,7 @@ module Myapp
     end
 
      #config.hosts << '.example.com'
-      config.hosts << "52.195.8.187"
+      config.hosts << "3.112.0.252"
 
     # セッションメソッドを有効にする
     config.middleware.use ActionDispatch::Cookies
@@ -62,7 +62,7 @@ module Myapp
 
     config.action_dispatch.default_headers = {
       'Access-Control-Allow-Credentials' => 'true',
-      'Access-Control-Allow-Origin' => 'http://52.195.8.187:3000',
+      'Access-Control-Allow-Origin' => 'http://3.112.0.252:3000',
       'Access-Control-Request-Method' => '*'
     }
   end

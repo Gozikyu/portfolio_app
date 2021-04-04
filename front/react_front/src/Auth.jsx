@@ -10,7 +10,7 @@ const Auth = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://52.195.8.187:3001/login", { withCredentials: true })
+      .get("http://3.112.0.252:3001/login", { withCredentials: true })
       .then((response) => {
         console.log("check");
         setLoggedInStatus(response.data.logged_in);

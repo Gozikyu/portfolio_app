@@ -24,7 +24,7 @@ const GymsAndMap = () => {
 
   const getGyms = () => {
     axios
-      .get("http://52.195.8.187:3001/gyms", { withCredentials: true })
+      .get("http://3.112.0.252:3001/gyms", { withCredentials: true })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);

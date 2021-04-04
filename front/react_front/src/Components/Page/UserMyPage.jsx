@@ -30,7 +30,7 @@ const UserMyPage = () => {
 
   const getLoginUser = () => {
     axios
-      .get("http://52.195.8.187:3001/login", { withCredentials: true })
+      .get("http://3.112.0.252:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -47,7 +47,7 @@ const UserMyPage = () => {
 
   const getTraining = () => {
     axios
-      .get("http://52.195.8.187:3001/trainings/" + loginUser.id, {
+      .get("http://3.112.0.252:3001/trainings/" + loginUser.id, {
         withCredentials: true,
       })
       .then((results) => {

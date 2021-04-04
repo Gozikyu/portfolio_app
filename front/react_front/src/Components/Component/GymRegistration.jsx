@@ -14,7 +14,7 @@ const GymRegistraion = () => {
   const postGym = () => {
     axios
       .post(
-        "http://52.195.8.187:3001/gyms",
+        "http://3.112.0.252:3001/gyms",
         {
           gym: {
             name: gymName,
