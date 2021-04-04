@@ -41,7 +41,7 @@ const Routing = () => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://3.112.0.252:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);

@@ -15,7 +15,7 @@ const SignUp = (props) => {
   const signIn = () => {
     axios
       .post(
-        "http://3.112.0.252:3001/login",
+        process.env.REACT_APP_HOST + "/login",
         {
           user: {
             email: email,
@@ -40,7 +40,7 @@ const SignUp = (props) => {
   const signUp = () => {
     axios
       .post(
-        "http://3.112.0.252:3001/users",
+        process.env.REACT_APP_HOST + "/users",
         {
           user: {
             name: username,

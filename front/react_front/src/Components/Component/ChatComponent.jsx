@@ -54,7 +54,7 @@ const ChatComponent = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://3.112.0.252:3001/login/", {
+      .get(process.env.REACT_APP_HOST + "/login/", {
         withCredentials: true,
       })
       .then((response) => {
@@ -74,7 +74,7 @@ const ChatComponent = (props) => {
 
   const getChats = () => {
     axios
-      .get("http://3.112.0.252:3001/chats/" + props.training.id, {
+      .get(process.env.REACT_APP_HOST + "/chats/" + props.training.id, {
         withCredentials: true,
       })
       .then((chats) => {

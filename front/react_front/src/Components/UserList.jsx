@@ -29,7 +29,7 @@ const UserList = (props) => {
   const getUsers = () => {
     console.log("move useEffect");
     axios
-      .get("http://3.112.0.252:3001/users", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/users", { withCredentials: true })
       .then((results) => {
         setUsers(results.data);
       })
@@ -41,7 +41,7 @@ const UserList = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://3.112.0.252:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
         console.log("registration res", response.data);
         setCurrentUser(response.data.user);
