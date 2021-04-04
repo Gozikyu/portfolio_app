@@ -44,7 +44,7 @@ const ChatInput = (props) => {
           onClick={() => {
             axios
               .post(
-                "http://localhost:3001/chats",
+                process.env.REACT_APP_HOST + "/chats",
                 {
                   chat: {
                     content: chat,

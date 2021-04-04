@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:3000'
+        origins 'http://3.112.0.252:3000', 'http://localhost:3000'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -47,6 +47,7 @@ module Myapp
     end
 
     config.hosts << '.example.com'
+    config.hosts << '3.112.0.252'
 
     # セッションメソッドを有効にする
     config.middleware.use ActionDispatch::Cookies
@@ -58,5 +59,16 @@ module Myapp
 
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Credentials' => 'true',
+      'Access-Control-Allow-Origin' =>
+      if Rails.env.production?
+        'http://3.112.0.252:3000'
+      else
+        'http://localhost:3000'
+      end,
+      'Access-Control-Request-Method' => '*'
+    }
   end
 end

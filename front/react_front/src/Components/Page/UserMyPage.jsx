@@ -30,7 +30,7 @@ const UserMyPage = () => {
 
   const getLoginUser = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -47,7 +47,7 @@ const UserMyPage = () => {
 
   const getTraining = () => {
     axios
-      .get("http://localhost:3001/trainings/" + loginUser.id, {
+      .get(process.env.REACT_APP_HOST + "/trainings/" + loginUser.id, {
         withCredentials: true,
       })
       .then((results) => {

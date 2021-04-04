@@ -29,7 +29,7 @@ const TrainingSearchForm = (props) => {
   const searchTrainings = () => {
     axios
       .post(
-        "http://localhost:3001/trainings/search",
+        process.env.REACT_APP_HOST + "/trainings/search",
         {
           search: {
             menu: menu,
@@ -57,7 +57,7 @@ const TrainingSearchForm = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
         if (response.data.logged_in) {
@@ -72,7 +72,7 @@ const TrainingSearchForm = (props) => {
 
   const getAllTrainings = () => {
     axios
-      .get("http://localhost:3001/trainings", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/trainings", { withCredentials: true })
       .then((results) => {
         setAllTrainings(results.data);
         setIsLoaded(true);
@@ -84,7 +84,7 @@ const TrainingSearchForm = (props) => {
 
   const getGyms = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
       .then((results) => {
         results.data.map((gym) => {
           gymsName[gym.name] = gym.name;

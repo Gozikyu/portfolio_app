@@ -15,7 +15,7 @@ const ChatForm = (props) => {
   const postChat = () => {
     axios
       .post(
-        "http://localhost:3001/chats",
+        process.env.REACT_APP_HOST + "/chats",
         {
           chat: {
             content: chat,

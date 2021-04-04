@@ -42,11 +42,11 @@ const TopPage = () => {
   const location = useLocation();
   const history = useHistory();
   const urlId = location.pathname.split("users/")[1];
-  const url = "http://localhost:3001/users/" + urlId;
+  const url = process.env.REACT_APP_HOST + "/users/" + urlId;
 
   const getLoginUser = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -63,7 +63,7 @@ const TopPage = () => {
 
   const getGyms = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);

@@ -50,7 +50,7 @@ export default function BasicTable(props) {
 
   const getHost = () => {
     axios
-      .get("http://localhost:3001/users/" + props.training.user_id, {
+      .get(process.env.REACT_APP_HOST + "/users/" + props.training.user_id, {
         withCredentials: true,
       })
       .then((response) => {

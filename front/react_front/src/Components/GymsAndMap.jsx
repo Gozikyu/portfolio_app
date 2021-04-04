@@ -24,7 +24,7 @@ const GymsAndMap = () => {
 
   const getGyms = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);
