@@ -41,7 +41,7 @@ const Routing = () => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get("http://52.195.8.187:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);

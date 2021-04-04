@@ -12,7 +12,7 @@ const SignIn = (props) => {
   const signIn = () => {
     axios
       .post(
-        "http://localhost:3001/login",
+        "http://52.195.8.187:3001/login",
         {
           user: {
             email: email,

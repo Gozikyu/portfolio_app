@@ -3,7 +3,8 @@ import axios from "axios";
 import { PrimaryButton } from "./UIkit/index";
 
 const TrainingDeleteButton = (props) => {
-  const trainingUrl = "http://localhost:3001/trainings/" + props.training.id;
+  const trainingUrl =
+    "http://l52.195.8.187:3001/trainings/" + props.training.id;
 
   return (
     <div>

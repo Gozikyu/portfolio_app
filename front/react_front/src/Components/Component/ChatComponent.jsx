@@ -54,7 +54,7 @@ const ChatComponent = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login/", {
+      .get("http://52.195.8.187:3001/login/", {
         withCredentials: true,
       })
       .then((response) => {
@@ -74,7 +74,7 @@ const ChatComponent = (props) => {
 
   const getChats = () => {
     axios
-      .get("http://localhost:3001/chats/" + props.training.id, {
+      .get("http://52.195.8.187:3001/chats/" + props.training.id, {
         withCredentials: true,
       })
       .then((chats) => {

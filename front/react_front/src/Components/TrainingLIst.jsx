@@ -29,9 +29,9 @@ const TrainingList = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get("http://52.195.8.187:3001/login", { withCredentials: true })
       .then((response) => {
-        setUrl("http://localhost:3001/trainings/" + response.data.user.id);
+        setUrl("http://52.195.8.187:3001/trainings/" + response.data.user.id);
         if (response.data.logged_in) {
           return;
         } else {

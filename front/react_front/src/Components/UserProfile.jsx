@@ -16,11 +16,11 @@ const UserProfile = () => {
   const location = useLocation();
   const history = useHistory();
   const urlId = location.pathname.split("users/")[1];
-  const url = "http://localhost:3001/users/" + urlId;
+  const url = "http://52.195.8.187:3001/users/" + urlId;
 
   const checkCorrectUser = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get("http://52.195.8.187:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           const loginUserId = response.data.user.id;
@@ -44,7 +44,7 @@ const UserProfile = () => {
 
   const getTraining = () => {
     axios
-      .get("http://localhost:3001/trainings/" + urlId, {
+      .get("http://52.195.8.187:3001/trainings/" + urlId, {
         withCredentials: true,
       })
       .then((results) => {
