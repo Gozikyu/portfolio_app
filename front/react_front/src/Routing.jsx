@@ -85,55 +85,59 @@ const Routing = () => {
               )}
             />
 
-            {/* <Auth loggedInStatus={loggedInStatus}> */}
-            <Switch>
-              <Route exact path="/" component={TopPage} />
-              <Route exact path="/users/:id" component={UserMyPage} />
+            <Auth loggedInStatus={loggedInStatus}>
+              <Switch>
+                <Route exact path="/" component={TopPage} />
+                <Route exact path="/users/:id" component={UserMyPage} />
 
-              <Route
-                exact
-                path={"/users/:id/edit"}
-                render={(props) => (
-                  <UserEdit {...props} loginUser={loginUser} />
-                )}
-              />
-              <Route
-                exact
-                path={"/signup"}
-                render={(props) => (
-                  <SignUp
-                    {...props}
-                    loggedInStatus={loggedInStatus}
-                    login={login}
-                  />
-                )}
-              />
+                <Route
+                  exact
+                  path={"/users/:id/edit"}
+                  render={(props) => (
+                    <UserEdit {...props} loginUser={loginUser} />
+                  )}
+                />
+                <Route
+                  exact
+                  path={"/signup"}
+                  render={(props) => (
+                    <SignUp
+                      {...props}
+                      loggedInStatus={loggedInStatus}
+                      login={login}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path={"/users"}
-                render={(props) => (
-                  <UserList {...props} loggedInStatus={loggedInStatus} />
-                )}
-              />
+                <Route
+                  exact
+                  path={"/users"}
+                  render={(props) => (
+                    <UserList {...props} loggedInStatus={loggedInStatus} />
+                  )}
+                />
 
-              <Route exact path="/gyms" component={GymsAndMap} />
-              <Route
-                exact
-                path="/gyms/registration"
-                component={GymRegistraion}
-              />
-              <Route
-                exact
-                path="/users/:userId/trainings/:trainingId"
-                component={TrainingPage}
-              />
+                <Route exact path="/gyms" component={GymsAndMap} />
+                <Route
+                  exact
+                  path="/gyms/registration"
+                  component={GymRegistraion}
+                />
+                <Route
+                  exact
+                  path="/users/:userId/trainings/:trainingId"
+                  component={TrainingPage}
+                />
 
-              <Route exact path="/searchResult" component={SearchResultPage} />
+                <Route
+                  exact
+                  path="/searchResult"
+                  component={SearchResultPage}
+                />
 
-              <Route component={NotFound} />
-            </Switch>
-            {/* </Auth> */}
+                <Route component={NotFound} />
+              </Switch>
+            </Auth>
           </Switch>
         </Router>
       </div>
