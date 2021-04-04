@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://3.112.0.252:3000','http://localhost:3000'
+        origins 'http://3.112.0.252:3000', 'http://localhost:3000'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -62,12 +62,12 @@ module Myapp
 
     config.action_dispatch.default_headers = {
       'Access-Control-Allow-Credentials' => 'true',
-      'Access-Control-Allow-Origin' => 
-      if Rails.env.production? then
+      'Access-Control-Allow-Origin' =>
+      if Rails.env.production?
         'http://3.112.0.252:3000'
       else
         'http://localhost:3000'
-      end, 
+      end,
       'Access-Control-Request-Method' => '*'
     }
   end
