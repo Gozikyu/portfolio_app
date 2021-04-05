@@ -17,7 +17,7 @@ const CalendarComponent = (props) => {
         start: userTraining.date,
         allDay: true,
         url:
-          "http://localhost:3000/users/" +
+          "http://52.195.8.187:3000/users/" +
           userTraining.user_id +
           "/trainings/" +
           userTraining.id,

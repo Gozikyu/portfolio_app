@@ -11,7 +11,6 @@ import TopPage from "./Components/Page/TopPage";
 import TrainingPage from "./Components/Page/TrainingPage";
 import UserMyPage from "./Components/Page/UserMyPage";
 import UserList from "./Components/UserList";
-import UserProfile from "./Components/UserProfile";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
@@ -41,7 +40,7 @@ const Routing = () => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get("http://52.195.8.187:3001/login", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -85,7 +84,6 @@ const Routing = () => {
               )}
             />
 
-            <Auth loggedInStatus={loggedInStatus}>
               <Switch>
                 <Route exact path="/" component={TopPage} />
                 <Route exact path="/users/:id" component={UserMyPage} />
@@ -137,7 +135,6 @@ const Routing = () => {
 
                 <Route component={NotFound} />
               </Switch>
-            </Auth>
           </Switch>
         </Router>
       </div>
