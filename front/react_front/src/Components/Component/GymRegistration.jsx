@@ -14,7 +14,11 @@ const GymRegistraion = () => {
   const postGym = () => {
     axios
       .post(
+<<<<<<< HEAD
         "http://52.195.8.187:3001/gyms",
+=======
+        process.env.REACT_APP_HOST + "/gyms",
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         {
           gym: {
             name: gymName,

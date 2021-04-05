@@ -15,7 +15,11 @@ const ChatForm = (props) => {
   const postChat = () => {
     axios
       .post(
+<<<<<<< HEAD
         "http://52.195.8.187:3001/chats",
+=======
+        process.env.REACT_APP_HOST + "/chats",
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         {
           chat: {
             content: chat,

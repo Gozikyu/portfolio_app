@@ -54,7 +54,11 @@ const ChatComponent = (props) => {
 
   const checkLoginStatus = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/login/", {
+=======
+      .get(process.env.REACT_APP_HOST + "/login/", {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         withCredentials: true,
       })
       .then((response) => {
@@ -74,7 +78,11 @@ const ChatComponent = (props) => {
 
   const getChats = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/chats/" + props.training.id, {
+=======
+      .get(process.env.REACT_APP_HOST + "/chats/" + props.training.id, {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         withCredentials: true,
       })
       .then((chats) => {

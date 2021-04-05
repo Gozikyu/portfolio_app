@@ -50,7 +50,11 @@ const TrainingPage = (props) => {
 
   const followTraining = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/users/" + "trainings/" + trainingId, {
+=======
+      .get(process.env.REACT_APP_HOST + "/users/" + "trainings/" + trainingId, {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         withCredentials: true,
       })
       .then((response) => {
@@ -67,7 +71,12 @@ const TrainingPage = (props) => {
   const unfollowTraining = () => {
     axios
       .delete(
+<<<<<<< HEAD
         "http://52.195.8.187:3001/users/" +
+=======
+        process.env.REACT_APP_HOST +
+          "/users/" +
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -89,7 +98,11 @@ const TrainingPage = (props) => {
   const deleteTraining = () => {
     if (window.confirm("削除してよろしいですか？"))
       axios
+<<<<<<< HEAD
         .delete("http://52.195.8.187:3001/trainings/" + training.id, {
+=======
+        .delete(process.env.REACT_APP_HOST + "/trainings/" + training.id, {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
           withCredentials: true,
         })
         .then((response) => {
@@ -105,7 +118,11 @@ const TrainingPage = (props) => {
 
   const getTraining = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/trainings/" + userId, {
+=======
+      .get(process.env.REACT_APP_HOST + "/trainings/" + userId, {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         withCredentials: true,
       })
       .then((trainingData) => {
@@ -122,7 +139,11 @@ const TrainingPage = (props) => {
 
   const getGyms = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/gyms", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((results) => {
         setGym(results.data.find((gym) => gym.name == training.location));
       })
@@ -133,7 +154,11 @@ const TrainingPage = (props) => {
 
   const checkLoginStatus = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/login", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -148,7 +173,12 @@ const TrainingPage = (props) => {
   const checkFollowed = () => {
     axios
       .get(
+<<<<<<< HEAD
         "http://52.195.8.187:3001/users/" +
+=======
+        process.env.REACT_APP_HOST +
+          "/users/" +
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -166,9 +196,18 @@ const TrainingPage = (props) => {
 
   const getFollowers = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/trainings/" + training.id + "/followers", {
         withCredentials: true,
       })
+=======
+      .get(
+        process.env.REACT_APP_HOST + "/trainings/" + training.id + "/followers",
+        {
+          withCredentials: true,
+        }
+      )
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((response) => {
         setFollowers(response.data);
       })

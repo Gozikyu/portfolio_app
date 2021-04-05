@@ -38,7 +38,11 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
+<<<<<<< HEAD
         origins 'http://52.195.8.187:3000'
+=======
+        origins 'http://3.112.0.252:3000', 'http://localhost:3000'
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -46,8 +50,13 @@ module Myapp
       end
     end
 
+<<<<<<< HEAD
      #config.hosts << '.example.com'
       config.hosts << "52.195.8.187"
+=======
+    config.hosts << '.example.com'
+    config.hosts << '3.112.0.252'
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
 
     # セッションメソッドを有効にする
     config.middleware.use ActionDispatch::Cookies
@@ -62,7 +71,16 @@ module Myapp
 
     config.action_dispatch.default_headers = {
       'Access-Control-Allow-Credentials' => 'true',
+<<<<<<< HEAD
       'Access-Control-Allow-Origin' => 'http://52.195.8.187:3000',
+=======
+      'Access-Control-Allow-Origin' =>
+      if Rails.env.production?
+        'http://3.112.0.252:3000'
+      else
+        'http://localhost:3000'
+      end,
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       'Access-Control-Request-Method' => '*'
     }
   end

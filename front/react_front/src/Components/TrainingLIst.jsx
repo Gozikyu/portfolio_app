@@ -29,9 +29,11 @@ const TrainingList = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
       .then((response) => {
-        setUrl("http://localhost:3001/trainings/" + response.data.user.id);
+        setUrl(
+          process.env.REACT_APP_HOST + "/trainings/" + response.data.user.id
+        );
         if (response.data.logged_in) {
           return;
         } else {

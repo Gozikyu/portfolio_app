@@ -18,7 +18,11 @@ const UserEdit = (props) => {
   const editUser = () => {
     axios
       .patch(
+<<<<<<< HEAD
         "http://52.195.8.187:3001/users/" + urlId,
+=======
+        process.env.REACT_APP_HOST + "/users/" + urlId,
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         {
           user: {
             name: username,
@@ -42,7 +46,11 @@ const UserEdit = (props) => {
 
   const checkCorrectUser = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/login", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((response) => {
         if (response.data.logged_in) {
           const currentUserId = response.data.user.id;

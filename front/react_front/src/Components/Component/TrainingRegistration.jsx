@@ -20,7 +20,11 @@ const TrainingRegistration = (props) => {
 
   const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
+<<<<<<< HEAD
   const url = "http://52.195.8.187:3001/trainings/";
+=======
+  const url = process.env.REACT_APP_HOST + "/trainings/";
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
 
   const dateFormat = (date) => {
     var year = date.getFullYear();
@@ -32,7 +36,11 @@ const TrainingRegistration = (props) => {
 
   const checkLoginStatus = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/login", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((response) => {
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
@@ -44,7 +52,11 @@ const TrainingRegistration = (props) => {
 
   const getGyms = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/gyms", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((results) => {
         results.data.map((gym) => {
           gymsName[gym.name] = gym.name;

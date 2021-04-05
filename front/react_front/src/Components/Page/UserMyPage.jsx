@@ -30,7 +30,11 @@ const UserMyPage = () => {
 
   const getLoginUser = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/login", { withCredentials: true })
+=======
+      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -47,7 +51,11 @@ const UserMyPage = () => {
 
   const getTraining = () => {
     axios
+<<<<<<< HEAD
       .get("http://52.195.8.187:3001/trainings/" + loginUser.id, {
+=======
+      .get(process.env.REACT_APP_HOST + "/trainings/" + loginUser.id, {
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
         withCredentials: true,
       })
       .then((results) => {

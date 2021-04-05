@@ -48,11 +48,13 @@ services:
     env_file:
       - ./api/environments/db.env
     command: bundle exec puma -C config/puma.rb -e production
+    # command: bundle exec puma -C config/puma.rb
     volumes:
       - ./api:/webapp
       - public-data:/webapp/public
       - tmp-data:/webapp/tmp
       - log-data:/webapp/log
+<<<<<<< HEAD
     # depends_on:
     #   - db
   # db:
@@ -61,6 +63,16 @@ services:
   #     - ./api/environments/db.env
   #   volumes:
   #     - db-data:/var/lib/mysql
+=======
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    env_file:
+      - ./api/environments/db.env
+    volumes:
+      - db-data:/var/lib/mysql
+>>>>>>> 48a5881d3d94ffa875f585ccb27da2e9b8d81c44
   web:
     build:
       context: ./api/containers/nginx
@@ -88,4 +100,4 @@ volumes:
   public-data:
   tmp-data:
   log-data:
-  # db-data:
+  db-data:
