@@ -11,7 +11,6 @@ import TopPage from "./Components/Page/TopPage";
 import TrainingPage from "./Components/Page/TrainingPage";
 import UserMyPage from "./Components/Page/UserMyPage";
 import UserList from "./Components/UserList";
-import UserProfile from "./Components/UserProfile";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
