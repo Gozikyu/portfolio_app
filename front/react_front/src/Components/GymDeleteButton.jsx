@@ -3,7 +3,7 @@ import axios from "axios";
 import { PrimaryButton } from "./UIkit/index";
 
 const GymDeleteButton = (props) => {
-  const gymUrl = process.env.REACT_APP_HOST + "/gyms/" + props.gym.id;
+  const gymUrl = process.env.REACT_APP_HOST + ":3001" + "/gyms/" + props.gym.id;
 
   return (
     <div>

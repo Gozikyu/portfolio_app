@@ -47,8 +47,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./api/environments/db.env
-    command: bundle exec puma -C config/puma.rb -e production
-    # command: bundle exec puma -C config/puma.rb
+    # command: bundle exec puma -C config/puma.rb -e production
+    command: bundle exec puma -C config/puma.rb
     volumes:
       - ./api:/webapp
       - public-data:/webapp/public
@@ -79,7 +79,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./front:/usr/src/app
-    command: sh -c "cd react_front && yarn start"
+    command: sh -c "cd react_front && npm start "
     ports:
       - "3000:3000"
 # volumes:

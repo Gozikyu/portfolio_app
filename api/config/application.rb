@@ -48,6 +48,7 @@ module Myapp
 
     config.hosts << '.example.com'
     config.hosts << '3.112.0.252'
+    config.hosts << 'localhost'
 
     # セッションメソッドを有効にする
     config.middleware.use ActionDispatch::Cookies

@@ -20,7 +20,7 @@ const TrainingRegistration = (props) => {
 
   const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
-  const url = process.env.REACT_APP_HOST + "/trainings/";
+  const url = process.env.REACT_APP_HOST + ":3001" + "/trainings/";
 
   const dateFormat = (date) => {
     var year = date.getFullYear();
@@ -32,7 +32,9 @@ const TrainingRegistration = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
@@ -44,7 +46,9 @@ const TrainingRegistration = (props) => {
 
   const getGyms = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         results.data.map((gym) => {
           gymsName[gym.name] = gym.name;

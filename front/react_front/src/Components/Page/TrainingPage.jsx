@@ -50,9 +50,16 @@ const TrainingPage = (props) => {
 
   const followTraining = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/users/" + "trainings/" + trainingId, {
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/users/" +
+          "trainings/" +
+          trainingId,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(changeState);
         setChangeState(!changeState);
@@ -68,6 +75,7 @@ const TrainingPage = (props) => {
     axios
       .delete(
         process.env.REACT_APP_HOST +
+          ":3001" +
           "/users/" +
           loginUser.id +
           "/trainings/" +
@@ -90,9 +98,12 @@ const TrainingPage = (props) => {
   const deleteTraining = () => {
     if (window.confirm("削除してよろしいですか？"))
       axios
-        .delete(process.env.REACT_APP_HOST + "/trainings/" + training.id, {
-          withCredentials: true,
-        })
+        .delete(
+          process.env.REACT_APP_HOST + ":3001" + "/trainings/" + training.id,
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
           console.log("registration res", response);
           alert("指定したトレーニングを削除しました");
@@ -106,7 +117,7 @@ const TrainingPage = (props) => {
 
   const getTraining = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/trainings/" + userId, {
+      .get(process.env.REACT_APP_HOST + ":3001" + "/trainings/" + userId, {
         withCredentials: true,
       })
       .then((trainingData) => {
@@ -123,7 +134,9 @@ const TrainingPage = (props) => {
 
   const getGyms = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         setGym(results.data.find((gym) => gym.name == training.location));
       })
@@ -134,7 +147,9 @@ const TrainingPage = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -150,6 +165,7 @@ const TrainingPage = (props) => {
     axios
       .get(
         process.env.REACT_APP_HOST +
+          ":3001" +
           "/users/" +
           loginUser.id +
           "/trainings/" +
@@ -169,7 +185,11 @@ const TrainingPage = (props) => {
   const getFollowers = () => {
     axios
       .get(
-        process.env.REACT_APP_HOST + "/trainings/" + training.id + "/followers",
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/trainings/" +
+          training.id +
+          "/followers",
         {
           withCredentials: true,
         }

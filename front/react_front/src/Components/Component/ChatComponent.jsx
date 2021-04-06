@@ -54,7 +54,7 @@ const ChatComponent = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/login/", {
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login/", {
         withCredentials: true,
       })
       .then((response) => {
@@ -74,9 +74,12 @@ const ChatComponent = (props) => {
 
   const getChats = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/chats/" + props.training.id, {
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_HOST + ":3001" + "/chats/" + props.training.id,
+        {
+          withCredentials: true,
+        }
+      )
       .then((chats) => {
         setTrainingChats(chats.data);
         setIsLoaded(true);
