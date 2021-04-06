@@ -46,7 +46,7 @@ const Header = (props) => {
   const logout = () => {
     if (window.confirm("ログアウトしてよろしいですか？")) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/logout", {
+        .delete(process.env.REACT_APP_HOST + ":3001" + "/logout", {
           withCredentials: true,
         })
         .then((response) => {

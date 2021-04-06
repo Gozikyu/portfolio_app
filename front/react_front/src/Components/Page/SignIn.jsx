@@ -12,7 +12,7 @@ const SignIn = (props) => {
   const signIn = () => {
     axios
       .post(
-        process.env.REACT_APP_HOST + "/login",
+        process.env.REACT_APP_HOST + ":3001" + "/login",
         {
           user: {
             email: email,

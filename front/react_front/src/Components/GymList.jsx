@@ -30,7 +30,9 @@ const GymList = (props) => {
   const getGyms = () => {
     console.log("move useEffect");
     axios
-      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);
@@ -43,7 +45,9 @@ const GymList = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("registration res", response.data);
         setCurrentUser(response.data.user);

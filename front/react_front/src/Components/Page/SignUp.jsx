@@ -15,7 +15,7 @@ const SignUp = (props) => {
   const signIn = () => {
     axios
       .post(
-        process.env.REACT_APP_HOST + "/login",
+        process.env.REACT_APP_HOST + ":3001" + "/login",
         {
           user: {
             email: email,
@@ -40,7 +40,7 @@ const SignUp = (props) => {
   const signUp = () => {
     axios
       .post(
-        process.env.REACT_APP_HOST + "/users",
+        process.env.REACT_APP_HOST + ":3001" + "/users",
         {
           user: {
             name: username,
