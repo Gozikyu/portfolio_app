@@ -14,7 +14,7 @@ const GymRegistraion = () => {
   const postGym = () => {
     axios
       .post(
-        process.env.REACT_APP_HOST + "/gyms",
+        process.env.REACT_APP_HOST + ":3001" + "/gyms",
         {
           gym: {
             name: gymName,

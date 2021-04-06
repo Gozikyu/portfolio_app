@@ -24,7 +24,9 @@ const GymsAndMap = () => {
 
   const getGyms = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         setGyms(results.data);
         setIsLoaded(true);

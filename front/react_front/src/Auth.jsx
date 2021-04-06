@@ -10,7 +10,9 @@ const Auth = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("check");
         setLoggedInStatus(response.data.logged_in);
