@@ -38,6 +38,7 @@
 - データベース：MySQL  
 
 # AWS構成図
+![インフラ構成図](https://user-images.githubusercontent.com/53566393/114541701-04864a00-9c92-11eb-85dc-237f3cdea5a4.jpg)
 
 # 今後実装したい機能
 - 安心して利用するために  
