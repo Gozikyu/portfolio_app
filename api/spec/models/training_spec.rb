@@ -7,7 +7,8 @@ RSpec.describe Training, type: :model do
       menu: 'ベンチプレス',
       date: '2021-02-08',
       location: 'Gym1',
-      partner: 'both'
+      partner: 'both',
+      comment: 'comment'
     )
   end
 
@@ -50,4 +51,10 @@ RSpec.describe Training, type: :model do
     @training.limit_number = ''
     expect(@training).not_to be_valid
   end
+
+  it 'comment length should be less than 140' do
+    @training.comment = 'a'*51
+    expect(@training).not_to be_valid
+  end
+
 end

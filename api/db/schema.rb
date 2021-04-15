@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_28_061431) do
+ActiveRecord::Schema.define(version: 2021_04_15_102034) do
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
     t.text "content"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_03_28_061431) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "limit_number", default: 1
+    t.string "comment"
     t.index ["user_id"], name: "index_trainings_on_user_id"
   end
 

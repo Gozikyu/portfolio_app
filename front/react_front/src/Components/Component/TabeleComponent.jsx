@@ -78,9 +78,9 @@ export default function BasicTable(props) {
         <TableBody>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>
-              トレーニング強度
+              コメント
             </TableCell>
-            <TableCell align="center">{props.training.menu}</TableCell>
+            <TableCell align="center">{props.training.comment}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>

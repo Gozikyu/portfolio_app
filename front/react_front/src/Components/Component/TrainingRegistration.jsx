@@ -13,6 +13,7 @@ const TrainingRegistration = (props) => {
     [location, setLocation] = useState(""),
     [partner, setPartner] = useState(""),
     [limitNumber, setLimitNumber] = useState(1),
+    [comment, setComment] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
     [gymsName, setGymsName] = useState({}),
@@ -76,6 +77,7 @@ const TrainingRegistration = (props) => {
             location: location,
             partner: partner,
             limit_number: limitNumber,
+            comment: comment,
           },
         },
         { withCredentials: true }
@@ -120,6 +122,13 @@ const TrainingRegistration = (props) => {
   const inputLimitNumber = useCallback((event) => {
     setLimitNumber(event.target.value);
   });
+
+  const inputComment = useCallback(
+    (event) => {
+      setComment(event.target.value);
+    },
+    [setComment]
+  );
 
   if (!isLoaded) {
     return <p>読み込み中です</p>;
@@ -185,6 +194,16 @@ const TrainingRegistration = (props) => {
           value={limitNumber}
           onChange={inputLimitNumber}
         />
+        <TextInput
+          fullWidth={true}
+          label={"コメント"}
+          multiline={true}
+          rows={3}
+          required={false}
+          value={comment}
+          type={"text"}
+          onChange={inputComment}
+        />
 
         <div className="module-spacer--medium" />
         <div className="center">
@@ -196,12 +215,9 @@ const TrainingRegistration = (props) => {
                 return false;
               }
               {
-                if (partner == "男性のみ") {
-                  setPartner("male");
-                } else if (partner == "女性のみ") {
-                  setPartner("female");
-                } else {
-                  setPartner("both");
+                if (comment.length > 50) {
+                  alert("コメントは50文字以下にしてください。");
+                  return false;
                 }
               }
               postTraining();

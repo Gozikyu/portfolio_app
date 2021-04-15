@@ -60,7 +60,7 @@ class TrainingsController < ApplicationController
   private
 
   def training_params
-    params.require(:training).permit(:menu, :date, :location, :partner, :limit_number)
+    params.require(:training).permit(:menu, :date, :location, :partner, :limit_number, :comment)
   end
 
   # def correct_user
