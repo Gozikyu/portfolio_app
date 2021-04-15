@@ -4,7 +4,6 @@ import {
   Route,
   Switch,
   useHistory,
-  Redirect,
 } from "react-router-dom";
 import axios from "axios";
 import TopPage from "./Components/Page/TopPage";
@@ -20,6 +19,7 @@ import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
 import Header from "./Components/Header";
 import NotFound from "./Components/Page/NotFound";
+import AppTopPage from "./Components/Page/AppTopPage";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -35,8 +35,6 @@ const Routing = () => {
   const logout = () => {
     setLoggedInStatus(false);
   };
-
-  console.log(loggedInStatus);
 
   const checkLoginStatus = () => {
     axios
@@ -85,6 +83,7 @@ const Routing = () => {
                 />
               )}
             />
+            <Route exact path="/appTopPage" component={AppTopPage} />
 
             <Auth loggedInStatus={loggedInStatus}>
               <Switch>

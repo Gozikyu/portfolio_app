@@ -11,6 +11,7 @@ import TableComponent from "../Component/TabeleComponent";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "0 auto",
+    marginTop: "2rem ",
     width: "80%",
     [theme.breakpoints.down("xs")]: {
       width: "100%",

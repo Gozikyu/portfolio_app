@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "500px",
     margin: "0 auto",
+    marginTop: "2rem",
   },
   titleText: {
     fontWeight: "bold",
