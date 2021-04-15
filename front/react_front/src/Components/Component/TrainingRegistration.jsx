@@ -127,7 +127,7 @@ const TrainingRegistration = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
-        <TextInput
+        {/* <TextInput
           fullWidth={true}
           label={"メニュー名"}
           multiline={false}
@@ -135,6 +135,19 @@ const TrainingRegistration = (props) => {
           required={false}
           value={menu}
           type={"text"}
+          onChange={inputMenu}
+        /> */}
+
+        <PullDownComponent
+          items={{
+            軽めに筋トレ: "軽めに筋トレ",
+            がっつり筋トレ: "がっつり筋トレ",
+            軽め派もがっつり派も歓迎: "軽め派もがっつり派も歓迎",
+          }}
+          label={"トレーニング強度"}
+          required={true}
+          fullWidth={true}
+          value={menu}
           onChange={inputMenu}
         />
 
