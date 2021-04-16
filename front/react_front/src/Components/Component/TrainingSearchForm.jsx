@@ -164,7 +164,7 @@ const TrainingSearchForm = (props) => {
             軽め派もがっつり派も歓迎: "軽め派もがっつり派も歓迎",
           }}
           label={"トレーニング強度"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={menu}
           onChange={inputMenu}
@@ -174,13 +174,13 @@ const TrainingSearchForm = (props) => {
           date={date}
           inputDate={inputDate}
           label={"トレーニング日"}
-          required={true}
+          required={false}
           fullWidth={true}
         />
         <PullDownComponent
           items={gymsName}
           label={"場所"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={location}
           onChange={inputLocation}
@@ -188,7 +188,7 @@ const TrainingSearchForm = (props) => {
         <PullDownComponent
           items={gender}
           label={"希望パートナー"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={partner}
           onChange={inputPartner}
@@ -196,7 +196,7 @@ const TrainingSearchForm = (props) => {
         <PullDownComponent
           items={{ 指定しない: "", 1: 1, 2: 2, 3: 3 }}
           label={"参加人数上限"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={limitNumber}
           onChange={inputLimitNumber}

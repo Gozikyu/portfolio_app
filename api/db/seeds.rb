@@ -2,22 +2,25 @@
 User.create!(name: 'admin',
              email: 'admin@gmail.com',
              password: 'password',
+             gender: 'male',
              password_confirmation: 'password',
              admin: true)
 
 User.create!(name: 'guest',
              email: 'guest@gmail.com',
              password: 'password',
+             gender: 'female',
              password_confirmation: 'password',
              admin: false)
 
 # No admin users
 99.times do |n|
-  name  = Gimei.unique.first.hiragana
+  gimei  = Gimei.name
   email = "example-#{n + 1}@gmail.com"
   password = 'password'
-  User.create!(name: name,
+  User.create!(name: gimei.first.hiragana,
                email: email,
+               gender: gimei.gender,
                password: password,
                password_confirmation: password,
                admin: false)
@@ -97,30 +100,44 @@ Gym.create!(name:'文京総合体育館',
 
 User.all.map{|user| 
   3.times do
-    menu=['ベンチプレス','スクワット','上半身メニュー','下半身メニュー','ランニング','チンニング','ラットプルダウン'].sample
+    menu=['軽めに筋トレ','がっつり筋トレ','軽め派もがっつり派も歓迎'].sample
     location=Gym.all.sample.name
     partner=['male','female','both'].sample
     start_date=Date.parse('2021/3/1')
     end_date=Date.parse('2021/6/1')
     date=Random.rand(start_date..end_date)
-    limit_number=Random.rand(1..3)
-    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number)
+    limit_number=[1,2,3].sample
+    comment=['初心者大歓迎','ガッツリトレーニング希望です','女性限定！','気軽に参加してください！','定期的に一緒にできる方探してます'].sample
+
+    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number, comment: comment)
   end
 }
 
-user=User.first
-user_trainings=user.trainings.all
-users=User.all
-trainings=Training.all
+# user=User.first
+# user_trainings=user.trainings.all
+# users=User.all
+first_user_id=User.first.id
+prelast_user_id=User.last.id-2
+users=User.all[0..prelast_user_id]
+# trainings=Training.all
 
-followers=users[1..3]
-followingTs=trainings[3..5]
-followers.map{|follower|
-  user_trainings.map{|user_training|
-    follower.follow(user_training)
+# followers=users[1..3]
+# followingTs=trainings[3..5]
+# followers.map{|follower|
+#   user_trainings.map{|user_training|
+#     follower.follow(user_training)
+#   }
+# }
+# followingTs.map{|followingT|
+#   user.follow(followingT)
+# }
+
+users.map{|user|
+  next_id = user.id+1
+  next_user=User.find(next_id)
+  next_user_trainings=next_user.trainings.all
+  next_user_trainings.map{|next_user_training|
+    user.follow(next_user_training)
   }
-}
-followingTs.map{|followingT|
-  user.follow(followingT)
 }
 

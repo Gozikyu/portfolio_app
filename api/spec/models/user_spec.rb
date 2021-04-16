@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
       menu: 'ベンチプレス',
       date: '2021-02-08',
       location: 'Gym1',
-      partner: 'both'
+      partner: 'both',
     )
   end
 
@@ -78,6 +78,17 @@ RSpec.describe User, type: :model do
       @user.destroy
     end.to change(Training, :count).by(-1)
   end
+
+  it 'gender should be present' do
+    @user.gender=''
+    expect(@user).not_to be_valid
+  end
+
+  it 'gender should be male or female' do
+    @user.gender='hoge'
+    expect(@user).not_to be_valid
+  end
+
 
   it 'associated chats should be destroyed' do
     @chat = @user.chats.create!(

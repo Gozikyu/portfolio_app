@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_102034) do
+ActiveRecord::Schema.define(version: 2021_04_15_122132) do
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
     t.text "content"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_04_15_102034) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
     t.boolean "admin", default: false
+    t.string "gender"
   end
 
   add_foreign_key "chats", "trainings"

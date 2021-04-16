@@ -84,6 +84,17 @@ const Routing = () => {
               )}
             />
             <Route exact path="/appTopPage" component={AppTopPage} />
+            <Route
+              exact
+              path={"/signup"}
+              render={(props) => (
+                <SignUp
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
 
             <Auth loggedInStatus={loggedInStatus}>
               <Switch>
@@ -95,17 +106,6 @@ const Routing = () => {
                   path={"/users/:id/edit"}
                   render={(props) => (
                     <UserEdit {...props} loginUser={loginUser} />
-                  )}
-                />
-                <Route
-                  exact
-                  path={"/signup"}
-                  render={(props) => (
-                    <SignUp
-                      {...props}
-                      loggedInStatus={loggedInStatus}
-                      login={login}
-                    />
                   )}
                 />
 
