@@ -50,26 +50,30 @@ const TrainingPage = (props) => {
   const trainingId = location.pathname.split("/")[4];
 
   const followTraining = () => {
-    axios
-      .get(
-        process.env.REACT_APP_HOST +
-          ":3001" +
-          "/users/" +
-          "trainings/" +
-          trainingId,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        console.log(changeState);
-        setChangeState(!changeState);
-        alert("トレーニングの参加申請が完了しました");
-        console.log(changeState);
-      })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
+    if (training.partner == loginUser.gender || training.partner == "both") {
+      axios
+        .get(
+          process.env.REACT_APP_HOST +
+            ":3001" +
+            "/users/" +
+            "trainings/" +
+            trainingId,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log(changeState);
+          setChangeState(!changeState);
+          alert("トレーニングの参加申請が完了しました");
+          console.log(changeState);
+        })
+        .catch((error) => {
+          console.log("registration error", error);
+        });
+    } else {
+      alert("参加可能な方の性別に制限があります");
+    }
   };
 
   const unfollowTraining = () => {
