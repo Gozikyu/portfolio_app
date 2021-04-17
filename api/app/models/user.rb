@@ -20,7 +20,6 @@ class User < ApplicationRecord
   
 
   def follow(training)
-    # self.followingTs << training
     active_relationships.create(follower_id: id, followingT_id: training.id)
   end
 

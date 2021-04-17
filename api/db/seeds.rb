@@ -1,4 +1,4 @@
-# Create admin user
+# Create user demo data
 User.create!(name: 'admin',
              email: 'admin@gmail.com',
              password: 'password',
@@ -13,7 +13,6 @@ User.create!(name: 'guest',
              password_confirmation: 'password',
              admin: false)
 
-# No admin users
 99.times do |n|
   gimei  = Gimei.name
   email = "example-#{n + 1}@gmail.com"
@@ -26,7 +25,7 @@ User.create!(name: 'guest',
                admin: false)
 end
 
-# Sample gyms
+# Create gym demo data
 Gym.create!(name:'千代田区立スポーツセンター',
             latitude: 35.689467815981274, 
             longitude: 139.76783385524607,
@@ -98,6 +97,7 @@ Gym.create!(name:'文京総合体育館',
             url:'http://www.city.bunkyo.lg.jp/sosiki_busyo_sports_shisetsu_sougoutaiikukan.html'
             )
 
+# Create training demo data
 User.all.map{|user| 
   3.times do
     menu=['軽めに筋トレ','がっつり筋トレ','軽め派もがっつり派も歓迎'].sample
@@ -113,24 +113,9 @@ User.all.map{|user|
   end
 }
 
-# user=User.first
-# user_trainings=user.trainings.all
-# users=User.all
-first_user_id=User.first.id
+# Create following relationship demo data
 prelast_user_id=User.last.id-2
 users=User.all[0..prelast_user_id]
-# trainings=Training.all
-
-# followers=users[1..3]
-# followingTs=trainings[3..5]
-# followers.map{|follower|
-#   user_trainings.map{|user_training|
-#     follower.follow(user_training)
-#   }
-# }
-# followingTs.map{|followingT|
-#   user.follow(followingT)
-# }
 
 users.map{|user|
   next_id = user.id+1
@@ -140,4 +125,24 @@ users.map{|user|
     user.follow(next_user_training)
   }
 }
+
+# Create chat demo data
+all_user=User.all
+host_contents=['楽しく筋トレしましょう！','よろしくお願いします！','メンバー集まったら集合場所決めましょう！']
+member_contents=['はじめまして！','よろしくお願いします！']
+
+all_user.map{|user|
+  user_all_trainings=user.trainings
+  user_all_trainings.map{|training|
+  user.chats.create!(content:host_contents.sample, training_id:training.id, user_name:user.name)
+  }
+}
+
+all_user.map{|user|
+  following_trainings=user.followingTs
+  following_trainings.map{|following_training|
+    user.chats.create!(content:member_contents.sample, training_id:following_training.id, user_name:user.name)
+  }
+}
+
 
