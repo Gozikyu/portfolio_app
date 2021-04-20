@@ -136,16 +136,6 @@ const TrainingRegistration = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
-        {/* <TextInput
-          fullWidth={true}
-          label={"メニュー名"}
-          multiline={false}
-          rows={1}
-          required={false}
-          value={menu}
-          type={"text"}
-          onChange={inputMenu}
-        /> */}
 
         <PullDownComponent
           items={{

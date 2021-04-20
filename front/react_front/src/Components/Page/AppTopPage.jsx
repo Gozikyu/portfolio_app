@@ -3,13 +3,14 @@ import { PrimaryButton } from "../UIkit/index";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import appTopPage from "../../assets/img/AppTopPage.jpg";
+import appTopPage from "../../assets/img/AppTopPage.png";
+import logo from "../../assets/img/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    // width: "100%",
     height: "100vh",
-    margin: "0 auto",
+    margin: " auto",
     background: "rgba(255,255,255,0.6)",
     backgroundBlendMode: "lighten",
     backgroundImage: `url(${appTopPage})`,
@@ -21,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "6rem",
     paddingTop: "3rem",
   },
+  // titleText: {
+  //   width: "20%",
+  //   marginTop: "3rem",
+  //   backgroundColor: "red",
+  //   margin: "0 auto",
+  // },
+
   subTitleText: {
     fontWeight: "bold",
     marginTop: "0",
@@ -31,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2rem",
   },
   button: {
-    backgroundColor: "#41b6e6",
-    color: "#000",
+    backgroundColor: "#DDE101",
     fontSize: 16,
     height: 48,
     marginBottom: 16,
@@ -57,6 +64,9 @@ const AppTopPage = () => {
     <div className={classes.root}>
       <div>
         <p className={classes.titleText}>Muscle Mate</p>
+        {/* <div className={classes.titleText}>
+          <img src={logo} alt="logo" />
+        </div> */}
         <p className={classes.subTitleText}>トレーニング仲間マッチングアプリ</p>
       </div>
       <Button

@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   text: {
-    color: "#4dd0e1",
     fontSize: "1.563rem",
   },
 }));
