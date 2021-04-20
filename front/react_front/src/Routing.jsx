@@ -9,15 +9,13 @@ import axios from "axios";
 import TopPage from "./Components/Page/TopPage";
 import TrainingPage from "./Components/Page/TrainingPage";
 import UserMyPage from "./Components/Page/UserMyPage";
-import UserList from "./Components/UserList";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
 import SearchResultPage from "./Components/Page/SearchResultPage";
 import Auth from "./Auth";
-import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
-import Header from "./Components/Header";
+import Header from "./Components/Component/Header";
 import NotFound from "./Components/Page/NotFound";
 import AppTopPage from "./Components/Page/AppTopPage";
 
@@ -109,15 +107,6 @@ const Routing = () => {
                   )}
                 />
 
-                <Route
-                  exact
-                  path={"/users"}
-                  render={(props) => (
-                    <UserList {...props} loggedInStatus={loggedInStatus} />
-                  )}
-                />
-
-                <Route exact path="/gyms" component={GymsAndMap} />
                 <Route
                   exact
                   path="/gyms/registration"
