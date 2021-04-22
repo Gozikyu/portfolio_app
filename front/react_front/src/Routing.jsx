@@ -45,7 +45,6 @@ const Routing = () => {
           setLoggedInStatus(true);
         } else {
           setLoggedInStatus(false);
-          // history.push("/signin");
         }
       })
       .catch((error) => {

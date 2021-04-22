@@ -1,44 +1,3 @@
-# version: "3"
-
-# services:
-#   db:
-#     image: mysql:8.0
-#     volumes:
-#       - mysql-data:/var/lib/mysql
-#     environment:
-#       MYSQL_USER: root
-#       MYSQL_ROOT_PASSWORD: password
-#     command: --default-authentication-plugin=mysql_native_password
-
-#   api:
-#     build:
-#       context: ./api/
-#       dockerfile: Dockerfile
-#     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
-#     image: rails:dev
-#     volumes:
-#       - ./api:/myapp
-#       - ./api/vendor/bundle:/myapp/vendor/bundle
-#     environment:
-#       TZ: Asia/Tokyo
-#       RAILS_ENV: development
-#     ports:
-#       - 3001:3001
-#     depends_on:
-#       - db
-#   front:
-#     build:
-#       context: ./front/
-#       dockerfile: Dockerfile
-#     volumes:
-#       - ./front:/usr/src/app
-#     command: sh -c "cd react_front && yarn start"
-#     ports:
-#       - "3000:3000"
-# volumes:
-#   mysql-data:
-#     driver: local
-
 version: "3"
 services:
   app:
@@ -81,10 +40,7 @@ services:
       - ./front:/usr/src/app
     command: sh -c "cd react_front && npm start "
     ports:
-      - "3000:3000"
-# volumes:
-#   mysql-data:
-#     driver: local
+      - "80:3000"
 volumes:
   public-data:
   tmp-data:
