@@ -8,7 +8,6 @@ import logo from "../../assets/img/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: "100%",
     height: "100vh",
     margin: " auto",
     background: "rgba(255,255,255,0.6)",
@@ -18,16 +17,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
   },
   titleText: {
-    fontWeight: "bold",
-    fontSize: "6rem",
     paddingTop: "3rem",
+    width: "50%",
+    backgroundColor: "000",
+    margin: "0 auto",
   },
-  // titleText: {
-  //   width: "20%",
-  //   marginTop: "3rem",
-  //   backgroundColor: "red",
-  //   margin: "0 auto",
-  // },
 
   subTitleText: {
     fontWeight: "bold",
@@ -63,10 +57,9 @@ const AppTopPage = () => {
   return (
     <div className={classes.root}>
       <div>
-        <p className={classes.titleText}>Muscle Mate</p>
-        {/* <div className={classes.titleText}>
+        <div className={classes.titleText}>
           <img src={logo} alt="logo" />
-        </div> */}
+        </div>
         <p className={classes.subTitleText}>トレーニング仲間マッチングアプリ</p>
       </div>
       <Button
