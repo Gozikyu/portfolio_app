@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user, class: User do
     name { 'Hoge' }
     email { 'hoge@gmail.com' }
-    gender {'male'}
+    gender { 'male' }
     password { 'password' }
     password_confirmation { 'password' }
     admin { true }
@@ -13,7 +13,7 @@ FactoryBot.define do
   factory :Another, class: User do
     name { 'Another' }
     email { 'another@gmail.com' }
-    gender {'male'}
+    gender { 'male' }
     password { 'password' }
     password_confirmation { 'password' }
     admin { false }
@@ -22,7 +22,7 @@ FactoryBot.define do
   factory :Another2, class: User do
     name { 'Another2' }
     email { 'another2@gmail.com' }
-    gender {'male'}
+    gender { 'male' }
     password { 'password' }
     password_confirmation { 'password' }
     admin { false }
@@ -31,7 +31,7 @@ FactoryBot.define do
   factory :UpdatedUser, class: User do
     name { 'Hoge' }
     email { 'update@gmail.com' }
-    gender {'male'}
+    gender { 'male' }
     password { 'password' }
     password_confirmation { 'password' }
     admin { false }
@@ -41,7 +41,7 @@ FactoryBot.define do
     name {}
     email { 'nameless@gmail.com' }
     password { 'password' }
-    gender {'male'}
+    gender { 'male' }
     password_confirmation { 'password' }
     admin { false }
   end
@@ -49,7 +49,7 @@ FactoryBot.define do
   factory :SignupUser, class: User do
     name { 'Signup' }
     email { 'signup@gmail.com' }
-    gender {'male'}
+    gender { 'male' }
     password { 'password' }
     password_confirmation { 'password' }
     admin { false }

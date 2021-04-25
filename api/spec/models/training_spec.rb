@@ -53,8 +53,7 @@ RSpec.describe Training, type: :model do
   end
 
   it 'comment length should be less than 140' do
-    @training.comment = 'a'*51
+    @training.comment = 'a' * 51
     expect(@training).not_to be_valid
   end
-
 end
