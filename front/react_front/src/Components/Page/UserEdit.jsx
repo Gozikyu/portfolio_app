@@ -53,7 +53,7 @@ const UserEdit = (props) => {
             return;
           } else {
             alert("ログイン中のユーザー情報以外は編集できません");
-            history.push("/");
+            history.push("/top");
           }
         } else {
         }

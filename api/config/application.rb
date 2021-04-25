@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://3.112.0.252:3000', 'http://localhost:3000'
+        origins 'https://3.112.0.252:80', 'http://localhost:80', 'https://condots.net'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -48,15 +48,13 @@ module Myapp
 
     config.hosts << '.example.com'
     config.hosts << '3.112.0.252'
+    config.hosts << 'condots.net'
     config.hosts << 'localhost'
 
     # セッションメソッドを有効にする
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
     config.middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
-    # ログイン状態を保持する為に署名つきCookieへの保存を有効にする
-    # cookies.permanent.signed[:user_id] = user.id
-    # cookies.permanent[:remember_token] = user.remember_token
 
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
@@ -65,9 +63,9 @@ module Myapp
       'Access-Control-Allow-Credentials' => 'true',
       'Access-Control-Allow-Origin' =>
       if Rails.env.production?
-        'http://3.112.0.252:3000'
+        'https://condots.net'
       else
-        'http://localhost:3000'
+        'http://localhost'
       end,
       'Access-Control-Request-Method' => '*'
     }

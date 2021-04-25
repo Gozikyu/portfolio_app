@@ -18,7 +18,6 @@ const CalendarComponent = (props) => {
         allDay: true,
         url:
           process.env.REACT_APP_HOST +
-          ":3000" +
           "/users/" +
           userTraining.user_id +
           "/trainings/" +

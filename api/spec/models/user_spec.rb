@@ -79,6 +79,16 @@ RSpec.describe User, type: :model do
     end.to change(Training, :count).by(-1)
   end
 
+  it 'gender should be present' do
+    @user.gender = ''
+    expect(@user).not_to be_valid
+  end
+
+  it 'gender should be male or female' do
+    @user.gender = 'hoge'
+    expect(@user).not_to be_valid
+  end
+
   it 'associated chats should be destroyed' do
     @chat = @user.chats.create!(
       content: 'test',

@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "500px",
     margin: "0 auto",
+    marginTop: "2rem",
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   text: {
-    color: "#4dd0e1",
     fontSize: "1.563rem",
   },
 }));

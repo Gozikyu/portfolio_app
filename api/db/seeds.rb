@@ -1,29 +1,31 @@
-# Create admin user
+# Create user demo data
 User.create!(name: 'admin',
              email: 'admin@gmail.com',
              password: 'password',
+             gender: 'male',
              password_confirmation: 'password',
              admin: true)
 
 User.create!(name: 'guest',
              email: 'guest@gmail.com',
              password: 'password',
+             gender: 'female',
              password_confirmation: 'password',
              admin: false)
 
-# No admin users
 99.times do |n|
-  name  = Gimei.unique.first.hiragana
+  gimei  = Gimei.name
   email = "example-#{n + 1}@gmail.com"
   password = 'password'
-  User.create!(name: name,
+  User.create!(name: gimei.first.hiragana,
                email: email,
+               gender: gimei.gender,
                password: password,
                password_confirmation: password,
                admin: false)
 end
 
-# Sample gyms
+# Create gym demo data
 Gym.create!(name:'千代田区立スポーツセンター',
             latitude: 35.689467815981274, 
             longitude: 139.76783385524607,
@@ -95,32 +97,52 @@ Gym.create!(name:'文京総合体育館',
             url:'http://www.city.bunkyo.lg.jp/sosiki_busyo_sports_shisetsu_sougoutaiikukan.html'
             )
 
+# Create training demo data
 User.all.map{|user| 
   3.times do
-    menu=['ベンチプレス','スクワット','上半身メニュー','下半身メニュー','ランニング','チンニング','ラットプルダウン'].sample
+    menu=['軽めに筋トレ','がっつり筋トレ','軽め派もがっつり派も歓迎'].sample
     location=Gym.all.sample.name
     partner=['male','female','both'].sample
     start_date=Date.parse('2021/3/1')
     end_date=Date.parse('2021/6/1')
     date=Random.rand(start_date..end_date)
-    limit_number=Random.rand(1..3)
-    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number)
+    limit_number=[1,2,3].sample
+    comment=['初心者大歓迎','ガッツリトレーニング希望です','女性限定！','気軽に参加してください！','定期的に一緒にできる方探してます'].sample
+
+    user.trainings.create!(menu: menu, date: date, location: location, partner: partner, limit_number: limit_number, comment: comment)
   end
 }
 
-user=User.first
-user_trainings=user.trainings.all
-users=User.all
-trainings=Training.all
+# Create following relationship demo data
+prelast_user_id=User.last.id-2
+users=User.all[0..prelast_user_id]
 
-followers=users[1..3]
-followingTs=trainings[3..5]
-followers.map{|follower|
-  user_trainings.map{|user_training|
-    follower.follow(user_training)
+users.map{|user|
+  next_id = user.id+1
+  next_user=User.find(next_id)
+  next_user_trainings=next_user.trainings.all
+  next_user_trainings.map{|next_user_training|
+    user.follow(next_user_training)
   }
 }
-followingTs.map{|followingT|
-  user.follow(followingT)
+
+# Create chat demo data
+all_user=User.all
+host_contents=['楽しく筋トレしましょう！','よろしくお願いします！','メンバー集まったら集合場所決めましょう！']
+member_contents=['はじめまして！','よろしくお願いします！']
+
+all_user.map{|user|
+  user_all_trainings=user.trainings
+  user_all_trainings.map{|training|
+  user.chats.create!(content:host_contents.sample, training_id:training.id, user_name:user.name)
+  }
 }
+
+all_user.map{|user|
+  following_trainings=user.followingTs
+  following_trainings.map{|following_training|
+    user.chats.create!(content:member_contents.sample, training_id:following_training.id, user_name:user.name)
+  }
+}
+
 

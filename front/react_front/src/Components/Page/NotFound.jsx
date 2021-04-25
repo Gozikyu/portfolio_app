@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "500px",
     margin: "0 auto",
+    marginTop: "2rem",
   },
   titleText: {
     fontWeight: "bold",
@@ -24,7 +25,7 @@ const NotFound = () => {
   const classes = useStyles();
 
   const pushToTopPage = () => {
-    history.push("/");
+    history.push("/top");
   };
 
   return (

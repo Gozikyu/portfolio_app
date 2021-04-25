@@ -146,27 +146,31 @@ const TrainingSearchForm = (props) => {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング検索</h2>
-        <TextInput
-          fullWidth={true}
-          label={"メニュー名"}
-          multiline={false}
-          rows={1}
+
+        <PullDownComponent
+          items={{
+            軽めに筋トレ: "軽めに筋トレ",
+            がっつり筋トレ: "がっつり筋トレ",
+            軽め派もがっつり派も歓迎: "軽め派もがっつり派も歓迎",
+          }}
+          label={"トレーニング強度"}
           required={false}
+          fullWidth={true}
           value={menu}
-          type={"text"}
           onChange={inputMenu}
         />
+
         <DatePickerComponent
           date={date}
           inputDate={inputDate}
           label={"トレーニング日"}
-          required={true}
+          required={false}
           fullWidth={true}
         />
         <PullDownComponent
           items={gymsName}
           label={"場所"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={location}
           onChange={inputLocation}
@@ -174,7 +178,7 @@ const TrainingSearchForm = (props) => {
         <PullDownComponent
           items={gender}
           label={"希望パートナー"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={partner}
           onChange={inputPartner}
@@ -182,7 +186,7 @@ const TrainingSearchForm = (props) => {
         <PullDownComponent
           items={{ 指定しない: "", 1: 1, 2: 2, 3: 3 }}
           label={"参加人数上限"}
-          required={true}
+          required={false}
           fullWidth={true}
           value={limitNumber}
           onChange={inputLimitNumber}

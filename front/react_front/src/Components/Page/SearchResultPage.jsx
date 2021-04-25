@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "500px",
     margin: "0 auto",
+    marginTop: "2rem",
     width: "100%",
   },
   clild: {
