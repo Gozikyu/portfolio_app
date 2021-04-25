@@ -77,7 +77,7 @@ const Header = (props) => {
   };
 
   const pushToTopPage = () => {
-    history.push("/");
+    history.push("/top");
   };
 
   const logout = () => {

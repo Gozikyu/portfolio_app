@@ -25,7 +25,7 @@ const NotFound = () => {
   const classes = useStyles();
 
   const pushToTopPage = () => {
-    history.push("/");
+    history.push("/top");
   };
 
   return (

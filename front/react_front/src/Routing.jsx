@@ -80,7 +80,7 @@ const Routing = () => {
                 />
               )}
             />
-            <Route exact path="/appTopPage" component={AppTopPage} />
+            <Route exact path="/" component={AppTopPage} />
             <Route
               exact
               path={"/signup"}
@@ -95,7 +95,7 @@ const Routing = () => {
 
             <Auth loggedInStatus={loggedInStatus}>
               <Switch>
-                <Route exact path="/" component={TopPage} />
+                <Route exact path="/top" component={TopPage} />
                 <Route exact path="/users/:id" component={UserMyPage} />
 
                 <Route
