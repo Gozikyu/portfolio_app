@@ -40,6 +40,8 @@ export default function BasicTable(props) {
     [host, setHost] = useState("");
   const classes = useStyles();
 
+  const gender = { male: "男性のみ", female: "女性のみ", both: "どちらでも可" };
+
   const dateFormat = (date) => {
     var year = date.slice(0, 4);
     var month = date.slice(5, 7);
@@ -78,9 +80,9 @@ export default function BasicTable(props) {
         <TableBody>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>
-              メニュー
+              コメント
             </TableCell>
-            <TableCell align="center">{props.training.menu}</TableCell>
+            <TableCell align="center">{props.training.comment}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="center" className={classes.tableItem}>
@@ -116,6 +118,14 @@ export default function BasicTable(props) {
               場所
             </TableCell>
             <TableCell align="center">{props.training.location}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell align="center" className={classes.tableItem}>
+              希望パートナー
+            </TableCell>
+            <TableCell align="center">
+              {gender[props.training.partner]}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

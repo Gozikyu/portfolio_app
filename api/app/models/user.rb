@@ -14,11 +14,11 @@ class User < ApplicationRecord
   validates(:email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true)
+  validates(:gender, presence: true, format: { with: /male/ || /female/ })
   has_secure_password
   validates(:password, presence: true, length: { minimum: 6 }, allow_nil: true)
 
   def follow(training)
-    # self.followingTs << training
     active_relationships.create(follower_id: id, followingT_id: training.id)
   end
 

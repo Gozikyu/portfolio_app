@@ -3,14 +3,18 @@ import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import SignIn from "./SignIn";
+import PullDownComponent from "../Component/PullDownComponent";
 
 const SignUp = (props) => {
   const history = useHistory();
 
   const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
+    [gender, setGender] = useState(""),
     [password, setPassword] = useState(""),
     [confirmPassword, setConfirmPassword] = useState("");
+
+  const genderList = { 男性: "male", 女性: "female" };
 
   const signIn = () => {
     axios
@@ -45,6 +49,7 @@ const SignUp = (props) => {
           user: {
             name: username,
             email: email,
+            gender: gender,
             password: password,
             password_confirmation: confirmPassword,
           },
@@ -71,6 +76,13 @@ const SignUp = (props) => {
       setEmail(event.target.value);
     },
     [setEmail]
+  );
+
+  const inputGender = useCallback(
+    (event) => {
+      setGender(event.target.value);
+    },
+    [setGender]
   );
 
   const inputPassword = useCallback(
@@ -111,6 +123,15 @@ const SignUp = (props) => {
         type={"email"}
         onChange={inputEmail}
       />
+      <PullDownComponent
+        items={genderList}
+        label={"性別"}
+        required={true}
+        fullWidth={true}
+        value={gender}
+        onChange={inputGender}
+      />
+
       <TextInput
         fullWidth={true}
         label={"パスワード"}
@@ -141,6 +162,7 @@ const SignUp = (props) => {
             if (
               username === "" ||
               email === "" ||
+              gender === "" ||
               password === "" ||
               confirmPassword === ""
             ) {

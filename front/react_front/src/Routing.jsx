@@ -4,22 +4,20 @@ import {
   Route,
   Switch,
   useHistory,
-  Redirect,
 } from "react-router-dom";
 import axios from "axios";
 import TopPage from "./Components/Page/TopPage";
 import TrainingPage from "./Components/Page/TrainingPage";
 import UserMyPage from "./Components/Page/UserMyPage";
-import UserList from "./Components/UserList";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
 import SearchResultPage from "./Components/Page/SearchResultPage";
 import Auth from "./Auth";
-import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
-import Header from "./Components/Header";
+import Header from "./Components/Component/Header";
 import NotFound from "./Components/Page/NotFound";
+import AppTopPage from "./Components/Page/AppTopPage";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -36,8 +34,6 @@ const Routing = () => {
     setLoggedInStatus(false);
   };
 
-  console.log(loggedInStatus);
-
   const checkLoginStatus = () => {
     axios
       .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
@@ -49,7 +45,6 @@ const Routing = () => {
           setLoggedInStatus(true);
         } else {
           setLoggedInStatus(false);
-          // history.push("/signin");
         }
       })
       .catch((error) => {
@@ -85,10 +80,22 @@ const Routing = () => {
                 />
               )}
             />
+            <Route exact path="/" component={AppTopPage} />
+            <Route
+              exact
+              path={"/signup"}
+              render={(props) => (
+                <SignUp
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
 
             <Auth loggedInStatus={loggedInStatus}>
               <Switch>
-                <Route exact path="/" component={TopPage} />
+                <Route exact path="/top" component={TopPage} />
                 <Route exact path="/users/:id" component={UserMyPage} />
 
                 <Route
@@ -98,27 +105,7 @@ const Routing = () => {
                     <UserEdit {...props} loginUser={loginUser} />
                   )}
                 />
-                <Route
-                  exact
-                  path={"/signup"}
-                  render={(props) => (
-                    <SignUp
-                      {...props}
-                      loggedInStatus={loggedInStatus}
-                      login={login}
-                    />
-                  )}
-                />
 
-                <Route
-                  exact
-                  path={"/users"}
-                  render={(props) => (
-                    <UserList {...props} loggedInStatus={loggedInStatus} />
-                  )}
-                />
-
-                <Route exact path="/gyms" component={GymsAndMap} />
                 <Route
                   exact
                   path="/gyms/registration"
