@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'https://3.112.0.252:80', 'http://localhost:80', 'https://condots.net'
+        origins 'http://3.112.0.252:80', 'http://localhost:80', 'https://condots.net'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
@@ -63,7 +63,7 @@ module Myapp
       'Access-Control-Allow-Credentials' => 'true',
       'Access-Control-Allow-Origin' =>
       if Rails.env.production?
-        'https://condots.net'
+        'http://3.112.0.252'
       else
         'http://localhost'
       end,
