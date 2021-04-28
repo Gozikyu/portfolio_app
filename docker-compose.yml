@@ -40,7 +40,7 @@ services:
       - ./front:/usr/src/app
     command: sh -c "cd react_front && npm start "
     ports:
-      - "443:3000"
+      - "80:3000"
 volumes:
   public-data:
   tmp-data:
