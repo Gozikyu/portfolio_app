@@ -14,7 +14,7 @@ const Auth = (props) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("check");
+        console.log(response);
         setLoggedInStatus(response.data.logged_in);
         setLoaded(true);
         if (response.data.logged_in) {

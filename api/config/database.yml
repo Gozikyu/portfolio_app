@@ -1,31 +1,3 @@
-# default: &default
-#   adapter: mysql2
-#   encoding: utf8mb4
-#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-#   username: <%= ENV.fetch("MYSQL_USERNAME", "root") %>
-#   password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %>
-#   host: <%= ENV.fetch("MYSQL_HOST", "db") %>
-
-# development:
-#   <<: *default
-#   database: myapp_development
-
-# test:
-#   <<: *default
-#   database: myapp_test
-#   # host: <%= ENV['MYSQL_ROOT_HOST'] || '127.0.0.1' %>
-
-# production:
-#   <<: *default
-#   database: <%= ENV['DB_DATABASE'] %>
-#   adapter: mysql2
-#   encoding: utf8mb4
-#   charset: utf8mb4
-#   collation: utf8mb4_general_ci
-#   host: <%= ENV['DB_HOST'] %>
-#   username: <%= ENV['DB_USERNAME'] %>
-#   password: <%= ENV['DB_PASSWORD'] %>
-
 default: &default
   adapter: mysql2
   encoding: utf8
