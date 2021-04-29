@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: signin_params[:email])
     if @user && @user.authenticate(signin_params[:password])
       session[:user_id] = @user.id
-      render json: current_user
+      render json: { user_id: session[:user_id], user: current_user }
     else
       render status: 404
     end

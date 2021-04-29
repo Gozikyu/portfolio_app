@@ -23,7 +23,7 @@ const SignIn = (props) => {
       )
       .then((response) => {
         console.log("registration res", response);
-        const createdId = response.data.id;
+        const createdId = response.data.user_id;
         console.log(createdId);
         props.login();
         history.push({ pathname: "/users/" + createdId });
