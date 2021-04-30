@@ -22,7 +22,7 @@ import AppTopPage from "./Components/Page/AppTopPage";
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
   const [loginUser, setLoginUser] = useState("");
-  const [isloaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const history = useHistory();
 
@@ -57,7 +57,7 @@ const Routing = () => {
     checkLoginStatus();
   }, []);
 
-  if (!isloaded) {
+  if (!isLoaded) {
     return <div>読み込み中です</div>;
   } else {
     return (
@@ -80,7 +80,18 @@ const Routing = () => {
                 />
               )}
             />
-            <Route exact path="/" component={AppTopPage} />
+            <Route
+              exact
+              path={"/"}
+              render={(props) => (
+                <AppTopPage
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
+
             <Route
               exact
               path={"/signup"}
