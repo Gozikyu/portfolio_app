@@ -1,6 +1,7 @@
 import React from "react";
 import { PrimaryButton } from "../UIkit/index";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import appTopPage from "../../assets/img/AppTopPage.png";
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppTopPage = () => {
+const AppTopPage = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -52,6 +53,33 @@ const AppTopPage = () => {
   };
   const pushToSignUpPage = () => {
     history.push("/signup");
+  };
+
+  const guestSignIn = () => {
+    axios
+      .post(
+        process.env.REACT_APP_HOST + ":3001" + "/login",
+        {
+          user: {
+            email: "guest@gmail.com",
+            password: "password",
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+        const createdId = response.data.user_id;
+        console.log(createdId);
+        props.login();
+        history.push({ pathname: "/users/" + createdId });
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+        alert(
+          "ゲストアカウントでログインできませんでした。通信環境をご確認ください。"
+        );
+      });
   };
 
   return (
@@ -75,6 +103,14 @@ const AppTopPage = () => {
         onClick={() => pushToSignUpPage()}
       >
         ユーザー登録
+      </Button>
+
+      <Button
+        className={classes.button}
+        variant="contained"
+        onClick={() => guestSignIn()}
+      >
+        ゲストアカウントでログイン
       </Button>
     </div>
   );

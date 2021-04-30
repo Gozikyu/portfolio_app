@@ -6,7 +6,7 @@ User.create!(name: 'admin',
              password_confirmation: 'password',
              admin: true)
 
-User.create!(name: 'guest',
+User.create!(name: 'ゲスト',
              email: 'guest@gmail.com',
              password: 'password',
              gender: 'female',

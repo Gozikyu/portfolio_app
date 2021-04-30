@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -57,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const [loggedInStatus, setLoggedInStatus] = useState(true),
-    [anchorEl, setAnchorEl] = useState(null);
-
+    [anchorEl, setAnchorEl] = useState(null),
+    [loginUser, setLoginUser] = useState(""),
+    [isLoaded, setIsLoaded] = useState(true);
   const classes = useStyles();
   const history = useHistory();
   const open = Boolean(anchorEl);
@@ -89,6 +90,7 @@ const Header = (props) => {
         .then((response) => {
           alert("ログアウトしました");
           props.logout();
+          setIsLoaded(!isLoaded);
           history.push("/signin");
           handleClose();
         })
@@ -98,6 +100,29 @@ const Header = (props) => {
         });
     }
   };
+
+  const checkLoginStatus = () => {
+    axios
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.logged_in) {
+          setLoginUser(response.data.user);
+          setLoggedInStatus(true);
+        } else {
+          setLoggedInStatus(false);
+        }
+      })
+      .catch((error) => {
+        console.log("ログインステータスエラー", error);
+      });
+    setIsLoaded(true);
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [isLoaded]);
 
   return (
     <>
@@ -119,23 +144,23 @@ const Header = (props) => {
                     style={{ height: 80 }}
                   />
                 </IconButton>
-                {props.loggedInStatus && (
+                {loggedInStatus && loginUser.name && (
                   <>
                     <Typography variant="h6" className={classes.user}>
-                      ログイン中：{props.loginUser.name}
+                      ログイン中：{loginUser.name}
                     </Typography>
                     <div className={classes.buttonArea}>
                       <Button
                         onClick={() => pushToMyPage()}
                         className={classes.button}
                       >
-                        My Page
+                        マイページ
                       </Button>
                       <Button
                         onClick={() => logout()}
                         className={classes.button}
                       >
-                        Logout
+                        ログアウト
                       </Button>
                     </div>
                   </>
