@@ -38,7 +38,7 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://3.112.0.252:80', 'http://localhost:80', 'https://condots.net', 'http://condots.net'
+        origins 'http://localhost', 'https://condots.net'
         resource '*',
                  headers: :any,
                  methods: %i[get post patch delete options],
