@@ -38,7 +38,7 @@
 - データベース：MySQL  
 
 # AWS構成図
-![インフラ構成図](https://user-images.githubusercontent.com/53566393/116805250-08eea600-ab60-11eb-8f66-353aadcffbfb.png)
+![インフラ構成図](https://user-images.githubusercontent.com/53566393/116805304-64b92f00-ab60-11eb-974f-da069f8ca80f.png)
 
 # 苦労したこと
 フロントエンドにReactを使用したこと  
