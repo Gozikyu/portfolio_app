@@ -63,7 +63,7 @@ module Myapp
       'Access-Control-Allow-Credentials' => 'true',
       'Access-Control-Allow-Origin' =>
       if Rails.env.production?
-        'http://condots.net'
+        'https://condots.net'
       else
         'http://localhost'
       end,
