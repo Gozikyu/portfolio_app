@@ -12,6 +12,8 @@ const TrainingRegistration = (props) => {
     [date, setDate] = useState(new Date()),
     [location, setLocation] = useState(""),
     [partner, setPartner] = useState(""),
+    [limitNumber, setLimitNumber] = useState(1),
+    [comment, setComment] = useState(""),
     [currentUser, setCurrentUser] = useState(""),
     [id, SetId] = useState(""),
     [gymsName, setGymsName] = useState({}),
@@ -19,7 +21,7 @@ const TrainingRegistration = (props) => {
 
   const gender = { 男性のみ: "male", 女性のみ: "female", どちらでも可: "both" };
 
-  const url = "http://localhost:3001/trainings/";
+  const url = process.env.REACT_APP_HOST + ":3001" + "/trainings/";
 
   const dateFormat = (date) => {
     var year = date.getFullYear();
@@ -31,7 +33,9 @@ const TrainingRegistration = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         setCurrentUser(response.data.user);
         SetId(response.data.user.id);
@@ -43,7 +47,9 @@ const TrainingRegistration = (props) => {
 
   const getGyms = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         results.data.map((gym) => {
           gymsName[gym.name] = gym.name;
@@ -59,6 +65,31 @@ const TrainingRegistration = (props) => {
     checkLoginStatus();
     getGyms();
   }, []);
+
+  const postTraining = () => {
+    axios
+      .post(
+        url,
+        {
+          training: {
+            menu: menu,
+            date: date,
+            location: location,
+            partner: partner,
+            limit_number: limitNumber,
+            comment: comment,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        props.setChangedTraining(true);
+        alert("トレーニングの登録が完了しました");
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
 
   const inputMenu = useCallback(
     (event) => {
@@ -87,21 +118,35 @@ const TrainingRegistration = (props) => {
     },
     [setPartner]
   );
+
+  const inputLimitNumber = useCallback((event) => {
+    setLimitNumber(event.target.value);
+  });
+
+  const inputComment = useCallback(
+    (event) => {
+      setComment(event.target.value);
+    },
+    [setComment]
+  );
+
   if (!isLoaded) {
     return <p>読み込み中です</p>;
   } else {
     return (
       <div className="c-section-container">
         <h2 className="u-text__headline u-text-center">トレーニング登録</h2>
-        <div className="module-spacer--medium" />
-        <TextInput
+
+        <PullDownComponent
+          items={{
+            軽めに筋トレ: "軽めに筋トレ",
+            がっつり筋トレ: "がっつり筋トレ",
+            軽め派もがっつり派も歓迎: "軽め派もがっつり派も歓迎",
+          }}
+          label={"トレーニング強度"}
+          required={true}
           fullWidth={true}
-          label={"メニュー名"}
-          multiline={false}
-          rows={1}
-          required={false}
           value={menu}
-          type={"text"}
           onChange={inputMenu}
         />
 
@@ -131,6 +176,25 @@ const TrainingRegistration = (props) => {
           onChange={inputPartner}
         />
 
+        <PullDownComponent
+          items={{ 1: 1, 2: 2, 3: 3 }}
+          label={"参加人数上限"}
+          required={true}
+          fullWidth={true}
+          value={limitNumber}
+          onChange={inputLimitNumber}
+        />
+        <TextInput
+          fullWidth={true}
+          label={"コメント"}
+          multiline={true}
+          rows={3}
+          required={false}
+          value={comment}
+          type={"text"}
+          onChange={inputComment}
+        />
+
         <div className="module-spacer--medium" />
         <div className="center">
           <PrimaryButton
@@ -141,35 +205,12 @@ const TrainingRegistration = (props) => {
                 return false;
               }
               {
-                if (partner == "男性のみ") {
-                  setPartner("male");
-                } else if (partner == "女性のみ") {
-                  setPartner("female");
-                } else {
-                  setPartner("both");
+                if (comment.length > 50) {
+                  alert("コメントは50文字以下にしてください。");
+                  return false;
                 }
               }
-
-              axios
-                .post(
-                  url,
-                  {
-                    training: {
-                      menu: menu,
-                      date: date,
-                      location: location,
-                      partner: partner,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  props.setChangedTraining(true);
-                  alert("トレーニングの登録が完了しました");
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                });
+              postTraining();
             }}
           />
         </div>

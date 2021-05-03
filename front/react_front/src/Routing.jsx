@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { PrimaryButton } from "./Components/UIkit/index";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   useHistory,
-  Redirect,
 } from "react-router-dom";
 import axios from "axios";
 import TopPage from "./Components/Page/TopPage";
 import TrainingPage from "./Components/Page/TrainingPage";
 import UserMyPage from "./Components/Page/UserMyPage";
-import UserList from "./Components/UserList";
-import UserProfile from "./Components/UserProfile";
 import UserEdit from "./Components/Page/UserEdit";
 import SignUp from "./Components/Page/SignUp";
 import SignIn from "./Components/Page/SignIn";
+import SearchResultPage from "./Components/Page/SearchResultPage";
 import Auth from "./Auth";
-import GoogleMapComponent from "./Components/Component/GoogleMapComponent";
-import GymsAndMap from "./Components/GymsAndMap";
 import GymRegistraion from "./Components/Component/GymRegistration";
-import Header from "./Components/Header";
+import Header from "./Components/Component/Header";
+import NotFound from "./Components/Page/NotFound";
+import AppTopPage from "./Components/Page/AppTopPage";
 
 const Routing = () => {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
   const [loginUser, setLoginUser] = useState("");
-  const [isloaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const history = useHistory();
 
@@ -39,81 +36,108 @@ const Routing = () => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
-          console.log(loggedInStatus);
+          setLoggedInStatus(true);
         } else {
           setLoggedInStatus(false);
-          history.push("/signin");
         }
       })
       .catch((error) => {
         console.log("ログインステータスエラー", error);
       });
     setIsLoaded(true);
-    console.log(isloaded);
   };
 
   useEffect(() => {
     checkLoginStatus();
   }, []);
 
-  if (!isloaded) {
+  if (!isLoaded) {
     return <div>読み込み中です</div>;
   } else {
     return (
       <div className="App">
         <Router>
-          {loggedInStatus ? <Redirect to={"/signin"} /> : <p>moo</p>}
-          <Header loginUser={loginUser} />
-          <Auth>
-            <Switch>
-              <Route exact path="/" component={TopPage} />
-              <Route exact path="/users/:id" component={UserMyPage} />
-              <Route exact path="/signup" component={SignUp} />
+          <Header
+            loginUser={loginUser}
+            logout={logout}
+            loggedInStatus={loggedInStatus}
+          />
+          <Switch>
+            <Route
+              exact
+              path={"/signin"}
+              render={(props) => (
+                <SignIn
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={"/"}
+              render={(props) => (
+                <AppTopPage
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
 
-              <Route
-                exact
-                path={"/users/:id/edit"}
-                render={(props) => (
-                  <UserEdit {...props} loginUser={loginUser} />
-                )}
-              />
-              <Route
-                exact
-                path={"/signin"}
-                render={(props) => (
-                  <SignIn
-                    {...props}
-                    loggedInStatus={loggedInStatus}
-                    login={login}
-                  />
-                )}
-              />
+            <Route
+              exact
+              path={"/signup"}
+              render={(props) => (
+                <SignUp
+                  {...props}
+                  loggedInStatus={loggedInStatus}
+                  login={login}
+                />
+              )}
+            />
 
-              <Route
-                exact
-                path={"/users"}
-                render={(props) => (
-                  <UserList {...props} loggedInStatus={loggedInStatus} />
-                )}
-              />
+            <Auth loggedInStatus={loggedInStatus}>
+              <Switch>
+                <Route exact path="/top" component={TopPage} />
+                <Route exact path="/users/:id" component={UserMyPage} />
 
-              <Route exact path="/gyms" component={GymsAndMap} />
-              <Route
-                exact
-                path="/gyms/registration"
-                component={GymRegistraion}
-              />
-              <Route
-                exact
-                path="/users/:userId/trainings/:trainingId"
-                component={TrainingPage}
-              />
-            </Switch>
-          </Auth>
+                <Route
+                  exact
+                  path={"/users/:id/edit"}
+                  render={(props) => (
+                    <UserEdit {...props} loginUser={loginUser} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path="/gyms/registration"
+                  component={GymRegistraion}
+                />
+                <Route
+                  exact
+                  path="/users/:userId/trainings/:trainingId"
+                  component={TrainingPage}
+                />
+
+                <Route
+                  exact
+                  path="/searchResult"
+                  component={SearchResultPage}
+                />
+
+                <Route component={NotFound} />
+              </Switch>
+            </Auth>
+          </Switch>
         </Router>
       </div>
     );

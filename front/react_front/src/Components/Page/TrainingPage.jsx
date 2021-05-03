@@ -1,23 +1,42 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
-import { TextInput, PrimaryButton } from "../UIkit/index";
+import { PrimaryButton } from "../UIkit/index";
 import GoogleMapComponent from "../Component/GoogleMapComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
+import ChatComponent from "../Component/ChatComponent";
+import TableComponent from "../Component/TabeleComponent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "500px",
     margin: "0 auto",
+    marginTop: "2rem ",
+    width: "80%",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   clild: {
     display: "inline-block",
   },
+  table: {
+    display: "block",
+    margin: "0 auto",
+    width: "70%",
+
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
+  },
+  chat: {
+    marginBottom: "1rem",
+  },
 }));
 
 const TrainingPage = (props) => {
+  const classes = useStyles();
+
   const [training, setTraining] = useState([""]),
     [gym, setGym] = useState([""]),
     [loginUser, setLoginUser] = useState(""),
@@ -26,44 +45,43 @@ const TrainingPage = (props) => {
     [followers, setFollowers] = useState([]);
 
   const location = useLocation();
+  const history = useHistory();
   const userId = location.pathname.split("/")[2];
   const trainingId = location.pathname.split("/")[4];
 
-  const classes = useStyles();
-
-  const dateFormat = (date) => {
-    const dateObject = new Date(date);
-    var year = dateObject.getFullYear();
-    var month = dateObject.getMonth() + 1;
-    var day = dateObject.getDate();
-    var trainingDate = year + "/" + month + "/" + day;
-    return trainingDate;
-  };
-
   const followTraining = () => {
-    axios
-      .post(
-        "http://localhost:3001/users/" +
-          loginUser.id +
-          "/trainings/" +
-          trainingId,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        setChangeState(!changeState);
-        alert("トレーニングの参加申請が完了しました");
-      })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
+    if (training.partner == loginUser.gender || training.partner == "both") {
+      axios
+        .get(
+          process.env.REACT_APP_HOST +
+            ":3001" +
+            "/users/" +
+            "trainings/" +
+            trainingId,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log(changeState);
+          setChangeState(!changeState);
+          alert("トレーニングの参加申請が完了しました");
+          console.log(changeState);
+        })
+        .catch((error) => {
+          console.log("registration error", error);
+        });
+    } else {
+      alert("参加可能な方の性別に制限があります");
+    }
   };
 
   const unfollowTraining = () => {
     axios
       .delete(
-        "http://localhost:3001/users/" +
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/users/" +
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -72,17 +90,39 @@ const TrainingPage = (props) => {
         }
       )
       .then((response) => {
+        console.log(changeState);
         setChangeState(!changeState);
         alert("トレーニングの参加申請取消が完了しました");
+        console.log(changeState);
       })
       .catch((error) => {
         console.log("registration error", error);
       });
   };
 
+  const deleteTraining = () => {
+    if (window.confirm("削除してよろしいですか？"))
+      axios
+        .delete(
+          process.env.REACT_APP_HOST + ":3001" + "/trainings/" + training.id,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log("registration res", response);
+          alert("指定したトレーニングを削除しました");
+          history.push("/users/" + loginUser.id);
+        })
+        .catch((error) => {
+          console.log("registration error", error);
+          alert("トレーニングを削除できませんでした。通信環境をご確認ください");
+        });
+  };
+
   const getTraining = () => {
     axios
-      .get("http://localhost:3001/trainings/" + userId, {
+      .get(process.env.REACT_APP_HOST + ":3001" + "/trainings/" + userId, {
         withCredentials: true,
       })
       .then((trainingData) => {
@@ -99,7 +139,9 @@ const TrainingPage = (props) => {
 
   const getGyms = () => {
     axios
-      .get("http://localhost:3001/gyms", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/gyms", {
+        withCredentials: true,
+      })
       .then((results) => {
         setGym(results.data.find((gym) => gym.name == training.location));
       })
@@ -110,7 +152,9 @@ const TrainingPage = (props) => {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/login", { withCredentials: true })
+      .get(process.env.REACT_APP_HOST + ":3001" + "/login", {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.data.logged_in) {
           setLoginUser(response.data.user);
@@ -125,7 +169,9 @@ const TrainingPage = (props) => {
   const checkFollowed = () => {
     axios
       .get(
-        "http://localhost:3001/users/" +
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/users/" +
           loginUser.id +
           "/trainings/" +
           trainingId,
@@ -143,12 +189,18 @@ const TrainingPage = (props) => {
 
   const getFollowers = () => {
     axios
-      .get("http://localhost:3001/trainings/" + training.id + "/followers", {
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/trainings/" +
+          training.id +
+          "/followers",
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setFollowers(response.data);
-        console.log(followers);
       })
       .catch((error) => {
         console.log("registration error", error);
@@ -161,44 +213,56 @@ const TrainingPage = (props) => {
   }, []);
 
   useEffect(() => {
+    getTraining();
+  }, [changeState]);
+
+  useEffect(() => {
     checkFollowed();
   }, [changeState, loginUser]);
 
   useEffect(() => {
     getGyms();
     getFollowers();
-  }, [training]);
+  }, [training, changeState]);
 
   return !training.length ? (
     <Grid container spacing={3} className={classes.root}>
-      <Grid item xs={6} className={classes.clild}>
+      <Grid item xs={12} sm={6}>
+        <div className={classes.table}>
+          <TableComponent
+            className={classes.component}
+            training={training}
+            followers={followers}
+          />
+        </div>
         <GoogleMapComponent gyms={gym} />
       </Grid>
-      <Grid item xs={6} className={classes.clild}>
-        <p>メニュー：　{training.menu}</p>
-        <p>日時：　{dateFormat(training.date)}</p>
-        <p>場所：　{training.location}</p>
-        {isFollowed ? (
+      <Grid item xs={12} sm={6}>
+        <div className={classes.chat}>
+          {(isFollowed || training.user_id == loginUser.id) && (
+            <ChatComponent training={training} />
+          )}
+        </div>
+        {training.user_id == loginUser.id ? (
+          <PrimaryButton
+            label={"トレーニングを削除する"}
+            onClick={() => {
+              deleteTraining();
+            }}
+          />
+        ) : isFollowed ? (
           <PrimaryButton
             label={"参加申請取り消し"}
             onClick={() => unfollowTraining()}
           />
+        ) : followers.length >= training.limit_number ? (
+          <p class="warning">トレーニングの参加人数上限に達しています</p>
         ) : (
           <PrimaryButton
             label={"トレーニングへの参加申請"}
             onClick={() => followTraining()}
           />
         )}
-        <div>
-          <h1>参加希望者</h1>
-          {followers.map((follower, i) => {
-            return (
-              <p key={i}>
-                <Link to={"/users/" + follower.id}>{follower.name}</Link>
-              </p>
-            );
-          })}
-        </div>
       </Grid>
     </Grid>
   ) : (

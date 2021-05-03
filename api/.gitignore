@@ -26,5 +26,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Added by Yuta
-../front/react_front/node_modules/
+# # Added by Yuta
+# ../front/react_front/node_modules/
+/environments/db.env
+

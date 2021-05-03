@@ -2,14 +2,67 @@ import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import SignIn from "./SignIn";
+import PullDownComponent from "../Component/PullDownComponent";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const history = useHistory();
 
   const [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
+    [gender, setGender] = useState(""),
     [password, setPassword] = useState(""),
     [confirmPassword, setConfirmPassword] = useState("");
+
+  const genderList = { 男性: "male", 女性: "female" };
+
+  const signIn = () => {
+    axios
+      .post(
+        process.env.REACT_APP_HOST + ":3001" + "/login",
+        {
+          user: {
+            email: email,
+            password: password,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+        const createdId = response.data.id;
+        console.log(createdId);
+        props.login();
+        history.push({ pathname: "/users/" + createdId });
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+        alert("メールアドレスとパスワードの組み合わせが正しくありません。");
+      });
+  };
+
+  const signUp = () => {
+    axios
+      .post(
+        process.env.REACT_APP_HOST + ":3001" + "/users",
+        {
+          user: {
+            name: username,
+            email: email,
+            gender: gender,
+            password: password,
+            password_confirmation: confirmPassword,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        signIn();
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+  };
 
   const inputUsername = useCallback(
     (event) => {
@@ -23,6 +76,13 @@ const SignUp = () => {
       setEmail(event.target.value);
     },
     [setEmail]
+  );
+
+  const inputGender = useCallback(
+    (event) => {
+      setGender(event.target.value);
+    },
+    [setGender]
   );
 
   const inputPassword = useCallback(
@@ -63,6 +123,15 @@ const SignUp = () => {
         type={"email"}
         onChange={inputEmail}
       />
+      <PullDownComponent
+        items={genderList}
+        label={"性別"}
+        required={true}
+        fullWidth={true}
+        value={gender}
+        onChange={inputGender}
+      />
+
       <TextInput
         fullWidth={true}
         label={"パスワード"}
@@ -93,6 +162,7 @@ const SignUp = () => {
             if (
               username === "" ||
               email === "" ||
+              gender === "" ||
               password === "" ||
               confirmPassword === ""
             ) {
@@ -112,29 +182,7 @@ const SignUp = () => {
               return false;
             }
 
-            axios
-              .post(
-                "http://localhost:3001/users",
-                {
-                  user: {
-                    name: username,
-                    email: email,
-                    password: password,
-                    password_confirmation: confirmPassword,
-                  },
-                },
-                { withCredentials: true }
-              )
-              .then((response) => {
-                console.log("registration res", response);
-                const createdId = response.data.id;
-                console.log(createdId);
-                history.push({ pathname: "/users/" + createdId });
-              })
-              .catch((error) => {
-                console.log("registration error", error);
-              });
-            // event.preventDefault()
+            signUp();
           }}
         />
         <div className="help">

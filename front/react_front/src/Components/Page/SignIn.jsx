@@ -2,18 +2,64 @@ import React, { useCallback, useState } from "react";
 import { TextInput, PrimaryButton } from "../UIkit/index";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { signIn } from "../reducks/users/operations";
-// import { push } from "connected-react-router";
 
 const SignIn = (props) => {
-  //   const dispatch = useDispatch();
-  //   const selector = useSelector((state) => state);
-
   const history = useHistory();
 
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState("");
+
+  const signIn = () => {
+    axios
+      .post(
+        process.env.REACT_APP_HOST + ":3001" + "/login",
+        {
+          user: {
+            email: email,
+            password: password,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+        const createdId = response.data.user_id;
+        console.log(createdId);
+        props.login();
+        history.push({ pathname: "/users/" + createdId });
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+        alert("メールアドレスとパスワードの組み合わせが正しくありません。");
+      });
+  };
+
+  const guestSignIn = () => {
+    axios
+      .post(
+        process.env.REACT_APP_HOST + ":3001" + "/login",
+        {
+          user: {
+            email: "guest@gmail.com",
+            password: "password",
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("registration res", response);
+        const createdId = response.data.user_id;
+        console.log(createdId);
+        props.login();
+        history.push({ pathname: "/users/" + createdId });
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+        alert(
+          "ゲストアカウントでログインできませんでした。通信環境をご確認ください。"
+        );
+      });
+  };
 
   const inputEmail = useCallback(
     (event) => {
@@ -28,7 +74,6 @@ const SignIn = (props) => {
     },
     [setPassword]
   );
-  console.log("signin");
   return (
     <div className="c-section-container">
       <h2 className="u-text__headline u-text-center">ログイン</h2>
@@ -53,57 +98,18 @@ const SignIn = (props) => {
         type={"password"}
         onChange={inputPassword}
       />
-      <div className="guestAccount">
-        <h3>ゲストアカウント</h3>
-        <p>メールアドレス: guest@gmail.com</p>
-        <p>パスワード: password</p>
-      </div>
-      <div className="module-spacer--medium" />
-
+      <div className="guestAccount"></div>
       <div className="center">
-        {/* <PrimaryButton
-          label={"Sign in"}
-          onClick={() => dispatch(signIn(email, password))}
-        />
- */}
+        <PrimaryButton label={"ログインする"} onClick={() => signIn()} />
+        <div className="module-spacer--medium" />
         <PrimaryButton
-          label={"ログインする"}
-          onClick={
-            () =>
-              axios
-                .post(
-                  "http://localhost:3001/login",
-                  {
-                    user: {
-                      email: email,
-                      password: password,
-                    },
-                  },
-                  { withCredentials: true }
-                )
-                .then((response) => {
-                  console.log("registration res", response);
-                  const createdId = response.data.id;
-                  console.log(createdId);
-                  props.login();
-                  history.push({ pathname: "/users/" + createdId });
-                })
-                .catch((error) => {
-                  console.log("registration error", error);
-                  alert(
-                    "メールアドレスとパスワードの組み合わせが正しくありません。"
-                  );
-                })
-            // event.preventDefault()
-          }
+          label={"ゲストアカウントでログインする"}
+          onClick={() => guestSignIn()}
         />
         <div className="help">
           <p onClick={() => history.push("/signup")}>
             アカウントをお持ちでない方はこちら
           </p>
-          {/* <p onClick={() => dispatch(push("/signin/reset"))}>
-            パスワードを忘れた方はこちら
-          </p> */}
         </div>
       </div>
     </div>
