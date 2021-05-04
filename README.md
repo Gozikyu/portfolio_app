@@ -50,7 +50,7 @@
 
 # AWS 構成図
 
-![インフラ構成図](https://user-images.githubusercontent.com/53566393/116805304-64b92f00-ab60-11eb-974f-da069f8ca80f.png)
+![インフラ構成図](https://user-images.githubusercontent.com/53566393/116949974-a6f88280-acbe-11eb-96c7-31c3ee7643f9.png)
 
 # 苦労したこと
 
