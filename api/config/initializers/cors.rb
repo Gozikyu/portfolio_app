@@ -9,7 +9,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://3.112.0.252', 'https://condots.net', 'http://condots.net', 'http://localhost'
+    origins 'http://localhost'
 
     resource '*',
              headers: :any,
