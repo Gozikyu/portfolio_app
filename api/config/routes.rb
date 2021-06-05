@@ -21,5 +21,5 @@ Rails.application.routes.draw do
 
   get 'trainings/:id/chats', to: 'chats#show'
   post 'trainings/:id/chats', to: 'chats#create'
-  delete 'trainings/:id/chats', to: 'chats#destroy'
+  delete 'trainings/:id/chats/:chat_id', to: 'chats#destroy'
 end

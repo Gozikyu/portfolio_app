@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
   end
 
   def correct_user
-    @chat = Chat.find(params[:id])
+    @chat = Chat.find(params[:chat_id])
     render status: 500 unless current_user.id == @chat.user_id
   end
 end
