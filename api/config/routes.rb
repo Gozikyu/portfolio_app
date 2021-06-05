@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'users/:user_id/trainings/:training_id', to: 'users#followed_training?'
   delete 'users/:user_id/trainings/:training_id', to: 'users#unfollow_training'
 
-  get '/chats/:id', to: 'chats#show'
-  post '/chats', to: 'chats#create'
-  delete '/chats/:id', to: 'chats#destroy'
+  get 'trainings/:id/chats', to: 'chats#show'
+  post 'trainings/:id/chats', to: 'chats#create'
+  delete 'trainings/:id/chats/:chat_id', to: 'chats#destroy'
 end
