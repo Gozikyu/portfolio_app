@@ -10,7 +10,7 @@ RSpec.describe 'Chats', type: :request do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      get "/chats/#{@training.id}"
+      get "/trainings/#{@training.id}/chats"
       expect(response).to be_successful
     end
   end
@@ -20,7 +20,7 @@ RSpec.describe 'Chats', type: :request do
       @another.follow(@training)
       post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
-        post '/chats', params: { chat: {
+        post "/trainings/#{@training.id}/chats", params: { chat: {
           content: 'test',
           training_id: @training.id,
           user_name: @user.name
@@ -31,7 +31,7 @@ RSpec.describe 'Chats', type: :request do
     it 'can not chat at not following trainings' do
       post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
-        post '/chats', params: { chat: {
+        post "/trainings/#{@training.id}/chats", params: { chat: {
           content: 'test',
           training_id: @training.id
         } }
@@ -43,14 +43,14 @@ RSpec.describe 'Chats', type: :request do
     it 'own chats should be deleted' do
       post '/login', params: { user: { email: 'hoge@gmail.com', password: 'password' } }
       expect do
-        delete "/chats/#{@chat.id}"
+        delete "/trainings/#{@training.id}/chats/#{@chat.id}"
       end.to change(Chat, :count).by(-1)
     end
 
     it 'not own chats should not be deleted' do
       post '/login', params: { user: { email: 'another@gmail.com', password: 'password' } }
       expect do
-        delete "/chats/#{@chat.id}"
+        delete "/trainings/#{@training.id}/chats/#{@chat.id}"
       end.to change(User, :count).by(0)
     end
   end

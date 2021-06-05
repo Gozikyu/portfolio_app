@@ -2,7 +2,9 @@
 
 ![TopPage](https://user-images.githubusercontent.com/53566393/116806111-d8116f80-ab65-11eb-9f76-f8fce5b81c8e.png)
 
-### URL: https://condots.net
+### URL: http://condots.net
+
+※一時的に https ではなく、http にさせていただいています。
 
 一緒に筋トレをする人を見つける筋トレ仲間マッチングアプリ。  
 トレーニングするジムの場所、日時などを入力して自分のトレーニングを登録。  

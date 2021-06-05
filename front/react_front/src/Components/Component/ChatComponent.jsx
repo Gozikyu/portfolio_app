@@ -75,7 +75,11 @@ const ChatComponent = (props) => {
   const getChats = () => {
     axios
       .get(
-        process.env.REACT_APP_HOST + ":3001" + "/chats/" + props.training.id,
+        process.env.REACT_APP_HOST +
+          ":3001" +
+          "/trainings/" +
+          props.training.id +
+          "/chats",
         {
           withCredentials: true,
         }
